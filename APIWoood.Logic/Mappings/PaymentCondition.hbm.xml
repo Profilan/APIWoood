@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="PaymentCondition" table="_AB_DEB_BETALINGSCONDITIES">
+    <id name="CODE">
+      <generator class="identity"/>
+    </id>
+
+    <property name="NL_DESC"/>
+    <property name="EN_DESC"/>
+    <property name="DE_DESC"/>
+    <property name="FR_DESC"/>
+  </class>
+</hibernate-mapping>

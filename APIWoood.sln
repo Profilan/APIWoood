@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIWoood", "APIWoood\APIWoo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIWoood.Tests", "APIWoood.Tests\APIWoood.Tests.csproj", "{7DECC636-7AD8-44CA-80EA-884C62C145EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIWoood.Logic", "APIWoood.Logic\APIWoood.Logic.csproj", "{D6625C78-3476-49F5-99AA-E926DC21393E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIWoood.LogicTests", "APIWoood.LogicTests\APIWoood.LogicTests.csproj", "{4E18469E-3E10-4CEC-9195-4F02B6ACAAB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{7DECC636-7AD8-44CA-80EA-884C62C145EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DECC636-7AD8-44CA-80EA-884C62C145EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DECC636-7AD8-44CA-80EA-884C62C145EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6625C78-3476-49F5-99AA-E926DC21393E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6625C78-3476-49F5-99AA-E926DC21393E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6625C78-3476-49F5-99AA-E926DC21393E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6625C78-3476-49F5-99AA-E926DC21393E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E18469E-3E10-4CEC-9195-4F02B6ACAAB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E18469E-3E10-4CEC-9195-4F02B6ACAAB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E18469E-3E10-4CEC-9195-4F02B6ACAAB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E18469E-3E10-4CEC-9195-4F02B6ACAAB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="Debtor" table="_AB_DEBINFO">
+    <id name="DEBITEURNR">
+      <generator class="identity"/>
+    </id>
+
+    <property name="NAAM"/>
+    <property name="TYPE"/>
+    <property name="FAKTUURDEBITEURNR"/>
+    <property name="CLASSIFICATIE"/>
+    <property name="CLASS_OMS"/>
+    <property name="BTWNR"/>
+    <property name="BETALINGSCONDITIE"/>
+    <property name="BETALINGSCONDITIEOMS"/>
+    <property name="LEVERINGSWIJZE"/>
+    <property name="WOOOD_NL" column="`WOOOD.NL`"/>
+    <property name="PORTAL"/>
+    <property name="FACTADRES"/>
+    <property name="FACTPC"/>
+    <property name="FACTPLAATS"/>
+    <property name="FACTLANDCODE"/>
+    <property name="FACTLAND"/>
+    <property name="BEZADRES"/>
+    <property name="BEZPC"/>
+    <property name="BEZPLAATS"/>
+    <property name="BEZLANDCODE"/>
+    <property name="BEZLAND"/>
+    <property name="AFLADRES"/>
+    <property name="AFLPC"/>
+    <property name="AFLPLAATS"/>
+    <property name="AFLLANDCODE"/>
+    <property name="AFLLAND"/>
+    <property name="POSTADRES"/>
+    <property name="POSTPC"/>
+    <property name="POSTPLAATS"/>
+    <property name="POSTLANDCODE"/>
+    <property name="POSTLAND"/>
+    <property name="CMP_NAME" column="cmp_name"/>
+    <property name="KVK" column="KvK"/>
+    <property name="FRANCO_LIMIET"/>
+    <property name="MINIMUM_ORDER_LIMIET"/>
+    <property name="ORDER_TOESLAG"/>
+    <property name="ACCOUNTMANAGER"/>
+    <property name="DFF_ACCESSCODE" column="DFF_Accesscode"/>
+    <property name="OVERRIDE_LIMITS"/>
+    <property name="DEB_NAME_ALIAS"/>
+    <property name="DEB_WWW_ALIAS"/>
+  </class>
+</hibernate-mapping>

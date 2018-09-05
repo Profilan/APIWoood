@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="Package" table="EEK_ARTIKELDATA_PAKKET">
+    <id name="ARTCODE_PAKKET" column="ARTCODE_PAKKET">
+      <generator class="identity"/>
+    </id>
+
+    <property name="ARTIKELCODE"/>
+    <property name="NL"/>
+    <property name="EN"/>
+    <property name="DE"/>
+    <property name="FR"/>
+    <property name="GEWICHT" precision="18" scale="2"/>
+    <property name="VERPAK_DIKTE_MM" column="VERPAK_DIKTE_mm" precision="18" scale="2"/>
+    <property name="VERPAK_LENGTE_MM" column="VERPAK_LENGTE_mm" precision="18" scale="2"/>
+    <property name="VERPAK_BREEDTE_MM" column="VERPAK_BREEDTE_mm" precision="18" scale="2"/>
+    <property name="VOL_M3_VERP" column="`VOL_M3/VERP`" precision="18" scale="2"/>
+    <property name="VRIJEVOORRAADPAKKET" column="VrijeVoorraadPakket" precision="18" scale="2"/>
+    <property name="ASS_CODE_EXCLUSIV"/>
+    <property name="EANCODE_PAKKET" column="EANCode"/>
+    <property name="AANTAL_PAKKETTEN"/>
+  </class>
+</hibernate-mapping>

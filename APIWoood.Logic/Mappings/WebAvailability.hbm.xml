@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="WebAvailability" table="_AB_WEB_AVAILABILITY">
+    <composite-id name="WebAvailabilityIdentifier">
+      <key-property name="FAKDEBNR"/>
+      <key-property name="ITEMCODE"/>
+    </composite-id>
+
+    <property name="TOELICHTING_NL"/>
+    <property name="TOELICHTING_EN"/>
+    <property name="TOELICHTING_DE"/>
+    <property name="TOELICHTING_FR"/>
+    <property name="LEVERWEEK"/>
+    <property name="LEVERWEEK_JJJJWW"/>
+    <property name="OMSCHRIJVING_NL"/>
+    <property name="OMSCHRIJVING_EN"/>
+    <property name="OMSCHRIJVING_DE"/>
+    <property name="OMSCHRIJVING_FR"/>
+    <property name="BRAND"/>
+    <property name="EXCLUSIVE"/>
+    <property name="EANCODE"/>
+  </class>
+</hibernate-mapping>

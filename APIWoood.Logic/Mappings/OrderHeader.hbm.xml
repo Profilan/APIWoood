@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="OrderHeader" table="_AB_TB_WEB_ORKRG">
+    <composite-id name="OrderIdentifier">
+      <key-property name="REFERENTIE"/>
+      <key-property name="DEBITEURNR"/>
+    </composite-id>
+
+    <property name="OMSCHRIJVING"/>
+    <property name="STATUS"/>
+    <property name="ORDERNR"/>
+    <property name="SELECTIECODE"/>
+    <property name="ORDERTOELICHTING"/>
+    <property name="ACCEPTATIE_VERZAMELEN"/>
+    <property name="ACCEPTATIE_ORDERKOSTEN"/>
+    <property name="DS_NAAM"/>
+    <property name="DS_AANSPREEKTITEL"/>
+    <property name="DS_ADRES1"/>
+    <property name="DS_POSTCODE"/>
+    <property name="DS_PLAATS"/>
+    <property name="DS_LAND"/>
+    <property name="DS_TELEFOON"/>
+    <property name="DS_EMAIL"/>
+    <property name="AUTHENTICATED_USER"/>
+    <property name="ACCEPTATIE_ORDERSPLITSING"/>
+    <property name="PAYMENT_RELEASE_REQUIRED"/>
+    <property name="SYSCREATED"/>
+    <property name="SYSMODIFIED"/>
+    <property name="SYSMSG"/>
+
+    <set name="Lines" table="_AB_TB_WEB_ORSRG" cascade="all-delete-orphan">
+      <key>
+        <column name="REFERENTIE"/>
+        <column name="DEBITEURNR"/>
+      </key>
+      <one-to-many class="OrderLine"/>
+    </set>
+
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="Product" table="EEK_ARTIKELDATA">
+    <id name="ARTIKELCODE">
+      <generator class="identity"/>
+    </id>
+
+    <property name="NL"/>
+    <property name="EN"/>
+    <property name="DE"/>
+    <property name="FR"/>
+    <property name="COLOR_FINISH"/>
+    <property name="MATERIAL"/>
+    <property name="BRAND"/>
+    <property name="ASSORTMENT"/>
+    <property name="PRODUCTGROUP_CODE"/>
+    <property name="PRODUCTGROUP"/>
+    <property name="DEFAULT_SUBPRODUCTGROUP_CODE"/>
+    <property name="DEFAULT_SUBPRODUCTGROUP_NAME"/>
+    <property name="RANGE"/>
+    <property name="STATUS"/>
+    <property name="EXCLUSIV"/>
+    <property name="VERKOOPPRIJS" precision="18" scale="2"/>
+    <property name="VERKOOPEENHEID"/>
+    <property name="AANTAL_PAKKETTEN"/>
+    <property name="AFMETING_ARTIKEL_HXBXD"/>
+    <property name="EANCODE" column="EANCode"/>
+    <property name="EN_LONG_DESC"/>
+    <property name="NL_LONG_DESC"/>
+    <property name="DE_LONG_DESC"/>
+    <property name="FR_LONG_DESC"/>
+    <property name="AANTAL_VERP"/>
+    <property name="SOURCE"/>
+    <property name="MRP_RUN"/>
+    <property name="CONSUMENTENPRIJS" precision="18" scale="2"/>
+    <property name="CONSUMENTENPRIJS_VAN" precision="18" scale="2"/>
+    <property name="ISE_CONSUMENTENPRIJS" precision="18" scale="2"/>
+    <property name="ISE_CONSUMENTENPRIJS_VAN" precision="18" scale="2"/>
+    <property name="GEWICHT" precision="18" scale="2"/>
+    <property name="NEW_ARRIVAL"/>
+    <property name="VERPAK_DIKTE_MM" column="VERPAK_DIKTE_mm" precision="18" scale="2"/>
+    <property name="VERPAK_LENGTE_MM" column="VERPAK_LENGTE_mm" precision="18" scale="2"/>
+    <property name="VERPAK_BREEDTE_MM" column="VERPAK_BREEDTE_mm" precision="18" scale="2"/>
+    <property name="VOL_M3_VERP" precision="18" scale="2"/>
+    <property name="VRIJEVOORRAAD"/>
+    <property name="ASS_CODE_EXCLUSIV"/>
+    <property name="ATP"/>
+    <property name="FSC"/>
+    <property name="COUNTRY_OF_ORIGIN"/>
+    <property name="INTRASTAT_CODE"/>
+    <property name="ASSEMBLY_REQUIRED"/>
+    <property name="WEB_VAN_PRIJS_NL" precision="18" scale="2"/>
+    <property name="WEB_VAN_PRIJS_ISE" precision="18" scale="2"/>
+    <property name="AVAILABILITY_WEEK" column="AvailabilityWeek"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="Pricelist" table="EEK_PRIJZEN_WEBSHOP">
+    <composite-id name="PricelistIdentifier">
+      <key-property name="DEBITEURNR" column="debiteurnr"/>
+      <key-property name="FAKTUURDEBITEURNR" column="faktuurdebiteurnr"/>
+      <key-property name="ARTIKELCODE" column="artikelnr"/>
+    </composite-id>
+
+    <property name="SALESPRICE" column="salesprice"/>
+    <property name="PRIJSLIJST" column="prijslijst"/>
+    <property name="KORTING" column="korting"/>
+    <property name="AANTAL0" column="aantal0"/>
+    <property name="PRIJS0" column="prijs0"/>
+    <property name="AANTAL1" column="aantal1"/>
+    <property name="PRIJS1" column="prijs1"/>
+    <property name="AANTAL2" column="aantal2"/>
+    <property name="PRIJS2" column="prijs2"/>
+    <property name="AANTAL3" column="aantal3"/>
+    <property name="PRIJS3" column="prijs3"/>
+    <property name="AANTAL4" column="aantal4"/>
+    <property name="PRIJS4" column="prijs4"/>
+    <property name="AANTAL5" column="aantal5"/>
+    <property name="PRIJS5" column="prijs5"/>
+    <property name="AANTAL6" column="aantal6"/>
+    <property name="PRIJS6" column="prijs6"/>
+    <property name="AANTAL7" column="aantal7"/>
+    <property name="PRIJS7" column="prijs7"/>
+    <property name="AANTAL8" column="aantal8"/>
+    <property name="PRIJS8" column="prijs8"/>
+    <property name="AANTAL9" column="aantal9"/>
+    <property name="PRIJS9" column="prijs9"/>
+    <property name="AANTAL10" column="aantal10"/>
+    <property name="PRIJS10" column="prijs10"/>
+    <property name="VALCODE" column="valcode"/>
+    <property name="STANDAARD_SALESPRICE" column="standaard_salesprice"/>
+    <property name="KORTINGTYPE" column="kortingtype"/>
+    <property name="PRIJSSOORT" column="prijssoort"/>
+  </class>
+</hibernate-mapping>

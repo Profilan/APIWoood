@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="DebtorOrder" table="_AB_TB_WEB_ORDERINFO">
+    <id name="ID">
+      <generator class="identity"/>
+    </id>
+
+    <property name="ORDERNR"/>
+    <property name="DEBNR"/>
+    <property name="FAKDEBNR"/>
+    <property name="REFERENTIE"/>
+    <property name="OMSCHRIJVING"/>
+    <property name="ORDDAT"/>
+    <property name="AANTAL_BESTELD"/>
+    <property name="ITEMCODE"/>
+    <property name="AFLEVERDATUM"/>
+    <property name="OMSCHRIJVING_NL"/>
+    <property name="OMSCHRIJVING_EN"/>
+    <property name="OMSCHRIJVING_DE"/>
+    <property name="AANT_GELEV"/>
+    <property name="STATUS"/>
+    <property name="DEL_LANDCODE"/>
+    <property name="SELCODE"/>
+    <property name="PRIJS_PER_STUK"/>
+    <property name="SUBTOTAAL"/>
+  </class>
+</hibernate-mapping>

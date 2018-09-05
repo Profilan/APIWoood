@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="SellingPoint" table="_AB_WOOOD_SELLINGPOINTS">
+    <composite-id name="SellingPointIdentifier">
+      <key-property name="ARTIKELCODE"/>
+      <key-property name="FACTUURDEBITEURNR"/>
+    </composite-id>
+
+    <property name="FACTUURDEBITEURNAAM"/>
+    <property name="FACTUURDEBITEUR_NAAM_ALIAS" column="`FACTUURDEBITEUR NAAM ALIAS`"/>
+    <property name="FACTUURDEBITEURWEB"/>
+    <property name="FACTUURDEBITEUR_WEB_ALIAS" column="`FACTUURDEBITEUR WEB ALIAS`"/>
+    <property name="FACTUURDEBITEURLAND"/>
+  </class>
+</hibernate-mapping>
