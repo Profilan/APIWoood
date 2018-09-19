@@ -3,6 +3,7 @@ using APIWoood.Logic.SharedKernel;
 using APIWoood.Logic.SharedKernel.Interfaces;
 using NHibernate;
 using NHibernate.Criterion;
+using NHibernate.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -93,6 +94,19 @@ namespace APIWoood.Logic.Repositories
                             select d;
 
                 query = query.Where(d => d.DEBITEURNR == id);
+
+                return query.ToList();
+            }
+        }
+
+        public IEnumerable<Debtor> ListBySearchstring(string searchstring)
+        {
+            using (ISession session = SessionFactory.GetNewSession("db1"))
+            {
+                var query = from d in session.Query<Debtor>()
+                            select d;
+
+                query = query.Where(d => d.NAAM.Like("%" + searchstring + "%") || d.DEBITEURNR.Like("%" + searchstring + "%"));
 
                 return query.ToList();
             }

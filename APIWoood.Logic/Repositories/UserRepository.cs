@@ -1,6 +1,7 @@
 ﻿using APIWoood.Logic.Models;
 using APIWoood.Logic.SharedKernel;
 using NHibernate;
+using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,27 @@ namespace APIWoood.Logic.Repositories
     {
         public override void Delete(int id)
         {
-            throw new NotImplementedException();
+            using (ISession session = SessionFactory.GetNewSession("db2"))
+            {
+                var item = session.Load<User>(id);
+
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+
+                    session.Delete(item); 
+                    transaction.Commit();
+                }
+             }
         }
 
         public override User GetById(int id)
         {
-            throw new NotImplementedException();
+            using (ISession session = SessionFactory.GetNewSession("db2"))
+            {
+                var item = session.Get<User>(id);
+
+                return item;
+            }
         }
 
         public User GetByUsername(string username)
@@ -28,7 +44,7 @@ namespace APIWoood.Logic.Repositories
                 var query = from u in session.Query<User>()
                             select u;
 
-                query = query.Where(u => u.Username == username);
+                query = query.Where(u => u.UserName == username);
 
                 var users = query.ToList();
 
@@ -65,8 +81,8 @@ namespace APIWoood.Logic.Repositories
         {
             using (ISession session = SessionFactory.GetNewSession("db2"))
             {
-                var query = from u in session.Query<User>()
-                            select u;
+                var query = session.Query<User>().OrderBy(x => x.UserName);
+                            
 
                 return query.ToList();
             }
@@ -74,7 +90,15 @@ namespace APIWoood.Logic.Repositories
 
         public override void Update(User entity)
         {
-            throw new NotImplementedException();
+            using (ISession session = SessionFactory.GetNewSession("db2"))
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+
+                    session.SaveOrUpdate(entity);
+                    transaction.Commit();
+                }
+            }
         }
     }
 }

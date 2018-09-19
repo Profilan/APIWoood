@@ -1,5 +1,7 @@
 ﻿using APIWoood.Logic.Models;
 using APIWoood.Logic.Repositories;
+using APIWoood.Logic.Services;
+using APIWoood.Logic.SharedKernel;
 using APIWoood.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -8,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Script.Serialization;
 
 namespace APIWoood.Controllers.Api
 {
@@ -15,11 +18,13 @@ namespace APIWoood.Controllers.Api
     {
         private readonly UserRepository userRepository;
         private readonly OrderRepository orderRepository;
+        private SystemLogger logger;
 
         public OrderController()
         {
             userRepository = new UserRepository();
             orderRepository = new OrderRepository();
+            logger = new SystemLogger();
         }
 
 
@@ -117,7 +122,7 @@ namespace APIWoood.Controllers.Api
         [Route("api/woood-order/create")]
         [HttpPost]
         [Authorize]
-        public IHttpActionResult Post([FromBody]OrderData data)
+        public IHttpActionResult CreateOrder([FromBody]OrderData data)
         {
             string apiKey;
             try
@@ -126,17 +131,23 @@ namespace APIWoood.Controllers.Api
             }
             catch (System.Exception)
             {
+                logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "API key is missing.", "api/woood-order/create");
+
                 return Content(HttpStatusCode.Unauthorized, "API key is missing.");
             }
 
             var user = userRepository.GetByUsername(data.header.username);
             if (apiKey != user.ApiKey)
             {
+                logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "API key is not correct. Get a right API key from the service provider.", "api/woood-order/create");
+
                 return Content(HttpStatusCode.Unauthorized, "API key is not correct. Get a right API key from the service provider.");
             }
 
             if (!ModelState.IsValid)
             {
+                logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, ModelState.ToString(), "api/woood-order/create");
+
                 return BadRequest(ModelState);
             }
 
@@ -151,6 +162,8 @@ namespace APIWoood.Controllers.Api
                     var existingOrders = orderRepository.GetByIdentifier(orderIdentifier);
                     if (existingOrders.Count() > 0)
                     {
+                        logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "The combination of DEBITEURNR and REFERENTIE must be unique", "api/woood-order/create");
+
                         return Content(HttpStatusCode.BadRequest, "The combination of DEBITEURNR and REFERENTIE must be unique");
                     }
 
@@ -205,14 +218,20 @@ namespace APIWoood.Controllers.Api
                 }
                 catch (System.Exception e)
                 {
+                    logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-order/create");
+
                     return InternalServerError(e);
                 }
             }
 
             if (orderCount == 0)
             {
+                logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "No orders added", "api/woood-order/create");
+
                 return BadRequest("No orders added");
             }
+
+            logger.Log(ErrorType.INFO, "CreateOrder()", RequestContext.Principal.Identity.Name, new JavaScriptSerializer().Serialize(references), "api/woood-order/create");
 
             return Ok(new {
                 body = new

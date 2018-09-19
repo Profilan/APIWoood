@@ -2,13 +2,21 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    namespace="APIWoood.Logic.Models"
                    assembly="APIWoood.Logic">
-  <class name="User" table="EEK_API_USERS" lazy="false">
+  <class name="User" table="EEK_API_WOOOD_USERS">
     <id name="Id" column="id">
       <generator class="identity"/>
     </id>
-    <property name="Username" column="username"/>
+    <property name="UserName" column="username"/>
     <property name="HashedPassword" column="password"/>
-    <property name="ApiKey" column="apikey"/>
+    <property name="ApiKey" column="api_key"/>
+    <property name="Email" column="email"/>
+    <property name="Role" column="role"/>
+    <property name="AllowedIP" column="ip_from"/>
+
+    <set name="Debtors" table="EEK_API_WOOOD_USER_DEBTORS">
+      <key column="USER_ID" />
+      <many-to-many class="Debtor" column="DEBITEURNR"/>
+    </set>
   </class>
 
 </hibernate-mapping>

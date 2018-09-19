@@ -60,15 +60,6 @@ namespace APIWoood.LogicTests
             structures.Should().NotBeNullOrEmpty();
         }
 
-        [TestMethod]
-        public void GetUserByName()
-        {
-            var rep = new UserRepository();
-
-            var user = rep.GetByUsername("raymond");
-
-            user.Should().NotBeNull();
-        }
 
         [TestMethod]
         public void UserList()

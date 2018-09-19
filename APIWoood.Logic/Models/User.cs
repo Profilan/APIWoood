@@ -1,35 +1,37 @@
-﻿using APIWoood.Logic.SharedKernel;
-using APIWoood.Logic.SharedKernel.Interfaces;
-using System;
+﻿using APIWoood.Logic.SharedKernel.Interfaces;
+using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace APIWoood.Logic.Models
 {
-    public class User : Entity<int>
+    public class User : IUser<int>
     {
-        private readonly IPasswordHasher _passwordHasher;
+        private readonly SharedKernel.Interfaces.IPasswordHasher _passwordHasher;
 
-        public virtual string Username { get; set; }
+        public virtual int Id { get; set; }
+        public virtual string UserName { get; set; }
         public virtual string HashedPassword { get; set; }
         public virtual string ApiKey { get; set; }
+        public virtual string Email { get; set; }
+        public virtual string Role { get; set; }
+        public virtual string AllowedIP { get; set; }
+
+        public virtual ISet<Debtor> Debtors { get; set; }
 
         public User()
         {
-
+            Debtors = new HashSet<Debtor>();
+            _passwordHasher = new SharedKernel.PasswordHasher();
         }
 
-        public User(IPasswordHasher passwordHasher)
+        public User(SharedKernel.Interfaces.IPasswordHasher passwordHasher)
         {
             _passwordHasher = passwordHasher;
         }
 
         public virtual void SetCredentials(string username, string plainTextPassword)
         {
-            Username = username;
+            UserName = username;
             SetPassword(plainTextPassword);
         }
 

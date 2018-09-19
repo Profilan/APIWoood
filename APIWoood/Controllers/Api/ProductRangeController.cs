@@ -1,4 +1,6 @@
 ﻿using APIWoood.Logic.Repositories;
+using APIWoood.Logic.Services;
+using APIWoood.Logic.SharedKernel;
 using APIWoood.Models;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,12 @@ namespace APIWoood.Controllers.Api
     public class ProductRangeController : ApiController
     {
         private readonly ProductRangeRepository productRangeRepository;
+        private SystemLogger logger;
 
         public ProductRangeController()
         {
             productRangeRepository = new ProductRangeRepository();
+            logger = new SystemLogger();
         }
 
         /**
@@ -76,10 +80,14 @@ namespace APIWoood.Controllers.Api
                     });
                 }
 
+                logger.Log(ErrorType.INFO, "GetProductRangeByRange()", RequestContext.Principal.Identity.Name, "Total in query: " + productRanges.Count, "api/woood-assortimenten-view/list/id/" + ass);
+
                 return Ok(productRanges);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetProductRangeByRange()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-assortimenten-view/list/id/" + ass);
+
                 return InternalServerError(e);
             }
         }

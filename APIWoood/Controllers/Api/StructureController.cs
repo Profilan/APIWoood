@@ -1,5 +1,7 @@
 ﻿using APIWoood.Logic.Models;
 using APIWoood.Logic.Repositories;
+using APIWoood.Logic.Services;
+using APIWoood.Logic.SharedKernel;
 using APIWoood.Models;
 using System;
 using System.Collections.Generic;
@@ -14,11 +16,13 @@ namespace APIWoood.Controllers.Api
     {
         private readonly StructureRepository structureRepository;
         private readonly ProductRepository productRepository;
+        private SystemLogger logger;
 
         public StructureController()
         {
             structureRepository = new StructureRepository();
             productRepository = new ProductRepository();
+            logger = new SystemLogger();
         }
 
         /**
@@ -163,10 +167,14 @@ namespace APIWoood.Controllers.Api
                     page_count = pagedResult.PageCount
                 };
 
+                logger.Log(ErrorType.INFO, "GetStructureList()", RequestContext.Principal.Identity.Name, "Total in query: " + products.Count(), "api/woood-structureview/list");
+
                 return Ok(collection);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetStructureList()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-structureview/list");
+
                 return InternalServerError(e);
             }
         }
@@ -246,10 +254,14 @@ namespace APIWoood.Controllers.Api
              {
                 var item = GetItem(artikelcode);
 
+                logger.Log(ErrorType.INFO, "GetStructureByArticle()", RequestContext.Principal.Identity.Name, "", "api/woood-structureview/view/artikelcode/" + artikelcode);
+
                 return Ok(item);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetStructureByArticle()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-structureview/view/artikelcode/" + artikelcode);
+
                 return InternalServerError(e);
             }
         }

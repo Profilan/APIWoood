@@ -1,4 +1,6 @@
 ﻿using APIWoood.Logic.Repositories;
+using APIWoood.Logic.Services;
+using APIWoood.Logic.SharedKernel;
 using APIWoood.Models;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,12 @@ namespace APIWoood.Controllers.Api
     public class WebAvailabilityController : ApiController
     {
         private readonly WebAvailabilityRepository webAvailabilityRepository;
+        private SystemLogger logger;
 
         public WebAvailabilityController()
         {
             webAvailabilityRepository = new WebAvailabilityRepository();
+            logger = new SystemLogger();
         }
 
         /**
@@ -88,10 +92,14 @@ namespace APIWoood.Controllers.Api
                     webAvailabilities.Add(NewWebAvailability(item));
                 }
 
+                logger.Log(ErrorType.INFO, "GetWebAvailability()", RequestContext.Principal.Identity.Name, "Total in query: " + webAvailabilities.Count(), "api/woood-web-availability/list");
+
                 return Ok(webAvailabilities);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetWebAvailability()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-web-availability/list");
+
                 return InternalServerError(e);
             }
         }
@@ -168,10 +176,14 @@ namespace APIWoood.Controllers.Api
                     webAvailabilities.Add(NewWebAvailability(item));
                 }
 
+                logger.Log(ErrorType.INFO, "GetWebAvailabilityByDebtor()", RequestContext.Principal.Identity.Name, "Total in query: " + webAvailabilities.Count(), "api/woood-web-availability/view/fakdebnr/" + fakdebnr);
+
                 return Ok(webAvailabilities);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetWebAvailabilityByDebtor()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-web-availability/view/fakdebnr/" + fakdebnr);
+
                 return InternalServerError(e);
             }
         }

@@ -6,16 +6,20 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using APIWoood.Logic.Services;
+using APIWoood.Logic.SharedKernel;
 
 namespace APIWoood.Controllers.Api
 {
     public class PricelistController : ApiController
     {
         private readonly PricelistRepository pricelistRepository;
+        private SystemLogger logger;
 
         public PricelistController()
         {
             pricelistRepository = new PricelistRepository();
+            logger = new SystemLogger();
         }
 
         /**
@@ -93,10 +97,14 @@ namespace APIWoood.Controllers.Api
                     page_count = result.PageCount
                 };
 
+                logger.Log(ErrorType.INFO, "GetPricelists()", RequestContext.Principal.Identity.Name, "Total in query: " + pricelists.Count(), "api/woood-pricelist/list");
+
                 return Ok(collection);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetPricelists()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-pricelist/list");
+
                 return InternalServerError(e);
             }
         }
@@ -167,10 +175,14 @@ namespace APIWoood.Controllers.Api
                     pricelists.Add(NewPricelist(item));
                 }
 
+                logger.Log(ErrorType.INFO, "GetPricelistsByDebtor()", RequestContext.Principal.Identity.Name, "Total in query: " + pricelists.Count(), "api/woood-pricelist/view/debiteurnr/" + debiteurnr);
+
                 return Ok(pricelists);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetPricelists()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-pricelist/view/debiteurnr/" + debiteurnr);
+
                 return InternalServerError(e);
             }
         }

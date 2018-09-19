@@ -1,4 +1,6 @@
 ﻿using APIWoood.Logic.Repositories;
+using APIWoood.Logic.Services;
+using APIWoood.Logic.SharedKernel;
 using APIWoood.Models;
 using System;
 using System.Collections.Generic;
@@ -13,11 +15,13 @@ namespace APIWoood.Controllers.Api
     {
         private readonly ProductRepository productRepository;
         private readonly PackageRepository packageRepository;
+        private SystemLogger logger;
 
         public ProductController()
         {
             productRepository = new ProductRepository();
             packageRepository = new PackageRepository();
+            logger = new SystemLogger();
         }
 
         /**
@@ -116,36 +120,47 @@ namespace APIWoood.Controllers.Api
         [Authorize]
         public IHttpActionResult GetArticles()
         {
-            var items = productRepository.List();
-
-            var products = new List<Product>();
-            foreach (var item in items)
+            try
             {
-                var product = CreateProduct(item);
+                var items = productRepository.List();
 
-                // Get the packages which belong to this product, if AANTAL_PAKKETTEN > 1
-                if (item.AANTAL_PAKKETTEN > 1)
+                var products = new List<Product>();
+                foreach (var item in items)
                 {
-                    var packageItems = packageRepository.ListByArtikelCode(item.ARTIKELCODE);
+                    var product = CreateProduct(item);
 
-                    foreach (var packageItem in packageItems)
+                    // Get the packages which belong to this product, if AANTAL_PAKKETTEN > 1
+                    if (item.AANTAL_PAKKETTEN > 1)
                     {
-                        var package = CreatePackage(packageItem);
+                        var packageItems = packageRepository.ListByArtikelCode(item.ARTIKELCODE);
+
+                        foreach (var packageItem in packageItems)
+                        {
+                            var package = CreatePackage(packageItem);
+
+                            product.PAKKETTEN.Add(package);
+                        }
+                    }
+                    else // Create a package like main product
+                    {
+                        var package = CreatePackage(item);
 
                         product.PAKKETTEN.Add(package);
                     }
-                }
-                else // Create a package like main product
-                {
-                    var package = CreatePackage(item);
 
-                    product.PAKKETTEN.Add(package);
+                    products.Add(product);
                 }
 
-                products.Add(product);
+                logger.Log(ErrorType.INFO, "GetArticles()", RequestContext.Principal.Identity.Name, "Total in query: " + products.Count, "api/woood-artikelview/list");
+
+                return Ok(products);
             }
+            catch (Exception e)
+            {
+                logger.Log(ErrorType.ERR, "GetArticles()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-artikelview/list");
 
-            return Ok(products);
+                return InternalServerError(e);
+            }
         }
 
         /**
@@ -240,29 +255,40 @@ namespace APIWoood.Controllers.Api
         [Authorize]
         public IHttpActionResult GetArticleById(string id)
         {
-            var item = productRepository.GetById(id);
-
-            var product = CreateProduct(item);
-
-            if (item.AANTAL_PAKKETTEN > 1)
+            try
             {
-                var packageItems = packageRepository.ListByArtikelCode(item.ARTIKELCODE);
+                var item = productRepository.GetById(id);
 
-                foreach (var packageItem in packageItems)
+                var product = CreateProduct(item);
+
+                if (item.AANTAL_PAKKETTEN > 1)
                 {
-                    var package = CreatePackage(packageItem);
+                    var packageItems = packageRepository.ListByArtikelCode(item.ARTIKELCODE);
+
+                    foreach (var packageItem in packageItems)
+                    {
+                        var package = CreatePackage(packageItem);
+
+                        product.PAKKETTEN.Add(package);
+                    }
+                }
+                else // Create a package like main product
+                {
+                    var package = CreatePackage(item);
 
                     product.PAKKETTEN.Add(package);
                 }
+
+                logger.Log(ErrorType.INFO, "GetArticleById()", RequestContext.Principal.Identity.Name, "", "api/woood-artikelview/view/artikelcode/" + id);
+
+                return Ok(product);
             }
-            else // Create a package like main product
+            catch (Exception e)
             {
-                var package = CreatePackage(item);
+                logger.Log(ErrorType.ERR, "GetArticleById()", e.Message, "", "api/woood-artikelview/view/artikelcode/" + id);
 
-                product.PAKKETTEN.Add(package);
+                return InternalServerError(e);
             }
-
-            return Ok(product);
         }
 
         /**
@@ -369,45 +395,56 @@ namespace APIWoood.Controllers.Api
         [Authorize]
         public IHttpActionResult Get(int page = 1, int limit = 25)
         {
-            var result = productRepository.List("ARTIKELCODE_ASC", limit, page);
-
-            var products = new List<Product>();
-            foreach (var item in result.Results)
+            try
             {
-                var product = CreateProduct(item);
+                var result = productRepository.List("ARTIKELCODE_ASC", limit, page);
 
-                // Get the packages which belong to this product, if AANTAL_PAKKETTEN > 1
-                if (item.AANTAL_PAKKETTEN > 1)
+                var products = new List<Product>();
+                foreach (var item in result.Results)
                 {
-                    var packageItems = packageRepository.ListByArtikelCode(item.ARTIKELCODE);
+                    var product = CreateProduct(item);
 
-                    foreach (var packageItem in packageItems)
+                    // Get the packages which belong to this product, if AANTAL_PAKKETTEN > 1
+                    if (item.AANTAL_PAKKETTEN > 1)
                     {
-                        var package = CreatePackage(packageItem);
+                        var packageItems = packageRepository.ListByArtikelCode(item.ARTIKELCODE);
+
+                        foreach (var packageItem in packageItems)
+                        {
+                            var package = CreatePackage(packageItem);
+
+                            product.PAKKETTEN.Add(package);
+                        }
+                    }
+                    else // Create a package like main product
+                    {
+                        var package = CreatePackage(item);
 
                         product.PAKKETTEN.Add(package);
                     }
+
+                    products.Add(product);
                 }
-                else // Create a package like main product
+
+                var collection = new PagedCollection<Product>()
                 {
-                    var package = CreatePackage(item);
+                    _embedded = products,
+                    page_size = result.PageSize,
+                    page = result.CurrentPage,
+                    total_items = result.RowCount,
+                    page_count = result.PageCount
+                };
 
-                    product.PAKKETTEN.Add(package);
-                }
+                logger.Log(ErrorType.INFO, "GetProducts()", RequestContext.Principal.Identity.Name, "Total in query: " + products.Count, "api/woood-productview/list");
 
-                products.Add(product);
+                return Ok(collection);
             }
-
-            var collection = new PagedCollection<Product>()
+            catch (Exception e)
             {
-                _embedded = products,
-                page_size = result.PageSize,
-                page = result.CurrentPage,
-                total_items = result.RowCount,
-                page_count = result.PageCount
-            };
+                logger.Log(ErrorType.ERR, "GetProducts()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-productview/list");
 
-            return Ok(collection);
+                return InternalServerError(e);
+            }
         }
 
         /**
@@ -510,29 +547,40 @@ namespace APIWoood.Controllers.Api
         [Authorize]
         public IHttpActionResult GetProductById(string id)
         {
-            var item = productRepository.GetById(id);
-
-            var product = CreateProduct(item);
-
-            if (item.AANTAL_PAKKETTEN > 1)
+            try
             {
-                var packageItems = packageRepository.ListByArtikelCode(item.ARTIKELCODE);
+                var item = productRepository.GetById(id);
 
-                foreach (var packageItem in packageItems)
+                var product = CreateProduct(item);
+
+                if (item.AANTAL_PAKKETTEN > 1)
                 {
-                    var package = CreatePackage(packageItem);
+                    var packageItems = packageRepository.ListByArtikelCode(item.ARTIKELCODE);
+
+                    foreach (var packageItem in packageItems)
+                    {
+                        var package = CreatePackage(packageItem);
+
+                        product.PAKKETTEN.Add(package);
+                    }
+                }
+                else // Create a package like main product
+                {
+                    var package = CreatePackage(item);
 
                     product.PAKKETTEN.Add(package);
                 }
+
+                logger.Log(ErrorType.INFO, "GetProductById()", RequestContext.Principal.Identity.Name, "", "api/woood-productview/view/artikelcode/" + id);
+
+                return Ok(product);
             }
-            else // Create a package like main product
+            catch (Exception e)
             {
-                var package = CreatePackage(item);
+                logger.Log(ErrorType.ERR, "GetProductById()", e.Message, "", "api/woood-productview/view/artikelcode/" + id);
 
-                product.PAKKETTEN.Add(package);
+                return InternalServerError(e);
             }
-
-            return Ok(product);
         }
 
         private Product CreateProduct(Logic.Models.Product item)

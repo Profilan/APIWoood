@@ -1,4 +1,6 @@
 ﻿using APIWoood.Logic.Repositories;
+using APIWoood.Logic.Services;
+using APIWoood.Logic.SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +13,12 @@ namespace APIWoood.Controllers.Api
     public class DeliveryMethodController : ApiController
     {
         private readonly DeliveryMethodRepository DeliveryMethodRepository;
+        private SystemLogger logger;
 
         public DeliveryMethodController()
         {
             DeliveryMethodRepository = new DeliveryMethodRepository();
+            logger = new SystemLogger();
         }
 
         /**
@@ -61,10 +65,14 @@ namespace APIWoood.Controllers.Api
             {
                 var items = DeliveryMethodRepository.List();
 
+                logger.Log(ErrorType.INFO, "GetDeliveryMethods()", RequestContext.Principal.Identity.Name, "Total in query: " + items.Count(), "api/woood-leveringswijze/list");
+
                 return Ok(items);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetDeliveryMethods()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-leveringswijze/list");
+
                 return InternalServerError(e);
             }
         }
@@ -107,13 +115,18 @@ namespace APIWoood.Controllers.Api
 
                 if (item == null)
                 {
+                    logger.Log(ErrorType.WARN, "GetDeliveryMethodByCode()", RequestContext.Principal.Identity.Name, "", "api/woood-leveringswijze/view/code/" + code);
+
                     return NotFound();
                 }
+
+                logger.Log(ErrorType.INFO, "GetDeliveryMethodByCode()", RequestContext.Principal.Identity.Name, "", "api/woood-leveringswijze/view/code/" + code);
 
                 return Ok(item);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetDeliveryMethodByCode()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-leveringswijze/view/code/" + code);
                 return InternalServerError(e);
             }
         }

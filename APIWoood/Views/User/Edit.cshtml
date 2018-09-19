@@ -1,0 +1,148 @@
+﻿@model APIWoood.Models.UserViewModel
+
+@{
+    ViewBag.Title = "Edit User";
+}
+
+@using APIWoood.Logic.SharedKernel;
+
+<div class="container">
+    <h2>Users</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
+
+        <h4>User</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Username" } })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "E-mail" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                @Html.EditorFor(model => model.ApiKey, new { htmlAttributes = new { @class = "form-control", @placeholder = "Api Key" } })
+                @Html.ValidationMessageFor(model => model.ApiKey, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-2">
+                <label>&nbsp;</label>
+                <button id="generate-apikey-btn" type="submit" class="btn btn-primary mb-2">Generate API Key</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.EnumDropDownListFor(model => model.UserRole, "Select Role", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.UserRole, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.EditorFor(model => model.AllowedIP, new { htmlAttributes = new { @class = "form-control", @placeholder = "Allowed IP's" } })
+            @Html.ValidationMessageFor(model => model.AllowedIP, "", new { @class = "text-danger" })
+        </div>
+
+        <table id="debtorTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Debtor</th>
+                    <th><a href="#" class="addDebtorButton btn btn-info btn-small" role="button"><i class="fa fa-plus"></i></a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="debtorRow prototype d-none">
+                    <td><input type="text" class="form-control debtorpicker" /></td>
+                    <td><a href="#" class="removeDebtorButton btn btn-secondary btn-small" role="button"><i class="fa fa-minus"></i></a></td>
+                </tr>
+                @foreach (var debtor in Model.SelectedDebtors)
+                {
+                    <tr class="debtorRow">
+                        <td><input type="text" class="form-control debtorpicker" name="Debtors[]" value="@debtor" /></td>
+                        <td><a href="#" class="removeDebtorButton btn btn-secondary btn-small" role="button"><i class="fa fa-minus"></i></a></td>
+                    </tr>
+                }
+                <tr class="debtorRow">
+                    <td><input type="text" class="form-control debtorpicker" name="Debtors[]" /></td>
+                    <td><a href="#" class="removeDebtorButton btn btn-secondary btn-small" role="button"><i class="fa fa-minus"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script type="text/javascript">
+
+            function generateApiKey() {
+                sarr = new Array("abcdefghijkmnopqrstuvwxyz", "ABCDEFGHJKLMNPQRSTUVWXYZ",
+                    "23456789", "~!#$%^&*()_+-=\[]{};:,./<>?");
+                s = new String();
+                pw = new String();
+                s = sarr[0] + sarr[1] + sarr[2];
+                for (var i = 0; i < 40; i++) {
+                    pw += s.charAt(Math.floor(Math.random() * s.length));
+                }
+                $('#ApiKey').val(pw);
+            }
+
+            $(function () {
+                $('#generate-apikey-btn').click(function (e) {
+                    generateApiKey();
+
+                    e.preventDefault();
+                });
+
+                $('.addDebtorButton').click(function (e) {
+                    var newRow = $('.debtorRow.prototype').clone().removeClass('prototype d-none');
+                    newRow.find('.removeDebtorButton').click(function (e) {
+                        $(this).parent().parent().remove();
+                    });
+                    newRow.find('.debtorpicker').attr('name', 'Debtors[]').autocomplete({
+                        source: function (request, response) {
+                            $.getJSON("/api/debtor/" + request.term, function (data) {
+                                response($.map(data, function (item) {
+                                    return item.DEBITEURNR + " " + item.NAAM;
+                                }));
+                            });
+                        },
+                        minLength: 2
+                    });
+                    $('#debtorTable tbody').append(newRow);
+                });
+
+                $('.removeDebtorButton').click(function (e) {
+                    $(this).parent().parent().remove();
+                });
+
+                $(".debtorpicker").autocomplete({
+                    source: function (request, response) {
+                        $.getJSON("/api/debtor/" + request.term, function (data) {
+                            response($.map(data, function (item) {
+                                return item.DEBITEURNR + " " + item.NAAM;
+                            }));
+                        });
+                    },
+                    minLength: 2
+                });
+            });
+
+        </script>
+    }
+</div>

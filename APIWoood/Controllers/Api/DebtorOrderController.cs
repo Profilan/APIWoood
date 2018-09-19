@@ -1,4 +1,6 @@
 ﻿using APIWoood.Logic.Repositories;
+using APIWoood.Logic.Services;
+using APIWoood.Logic.SharedKernel;
 using APIWoood.Models;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,12 @@ namespace APIWoood.Controllers.Api
     public class DebtorOrderController : ApiController
     {
         private readonly DebtorOrderRepository debtorOrderRepository;
+        private SystemLogger logger;
 
         public DebtorOrderController()
         {
             debtorOrderRepository = new DebtorOrderRepository();
+            logger = new SystemLogger();
         }
 
         /**
@@ -87,10 +91,14 @@ namespace APIWoood.Controllers.Api
                     page_count = result.PageCount
                 };
 
+                logger.Log(ErrorType.INFO, "GetPagedDebtorOrders()", RequestContext.Principal.Identity.Name, "Total in query: " + result.Results.Count, "api/woood-deb-order-info/list");
+
                 return Ok(collection);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetPagedDebtorOrders()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-deb-order-info/list");
+
                 return InternalServerError(e);
             }
         }
@@ -145,10 +153,14 @@ namespace APIWoood.Controllers.Api
             {
                 var debtors = debtorOrderRepository.List();
 
+                logger.Log(ErrorType.INFO, "GetDebtorOrders()", RequestContext.Principal.Identity.Name, "Total in query: " + debtors.Count(), "api/woood-deb-order-info/list");
+
                 return Ok(debtors);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetDebtorOrders()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-deb-order-info/list");
+
                 return InternalServerError(e);
             }
         }
@@ -222,10 +234,14 @@ namespace APIWoood.Controllers.Api
                     page_count = result.PageCount
                 };
 
+                logger.Log(ErrorType.INFO, "GetDebtorOrdersByDebtor()", RequestContext.Principal.Identity.Name, "Total in query: " + result.Results.Count(), "api/woood-deb-order-info/view/debiteurnr/" + debiteurnr);
+
                 return Ok(collection);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetDebtorOrders()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-deb-order-info/view/debiteurnr/" + debiteurnr);
+
                 return InternalServerError(e);
             }
         }

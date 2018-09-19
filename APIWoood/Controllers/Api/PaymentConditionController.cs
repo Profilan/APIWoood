@@ -1,4 +1,6 @@
 ﻿using APIWoood.Logic.Repositories;
+using APIWoood.Logic.Services;
+using APIWoood.Logic.SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +13,12 @@ namespace APIWoood.Controllers.Api
     public class PaymentConditionController : ApiController
     {
         private readonly PaymentConditionRepository paymentConditionRepository;
+        private SystemLogger logger;
 
         public PaymentConditionController()
         {
             paymentConditionRepository = new PaymentConditionRepository();
+            logger = new SystemLogger();
         }
 
         /**
@@ -54,10 +58,14 @@ namespace APIWoood.Controllers.Api
             {
                 var items = paymentConditionRepository.List();
 
+                logger.Log(ErrorType.INFO, "GetPaymentConditions()", RequestContext.Principal.Identity.Name, "Total in query: " + items.Count(), "api/woood-betalingsconditie/list");
+
                 return Ok(items);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetPaymentConditions()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-betalingsconditie/list");
+
                 return InternalServerError(e);
             }
         }
@@ -102,11 +110,14 @@ namespace APIWoood.Controllers.Api
                 {
                     return NotFound();
                 }
+                logger.Log(ErrorType.INFO, "GetPaymentConditionByCode()", RequestContext.Principal.Identity.Name, "", "api/woood-betalingsconditie/view/code/" + code);
 
                 return Ok(item);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetPaymentConditionByCode()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-betalingsconditie/view/code/" + code);
+
                 return InternalServerError(e);
             }
         }

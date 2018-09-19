@@ -1,10 +1,10 @@
 ﻿using APIWoood.Logic.Repositories;
+using APIWoood.Logic.Services;
+using APIWoood.Logic.SharedKernel;
 using APIWoood.Models;
+using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace APIWoood.Controllers.Api
@@ -12,10 +12,12 @@ namespace APIWoood.Controllers.Api
     public class DebtorController : ApiController
     {
         private readonly DebtorRepository debtorRepository;
+        private SystemLogger logger;
 
         public DebtorController()
         {
             debtorRepository = new DebtorRepository();
+            logger = new SystemLogger();
         }
 
         /**
@@ -97,18 +99,29 @@ namespace APIWoood.Controllers.Api
         [Authorize]
         public IHttpActionResult GetPagedDebtors(int page, int limit = 25)
         {
-            var result = debtorRepository.List("DEBITEURNR_ASC", limit, page);
-
-            var collection = new PagedCollection<APIWoood.Logic.Models.Debtor>()
+            try
             {
-                _embedded = result.Results,
-                page_size = result.PageSize,
-                page = result.CurrentPage,
-                total_items = result.RowCount,
-                page_count = result.PageCount
-            };
+                var result = debtorRepository.List("DEBITEURNR_ASC", limit, page);
 
-            return Ok(collection);
+                var collection = new PagedCollection<APIWoood.Logic.Models.Debtor>()
+                {
+                    _embedded = result.Results,
+                    page_size = result.PageSize,
+                    page = result.CurrentPage,
+                    total_items = result.RowCount,
+                    page_count = result.PageCount
+                };
+
+                logger.Log(ErrorType.INFO, "GetPagedDebtors()", RequestContext.Principal.Identity.Name, "Total in query: " + result.Results.Count, "api/woood-debtors/list");
+
+                return Ok(collection);
+            }
+            catch (Exception e)
+            {
+                logger.Log(ErrorType.ERR, "GetPagedDebtors()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-debtors/list");
+
+                return InternalServerError(e);
+            }
          }
 
         /**
@@ -180,10 +193,21 @@ namespace APIWoood.Controllers.Api
         [Authorize]
         public IHttpActionResult GetDebtors()
         {
-            var debtors = debtorRepository.List();
+            try
+            {
+                var debtors = debtorRepository.List();
 
-            return Ok(debtors);
-         }
+                logger.Log(ErrorType.INFO, "GetDebtors()", RequestContext.Principal.Identity.Name, "Total in query: " + debtors.Count(), "api/woood-debtors/list");
+
+                return Ok(debtors);
+            }
+            catch (Exception e)
+            {
+                logger.Log(ErrorType.ERR, "GetDebtors()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-debtors/list");
+
+                return InternalServerError(e);
+            }
+        }
 
         /**
          * @api {get} /api/woood-debtors/view/debiteurnr/{id} Request debtor by id
@@ -253,7 +277,29 @@ namespace APIWoood.Controllers.Api
         [Authorize]
         public IHttpActionResult GetDebtorById(string id)
         {
-            var debtors = debtorRepository.ListById(id);
+            try
+            {
+                var debtors = debtorRepository.ListById(id);
+
+                logger.Log(ErrorType.INFO, "GetDebtorById()", RequestContext.Principal.Identity.Name, "Total in query: " + debtors.Count(), "api/woood-debtors/view/debiteurnr/" + id);
+
+                return Ok(debtors);
+            }
+            catch (Exception e)
+            {
+                logger.Log(ErrorType.ERR, "GetDebtorById()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-debtors/view/debiteurnr/" + id);
+
+                return InternalServerError(e);
+
+            }
+        }
+
+        [Route("api/debtor/{searchstring}")]
+        [HttpGet]
+        [Authorize]
+        public IHttpActionResult GetDebtorsBySearchstring(string searchstring)
+        {
+            var debtors = debtorRepository.ListBySearchstring(searchstring);
 
             return Ok(debtors);
         }

@@ -1,56 +1,152 @@
-﻿@model APIWoood.Models.User
+﻿@model APIWoood.Models.UserViewModel
 
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = "Create User";
 }
 
-<h2>View</h2>
+@using APIWoood.Logic.SharedKernel;
+
+<div class="container">
+    <h2>Create User</h2>
 
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+
         <h4>User</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-            </div>
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Username" } })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ApiKey, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ApiKey, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Confirm Password" } })
+            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "E-mail" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                @Html.EditorFor(model => model.ApiKey, new { htmlAttributes = new { @class = "form-control", @placeholder = "Api Key" } })
                 @Html.ValidationMessageFor(model => model.ApiKey, "", new { @class = "text-danger" })
             </div>
+            <div class="form-group col-md-2">
+                <label>&nbsp;</label>
+                <button id="generate-apikey-btn" type="submit" class="btn btn-primary mb-2">Generate API Key</button>
+            </div>
         </div>
+
+        <div class="form-group">
+            @Html.DropDownList("UserRole", new SelectList(Enum.GetValues(typeof(Role))), "Select Role", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.UserRole, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.EditorFor(model => model.AllowedIP, new { htmlAttributes = new { @class = "form-control", @placeholder = "Allowed IP's" } })
+            @Html.ValidationMessageFor(model => model.AllowedIP, "", new { @class = "text-danger" })
+        </div>
+
+        <table id="debtorTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Debtor</th>
+                    <th><a href="#" class="addDebtorButton btn btn-info btn-small" role="button"><i class="fa fa-plus"></i></a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="debtorRow prototype d-none">
+                    <td><input type="text" class="form-control debtorpicker" /></td>
+                    <td><a href="#" class="removeDebtorButton btn btn-secondary btn-small" role="button"><i class="fa fa-minus"></i></a></td>
+                </tr>
+                <tr class="debtorRow">
+                    <td><input type="text" class="form-control debtorpicker" name="Debtors[]" /></td>
+                    <td><a href="#" class="removeDebtorButton btn btn-secondary btn-small" role="button"><i class="fa fa-minus"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
+
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script type="text/javascript">
+
+            function generateApiKey() {
+                sarr = new Array("abcdefghijkmnopqrstuvwxyz", "ABCDEFGHJKLMNPQRSTUVWXYZ",
+                    "23456789", "~!#$%^&*()_+-=\[]{};:,./<>?");
+                s = new String();
+                pw = new String();
+                s = sarr[0] + sarr[1] + sarr[2];
+                for (var i = 0; i < 40; i++) {
+                    pw += s.charAt(Math.floor(Math.random() * s.length));
+                }
+                $('#ApiKey').val(pw);
+            }
+
+            $(function () {
+                $('#generate-apikey-btn').click(function (e) {
+                    generateApiKey();
+
+                    e.preventDefault();
+                });
+
+                $('.addDebtorButton').click(function (e) {
+                    var newRow = $('.debtorRow.prototype').clone().removeClass('prototype d-none');
+                    newRow.find('.removeDebtorButton').click(function (e) {
+                        $(this).parent().parent().remove();
+                    });
+                    newRow.find('.debtorpicker').attr('name', 'Debtors[]').autocomplete({
+                        source: function (request, response) {
+                            $.getJSON("/api/debtor/" + request.term, function (data) {
+                                response($.map(data, function (item) {
+                                    return item.DEBITEURNR + " " + item.NAAM;
+                                }));
+                            });
+                        },
+                        minLength: 2
+                    });
+                    $('#debtorTable tbody').append(newRow);
+                });
+
+                $('.removeDebtorButton').click(function (e) {
+                    $(this).parent().parent().remove();
+                });
+
+                $(".debtorpicker").autocomplete({
+                    source: function (request, response) {
+                        $.getJSON("/api/debtor/" + request.term, function (data) {
+                            response($.map(data, function (item) {
+                                return item.DEBITEURNR + " " + item.NAAM;
+                            }));
+                        });
+                    },
+                    minLength: 2
+                });
+            });
+
+        </script>
+    }
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

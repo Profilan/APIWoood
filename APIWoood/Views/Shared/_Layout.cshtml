@@ -4,43 +4,54 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Woood API</title>
+    <link rel="shortcut icon" href="~/Content/images/favicon.ico">
+    @Styles.Render("~/Content/jquery-ui-1.10.0.custom.css")
+    @Styles.Render("~/Content/font-awesome.css")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            @Html.ActionLink("Woood API", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <a class="navbar-brand" href="">
+                <img src="~/Content/images/logo.png" height="30" class="d-inline-block align-top" alt="">
+                API
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })</li>
                     <li class="nav-item">
                         <a class="nav-link" href="/doc" target="_self">Documentation <span class="sr-only">(current)</span></a>
                     </li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="nav-item">@Html.ActionLink("Users", "Index", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Log", "Index", "Log", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
-                
+
             </div>
         </nav>
-   </header>
+    </header>
     <main role="main">
-        
+
         @RenderBody()
 
         <hr />
-        
+
     </main>
-        
+
     <footer class="container">
         <p>&copy; @DateTime.Now.Year - De Eekhoorn Woodworkings B.V.</p>
     </footer>
-  
+
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

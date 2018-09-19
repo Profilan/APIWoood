@@ -1,4 +1,6 @@
 ﻿using APIWoood.Logic.Repositories;
+using APIWoood.Logic.Services;
+using APIWoood.Logic.SharedKernel;
 using APIWoood.Models;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,12 @@ namespace APIWoood.Controllers.Api
     public class SellingPointController : ApiController
     {
         private readonly SellingPointRepository sellingPointRepository;
+        private SystemLogger logger;
 
         public SellingPointController()
         {
             sellingPointRepository = new SellingPointRepository();
+            logger = new SystemLogger();
         }
 
 
@@ -83,10 +87,14 @@ namespace APIWoood.Controllers.Api
                     });
                 }
 
+                logger.Log(ErrorType.INFO, "GetSellingPoints()", RequestContext.Principal.Identity.Name, "Total in query: " + items.Count(), "api/woood-verkooppunt-view/list");
+
                 return Ok(sellingPoints);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetSellingPoints()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-verkooppunt-view/list");
+
                 return InternalServerError(e);
             }
         }
@@ -155,10 +163,14 @@ namespace APIWoood.Controllers.Api
                     });
                 }
 
+                logger.Log(ErrorType.INFO, "GetSellingPointByArticle()", RequestContext.Principal.Identity.Name, "Total in query: " + items.Count(), "api/woood-verkooppunt-view/view/artikelcode/" + artikelcode);
+
                 return Ok(sellingPoints);
             }
             catch (Exception e)
             {
+                logger.Log(ErrorType.ERR, "GetSellingPointByArticle()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-verkooppunt-view/view/artikelcode/" + artikelcode);
+
                 return InternalServerError(e);
             }
         }

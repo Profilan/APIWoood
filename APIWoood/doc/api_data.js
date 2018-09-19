@@ -1021,6 +1021,129 @@ define({ "api": [
     "groupTitle": "PaymentConditions"
   },
   {
+    "type": "post",
+    "url": "/api/woood-payment-release/create",
+    "title": "Create Payment Release",
+    "version": "1.0.0",
+    "name": "CreatePaymentRelease",
+    "group": "PaymentReleases",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Basic Authorization value (provided by De Eekhoorn Woodworkings B.V.)</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Authentication": [
+          {
+            "group": "Authentication",
+            "type": "String",
+            "optional": false,
+            "field": "api-key",
+            "description": "<p>Unique key for the user</p>"
+          },
+          {
+            "group": "Authentication",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>Username of the user</p>"
+          },
+          {
+            "group": "Authentication",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Password of the user</p>"
+          }
+        ],
+        "Order": [
+          {
+            "group": "Order",
+            "type": "String",
+            "optional": false,
+            "field": "REFERENTIE",
+            "description": "<p>Reference</p>"
+          },
+          {
+            "group": "Order",
+            "type": "String",
+            "optional": false,
+            "field": "DEBITEURNR",
+            "description": "<p>Debtor Number</p>"
+          },
+          {
+            "group": "Order",
+            "type": "Int",
+            "optional": false,
+            "field": "PAYMENT_RELEASE",
+            "description": "<p>Release Payment</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "/api/woood-order/create?apikey=fftt2sQjjaiSXnX2Qnvr3XnahdDB3ZRDLTnRtpJr",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "{\n     \"header\":\n     {\n         \"api-key\": \"Yi7h9j0gWq4kUX2pPyaYkdNkmu\",\n         \"username\": \"pixel\",\n         \"password\": \"wachtwoord\"\n     },\n     \"body\":\n     {\n             {\n                 \"REFERENTIE\": \"TEST_ORDER_F6u16dKf_5\",\n                 \"DEBITEURNR\": \"160405\",\n                 \"PAYMENT_RELEASE\": \"1\"\n             }\n     }\n}",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1. 200 OK\n{\n    \"body\": {\n        \"message\": \"The Release Payment was succesfully added\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "400",
+            "optional": false,
+            "field": "Required",
+            "description": "<p>field is missing.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "401",
+            "optional": false,
+            "field": "NotAuthorized",
+            "description": "<p>The user is not authorized.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "409",
+            "optional": false,
+            "field": "DEBITEURNR-REFERENTIE",
+            "description": "<p>UNKNOWN.</p>"
+          }
+        ]
+      }
+    },
+    "filename": "./Controllers/Api/PaymentReleaseController.cs",
+    "groupTitle": "PaymentReleases"
+  },
+  {
     "type": "get",
     "url": "/api/woood-pricelist/list?page={page}&limit={limit}",
     "title": "Request paged list of debtor orders",
