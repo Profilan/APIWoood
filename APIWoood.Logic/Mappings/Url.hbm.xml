@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="Url" table="EEK_API_WOOOD_URLS">
+    <id name="Id" column="id">
+      <generator class="identity"/>
+    </id>
+    <property name="Name"/>
+    <property name="Hits"/>
+  </class>
+
+</hibernate-mapping>
