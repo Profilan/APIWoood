@@ -33,5 +33,7 @@ namespace APIWoood.Models
 
         public int QuantityVisitedUrls { get; set; }
         public DateTime LatestVisitDate { get; set; }
+
+        public double Duration { get; set; }
     }
 }

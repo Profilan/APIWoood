@@ -54,12 +54,18 @@ namespace APIWoood.Controllers
                 var logs = logRepository.ListByUserAndUrl(user.Id, url.Name, period);
                 if (logs.Count() > 0)
                 {
+                    double duration = 0;
+                    foreach (var log in logs)
+                    {
+                        duration += log.Duration;
+                    }
                     var visitor = new UserViewModel()
                     {
                         Id = user.Id,
                         UserName = user.UserName,
                         QuantityVisitedUrls = logs.Count(),
-                        LatestVisitDate = logs.First().TimeStamp
+                        LatestVisitDate = logs.First().TimeStamp,
+                        Duration = duration / logs.Count()
                     };
                     visitors.Add(visitor);
                 }

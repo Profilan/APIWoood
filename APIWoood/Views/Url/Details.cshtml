@@ -26,17 +26,19 @@
                     <tr>
                         <th>Username</th>
                         <th style="text-align: right">Latest Visit</th>
+                        <th style="text-align: right">Avg. Duration (ms)</th>
                         <th style="text-align: right">Visited #</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var user in Model.Visitors)
                     {
-                        <tr>
-                            <td>@Html.ActionLink(user.UserName, "UserStatistics", "Dashboard", new { id = user.Id }, null)</td>
-                            <td style="text-align: right">@user.LatestVisitDate</td>
-                            <td style="text-align: right"><span class="badge badge-secondary badge-pill">@Html.ActionLink(user.QuantityVisitedUrls.ToString(), "UrlVisits", "User", new { userId = user.Id, urlId = Model.Id, period = Model.Period }, null)</span></td>
-                        </tr>
+                    <tr>
+                        <td>@Html.ActionLink(user.UserName, "UserStatistics", "Dashboard", new { id = user.Id }, null)</td>
+                        <td style="text-align: right">@user.LatestVisitDate</td>
+                        <td style="text-align: right">@user.Duration.ToString("F")</td>
+                        <td style="text-align: right"><span class="badge badge-secondary badge-pill">@Html.ActionLink(user.QuantityVisitedUrls.ToString(), "UrlVisits", "User", new { userId = user.Id, urlId = Model.Id, period = Model.Period }, null)</span></td>
+                    </tr>
                     }
                 </tbody>
             </table>

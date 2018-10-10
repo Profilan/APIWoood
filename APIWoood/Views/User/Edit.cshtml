@@ -14,36 +14,41 @@
         @Html.AntiForgeryToken()
         @Html.HiddenFor(model => model.Id)
 
-        <h4>User</h4>
+        <h4>Edit User</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
+            <label for="UserName">Username</label>
             @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Username" } })
             @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
+            <label for="Email">E-mail</label>
             @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "E-mail" } })
             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-row">
             <div class="form-group col-md-6">
+                <label for="ApiKey">Api Key</label>
                 @Html.EditorFor(model => model.ApiKey, new { htmlAttributes = new { @class = "form-control", @placeholder = "Api Key" } })
                 @Html.ValidationMessageFor(model => model.ApiKey, "", new { @class = "text-danger" })
             </div>
             <div class="form-group col-md-2">
-                <label>&nbsp;</label>
-                <button id="generate-apikey-btn" type="submit" class="btn btn-primary mb-2">Generate API Key</button>
+                
+                <button id="generate-apikey-btn" type="submit" class="btn btn-primary align-bottom" style="margin-top: 2em;">Generate API Key</button>
             </div>
         </div>
 
         <div class="form-group">
+            <label for="UserRole">Role</label>
             @Html.EnumDropDownListFor(model => model.UserRole, "Select Role", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.UserRole, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
+            <label for="AllowedIP" data-toggle="tooltip" data-placement="top" title="Example: 172.0.1.10,172.0.1.11,172.0.1.12-17.16.0.20">Allowed IP Addresses <span class="fa fa-question-circle"></span></label>
             @Html.EditorFor(model => model.AllowedIP, new { htmlAttributes = new { @class = "form-control", @placeholder = "Allowed IP's" } })
             @Html.ValidationMessageFor(model => model.AllowedIP, "", new { @class = "text-danger" })
         </div>
@@ -76,7 +81,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
 
@@ -103,6 +108,9 @@
             }
 
             $(function () {
+
+                $('[data-toggle="tooltip"]').tooltip();
+
                 $('#generate-apikey-btn').click(function (e) {
                     generateApiKey();
 

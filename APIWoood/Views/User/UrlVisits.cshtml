@@ -30,6 +30,7 @@
                 <thead>
                     <tr>
                         <th>Date</th>
+                        <th style="text-align: right;">Duration (ms)</th>
                         <th>Message</th>
                         <th>Type</th>
                     </tr>
@@ -40,6 +41,7 @@
                         
                         <tr>
                             <td>@visit.TimeStamp</td>
+                            <td style="text-align: right;">@visit.Duration.ToString("F")</td>
                             <td>@visit.Message</td>
                             <td>
                                 @{

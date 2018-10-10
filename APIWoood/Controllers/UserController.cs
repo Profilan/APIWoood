@@ -233,7 +233,7 @@ namespace APIWoood.Controllers
                 Urls = urlRep.List(),
                 UrlId = urlId,
                 UserId = userId,
-                Period = period
+                Period = period,
             };
 
             return View(viewModel);
