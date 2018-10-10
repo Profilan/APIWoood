@@ -1,4 +1,5 @@
 ﻿using APIWoood.Logic.SharedKernel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -29,5 +30,8 @@ namespace APIWoood.Models
 
         [Display(Name = "Debtors")]
         public IList<string> SelectedDebtors { get; set; }
+
+        public int QuantityVisitedUrls { get; set; }
+        public DateTime LatestVisitDate { get; set; }
     }
 }

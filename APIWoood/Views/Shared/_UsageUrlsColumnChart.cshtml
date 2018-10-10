@@ -1,0 +1,58 @@
+﻿@model APIWoood.Models.DashboardViewModel
+
+@{
+    var period = (int)Model.Period;
+}
+
+<div class="card card-block">
+    <h4 class="card-title">Url Usage</h4>
+    <div id="url-usage-column-chart"></div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+
+        function onClickUrl(e) {
+            window.location.href = "/Url/Details/" + e.dataPoint.id + "?period=" + @period;
+        };
+
+        urlUsageDataPoints = []
+
+        var urlUsageChart = new CanvasJS.Chart("url-usage-column-chart", {
+            animationDuration: 800,
+            animationEnabled: true,
+            backgroundColor: "transparent",
+            colorSet: "customColorSet",
+            theme: "light2",
+            axisX: {
+                labelFontSize: 12,
+                labelWrap: false
+            },
+            axisY: {
+                title: "Hits",
+                interval: 1
+            },
+            data: [{
+                type: "bar",
+                dataPoints: urlUsageDataPoints,
+                click: onClickUrl,
+            }]
+        });
+
+        updateUrlUsageData();
+
+        function addUrlUsageData(data) {
+            urlUsageDataPoints.length = 0;
+            $.each(data, function (key, value) {
+
+                urlUsageDataPoints.push({ label: value.label, y: parseFloat(value.y), id: parseInt(value.id) });
+            });
+            urlUsageChart.render();
+            setTimeout(updateUrlUsageData, 3000);
+        }
+
+        function updateUrlUsageData() {
+            $.get("/api/dashboard/url-usage", { period: @period }, addUrlUsageData);
+        }
+    });
+</script>

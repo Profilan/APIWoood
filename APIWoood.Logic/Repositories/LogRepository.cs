@@ -38,7 +38,7 @@ namespace APIWoood.Logic.Repositories
             }
         }
 
-        public Log GetLatestByUrl(string url)
+        public Log GetLatestByUrl(string url, Period period = Period.month)
         {
             using (ISession session = SessionFactory.GetNewSession("db2"))
             {
@@ -47,7 +47,23 @@ namespace APIWoood.Logic.Repositories
 
                 query = query.Where(l => l.Url == url)
                     .OrderByDescending(l => l.Id).Take(1);
-                
+
+                var dateNow = DateTime.Now;
+                var dateBefore = dateNow.AddDays(-30);
+
+                switch (period)
+                {
+                    case Period.hour:
+                        dateBefore = dateNow.AddHours(-1);
+                        break;
+                    case Period.day:
+                        dateBefore = dateNow.AddDays(-1);
+                        break;
+                    case Period.week:
+                        dateBefore = dateNow.AddDays(-7);
+                        break;
+                }
+                query = query.Where(l => l.TimeStamp >= dateBefore && l.TimeStamp <= dateNow);
 
                 return query.ToList().Last();
             }
@@ -165,6 +181,131 @@ namespace APIWoood.Logic.Repositories
             {
                 var query = from l in session.Query<Log>()
                             select l;
+
+                return query.ToList();
+            }
+        }
+
+        public IEnumerable<Log> ListByUser(int userId, Period period = Period.month)
+        {
+            using (ISession session = SessionFactory.GetNewSession("db2"))
+            {
+                var query = from l in session.Query<Log>()
+                            select l;
+
+                var dateNow = DateTime.Now;
+                var dateBefore = dateNow.AddDays(-30);
+
+                switch (period)
+                {
+                    case Period.hour:
+                        dateBefore = dateNow.AddHours(-1);
+                        break;
+                    case Period.day:
+                        dateBefore = dateNow.AddDays(-1);
+                        break;
+                    case Period.week:
+                        dateBefore = dateNow.AddDays(-7);
+                        break;
+                }
+                query = query.Where(l => l.TimeStamp >= dateBefore && l.TimeStamp <= dateNow);
+
+                query = query.Where(l => l.UserId == userId);
+                query = query.OrderBy(l => l.Url);
+
+                return query.ToList();
+            }
+        }
+
+        public IEnumerable<Log> ListByUrl(string url, Period period = Period.month)
+        {
+            using (ISession session = SessionFactory.GetNewSession("db2"))
+            {
+                var query = from l in session.Query<Log>()
+                            select l;
+
+                var dateNow = DateTime.Now;
+                var dateBefore = dateNow.AddDays(-30);
+
+                switch (period)
+                {
+                    case Period.hour:
+                        dateBefore = dateNow.AddHours(-1);
+                        break;
+                    case Period.day:
+                        dateBefore = dateNow.AddDays(-1);
+                        break;
+                    case Period.week:
+                        dateBefore = dateNow.AddDays(-7);
+                        break;
+                }
+                query = query.Where(l => l.TimeStamp >= dateBefore && l.TimeStamp <= dateNow);
+
+                query = query.Where(l => l.Url == url);
+
+                return query.ToList();
+            }
+        }
+
+        public IEnumerable<Log> ListByUserAndUrl(int userId, string url, Period period)
+        {
+            using (ISession session = SessionFactory.GetNewSession("db2"))
+            {
+                var query = from l in session.Query<Log>()
+                            select l;
+
+
+                var dateNow = DateTime.Now;
+                var dateBefore = dateNow.AddDays(-30);
+
+                switch (period)
+                {
+                    case Period.hour:
+                        dateBefore = dateNow.AddHours(-1);
+                        break;
+                    case Period.day:
+                        dateBefore = dateNow.AddDays(-1);
+                        break;
+                    case Period.week:
+                        dateBefore = dateNow.AddDays(-7);
+                        break;
+                }
+                query = query.Where(l => l.TimeStamp >= dateBefore && l.TimeStamp <= dateNow);
+                query = query.Where(l => l.UserId == userId);
+                query = query.Where(l => l.Url == url);
+
+                query.OrderByDescending(l => l.TimeStamp);
+
+                return query.ToList();
+            }
+        }
+
+        public IEnumerable<Log> List(Period period, ErrorType errorType, string url, bool acknowledged = false)
+        {
+            using (ISession session = SessionFactory.GetNewSession("db2"))
+            {
+                var query = from l in session.Query<Log>()
+                            select l;
+
+                var dateNow = DateTime.Now;
+                var dateBefore = dateNow.AddDays(-30);
+
+                switch (period)
+                {
+                    case Period.hour:
+                        dateBefore = dateNow.AddHours(-1);
+                        break;
+                    case Period.day:
+                        dateBefore = dateNow.AddDays(-1);
+                        break;
+                    case Period.week:
+                        dateBefore = dateNow.AddDays(-7);
+                        break;
+                }
+                query = query.Where(l => l.TimeStamp >= dateBefore && l.TimeStamp <= dateNow);
+                query = query.Where(l => l.Acknowledged == acknowledged);
+                query = query.Where(l => l.Priority == Convert.ToInt32(errorType));
+                query = query.Where(l => l.Url == url);
 
                 return query.ToList();
             }

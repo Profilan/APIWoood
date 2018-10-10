@@ -10,12 +10,12 @@ using System.Web.Http;
 
 namespace APIWoood.Controllers.Api
 {
-    public class PaymentConditionController : ApiController
+    public class PaymentConditionController : WooodApiController
     {
         private readonly PaymentConditionRepository paymentConditionRepository;
         private SystemLogger logger;
 
-        public PaymentConditionController()
+        public PaymentConditionController() : base()
         {
             paymentConditionRepository = new PaymentConditionRepository();
             logger = new SystemLogger();
@@ -58,7 +58,7 @@ namespace APIWoood.Controllers.Api
             {
                 var items = paymentConditionRepository.List();
 
-                logger.Log(ErrorType.INFO, "GetPaymentConditions()", RequestContext.Principal.Identity.Name, "Total in query: " + items.Count(), "api/woood-betalingsconditie/list");
+                logger.Log(ErrorType.INFO, "GetPaymentConditions()", RequestContext.Principal.Identity.Name, "Total in query: " + items.Count(), "api/woood-betalingsconditie/list", startDate);
 
                 return Ok(items);
             }
@@ -110,13 +110,13 @@ namespace APIWoood.Controllers.Api
                 {
                     return NotFound();
                 }
-                logger.Log(ErrorType.INFO, "GetPaymentConditionByCode()", RequestContext.Principal.Identity.Name, "", "api/woood-betalingsconditie/view/code/" + code);
+                logger.Log(ErrorType.INFO, "GetPaymentConditionByCode(" + code + ")", RequestContext.Principal.Identity.Name, "", "api/woood-betalingsconditie/view/code", startDate);
 
                 return Ok(item);
             }
             catch (Exception e)
             {
-                logger.Log(ErrorType.ERR, "GetPaymentConditionByCode()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-betalingsconditie/view/code/" + code);
+                logger.Log(ErrorType.ERR, "GetPaymentConditionByCode(" + code + ")", RequestContext.Principal.Identity.Name, e.Message, "api/woood-betalingsconditie/view/code");
 
                 return InternalServerError(e);
             }

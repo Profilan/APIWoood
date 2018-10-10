@@ -11,13 +11,13 @@ using System.Web.Http;
 
 namespace APIWoood.Controllers.Api
 {
-    public class ProductController : ApiController
+    public class ProductController : WooodApiController
     {
         private readonly ProductRepository productRepository;
         private readonly PackageRepository packageRepository;
         private SystemLogger logger;
 
-        public ProductController()
+        public ProductController() : base()
         {
             productRepository = new ProductRepository();
             packageRepository = new PackageRepository();
@@ -151,7 +151,7 @@ namespace APIWoood.Controllers.Api
                     products.Add(product);
                 }
 
-                logger.Log(ErrorType.INFO, "GetArticles()", RequestContext.Principal.Identity.Name, "Total in query: " + products.Count, "api/woood-artikelview/list");
+                logger.Log(ErrorType.INFO, "GetArticles()", RequestContext.Principal.Identity.Name, "Total in query: " + products.Count, "api/woood-artikelview/list", startDate);
 
                 return Ok(products);
             }
@@ -279,13 +279,13 @@ namespace APIWoood.Controllers.Api
                     product.PAKKETTEN.Add(package);
                 }
 
-                logger.Log(ErrorType.INFO, "GetArticleById()", RequestContext.Principal.Identity.Name, "", "api/woood-artikelview/view/artikelcode/" + id);
+                logger.Log(ErrorType.INFO, "GetArticleById(" + id + ")", RequestContext.Principal.Identity.Name, "", "api/woood-artikelview/view/artikelcode", startDate);
 
                 return Ok(product);
             }
             catch (Exception e)
             {
-                logger.Log(ErrorType.ERR, "GetArticleById()", e.Message, "", "api/woood-artikelview/view/artikelcode/" + id);
+                logger.Log(ErrorType.ERR, "GetArticleById(" + id + ")", e.Message, "", "api/woood-artikelview/view/artikelcode");
 
                 return InternalServerError(e);
             }
@@ -393,7 +393,7 @@ namespace APIWoood.Controllers.Api
         [Route("api/woood-productview/list")]
         [HttpGet]
         [Authorize]
-        public IHttpActionResult Get(int page = 1, int limit = 25)
+        public IHttpActionResult GetProducts(int page = 1, int limit = 25)
         {
             try
             {
@@ -435,7 +435,7 @@ namespace APIWoood.Controllers.Api
                     page_count = result.PageCount
                 };
 
-                logger.Log(ErrorType.INFO, "GetProducts()", RequestContext.Principal.Identity.Name, "Total in query: " + products.Count, "api/woood-productview/list");
+                logger.Log(ErrorType.INFO, "GetProducts()", RequestContext.Principal.Identity.Name, "Total in query: " + products.Count, "api/woood-productview/list", startDate);
 
                 return Ok(collection);
             }
@@ -571,13 +571,13 @@ namespace APIWoood.Controllers.Api
                     product.PAKKETTEN.Add(package);
                 }
 
-                logger.Log(ErrorType.INFO, "GetProductById()", RequestContext.Principal.Identity.Name, "", "api/woood-productview/view/artikelcode/" + id);
+                logger.Log(ErrorType.INFO, "GetProductById(" + id + ")", RequestContext.Principal.Identity.Name, "", "api/woood-productview/view/artikelcode", startDate);
 
                 return Ok(product);
             }
             catch (Exception e)
             {
-                logger.Log(ErrorType.ERR, "GetProductById()", e.Message, "", "api/woood-productview/view/artikelcode/" + id);
+                logger.Log(ErrorType.ERR, "GetProductById(" + id + ")", e.Message, "", "api/woood-productview/view/artikelcode/" + id);
 
                 return InternalServerError(e);
             }

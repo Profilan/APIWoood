@@ -14,5 +14,6 @@
     <property name="Detail" column="trace" type="StringClob"/>
     <property name="Acknowledged" column="acknowledged"/>
     <property name="UserId" column="userId"/>
+    <property name="Duration" column="duration"/>
   </class>
 </hibernate-mapping>

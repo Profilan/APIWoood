@@ -1,0 +1,84 @@
+﻿@model APIWoood.Models.LogViewModel
+
+@{
+    ViewBag.Title = "User - Url visits";
+}
+
+<div class="container-fluid">
+    <h2>Url Visits</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-3">
+                @Html.DropDownListFor(x => Model.UserId, new SelectList(Model.Users, "Id", "UserName"), "- Select User -", htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownListFor(x => Model.UrlId, new SelectList(Model.Urls, "Id", "Name"), "- Select Url -", htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-md-6">
+                @Html.Partial("_PeriodPicker", Model.Period)
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="col-md-6">
+            <h4>Visits</h4>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Message</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var visit in Model.Visits)
+                    {
+                        
+                        <tr>
+                            <td>@visit.TimeStamp</td>
+                            <td>@visit.Message</td>
+                            <td>
+                                @{
+                                    var color = "green";
+                                    if (visit.PriorityName == "ERR")
+                                    {
+                                       color = "red";
+                                    }
+                                }
+                                <span class="last-run-result" style="color: @color">
+                                    @visit.PriorityName
+                                </span>
+                                
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+
+            $("#UserId").change(function (e) {
+                $("form").attr("action", "/User/UrlVisits?userId=" + @Model.UserId + "&urlId=" + @Model.UrlId);
+                $("form").submit();
+            });
+
+            $("#UrlId").change(function (e) {
+                $("form").attr("action", "/User/UrlVisits?userId=" + @Model.UserId + "&urlId=" + @Model.UrlId);
+                $("form").submit();
+            });
+        });
+    </script>
+}
+

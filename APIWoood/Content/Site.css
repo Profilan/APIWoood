@@ -55,3 +55,37 @@ a:hover {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+.dashboard .card {
+    background-color: inherit;
+    border: none;
+}
+
+.dashboard .card-title {
+    border-bottom: 1px solid;
+    padding-bottom: 10px;
+    font-size: 26px;
+    font-weight: 300;
+}
+
+.btn-primary {
+    background-color: #3f9598;
+    border-color: #3f9598;
+}
+
+.btn-primary:hover {
+    background-color: darkcyan;
+    border-color: darkcyan;
+}
+
+.badge-pill a {
+    color: #fff;
+    text-decoration: none;
+}
+
+#top-five-urls-pie-chart,
+#top-five-users-pie-chart,
+#url-usage-column-chart,
+#latest-errors {
+    height: 300px;
+}

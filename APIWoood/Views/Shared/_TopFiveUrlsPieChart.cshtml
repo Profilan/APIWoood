@@ -1,0 +1,58 @@
+﻿@model APIWoood.Models.DashboardViewModel
+
+<div class="card card-block">
+    <h4 class="card-title">Top Five Url's</h4>
+    <div id="top-five-urls-pie-chart"></div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+
+        function onClickUrl(e) {
+            window.location.href = "/Url/Details/" + e.dataPoint.id + "?period=" + @Convert.ToInt32(Model.Period);
+        }
+
+        var chart = new CanvasJS.Chart("top-five-urls-pie-chart", {
+            animationDuration: 800,
+            animationEnabled: true,
+            backgroundColor: "transparent",
+            colorSet: "customColorSet",
+            theme: "light2",
+            legend: {
+                fontSize: 12,
+                horizontalAlign: "right",
+                verticalAlign: "center",
+                maxWidth: 200,
+                itemWidth: 200,
+                itemTextFormatter: function (e) {
+                    return e.dataPoint.label;
+                }
+            },
+            toolTip: {
+                cornerRadius: 0,
+                fontStyle: "normal",
+                contentFormatter: function (e) {
+                    return e.entries[0].dataPoint.label;
+                }
+            },
+            data: [
+            {
+                legendMarkerType: "square",
+                radius: "90%",
+                type: "pie",
+                startAngle: 90,
+                indexLabelFontSize: 12,
+                showInLegend: true,
+                dataPoints: @Html.Raw(Model.TopFiveUrlsData),
+                click: onClickUrl,
+                indexLabelPlacement: "inside",
+                indexLabelFormatter: function (e) {
+                    return Math.round(e.percent) + "%";
+                },
+                indexLabelFontColor: "#FFFFFF",
+            }
+            ]
+        });
+        chart.render();
+    });
+</script>

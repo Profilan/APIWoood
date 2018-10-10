@@ -1,0 +1,59 @@
+﻿@model APIWoood.Models.DashboardViewModel
+
+<div class="card card-block">
+    <h4 class="card-title">Top Five Users</h4>
+    <div id="top-five-users-pie-chart"></div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+
+        function onClickUser(e) {
+            window.location.href = "/Dashboard/UserStatistics/" + e.dataPoint.id + "?period=" + @Convert.ToInt32(Model.Period);
+        }
+
+        var chart = new CanvasJS.Chart("top-five-users-pie-chart", {
+            animationDuration: 800,
+            animationEnabled: true,
+            backgroundColor: "transparent",
+            colorSet: "customColorSet",
+            theme: "light2",
+            legend: {
+                fontSize: 12,
+                fontWeight: "normal",
+                horizontalAlign: "right",
+                verticalAlign: "center",
+                maxWidth: 200,
+                itemWidth: 200,
+                itemTextFormatter: function (e) {
+                    return e.dataPoint.label;
+                }
+            },
+            toolTip: {
+                cornerRadius: 0,
+                fontStyle: "normal",
+                contentFormatter: function (e) {
+                    return e.entries[0].dataPoint.label;
+                }
+            },
+            data: [
+            {
+                legendMarkerType: "square",
+                radius: "90%",
+                type: "pie",
+                // indexLabel: "{label} {y}%",
+                click: onClickUser,
+                startAngle: 90,
+                showInLegend: true,
+                dataPoints: @Html.Raw(Model.TopFiveUsersData),
+                indexLabelPlacement: "inside",
+                indexLabelFormatter: function (e) {
+                    return Math.round(e.percent) + "%";
+                },
+                indexLabelFontColor: "#FFFFFF",
+            }
+            ]
+        });
+        chart.render();
+    });
+</script>

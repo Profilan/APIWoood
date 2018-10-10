@@ -14,13 +14,13 @@ using System.Web.Script.Serialization;
 
 namespace APIWoood.Controllers.Api
 {
-    public class OrderController : ApiController
+    public class OrderController : WooodApiController
     {
         private readonly UserRepository userRepository;
         private readonly OrderRepository orderRepository;
         private SystemLogger logger;
 
-        public OrderController()
+        public OrderController() : base()
         {
             userRepository = new UserRepository();
             orderRepository = new OrderRepository();
@@ -231,7 +231,7 @@ namespace APIWoood.Controllers.Api
                 return BadRequest("No orders added");
             }
 
-            logger.Log(ErrorType.INFO, "CreateOrder()", RequestContext.Principal.Identity.Name, new JavaScriptSerializer().Serialize(references), "api/woood-order/create");
+            logger.Log(ErrorType.INFO, "CreateOrder()", RequestContext.Principal.Identity.Name, new JavaScriptSerializer().Serialize(references), "api/woood-order/create", startDate);
 
             return Ok(new {
                 body = new

@@ -11,12 +11,12 @@ using System.Web.Http;
 
 namespace APIWoood.Controllers.Api
 {
-    public class ProductRangeController : ApiController
+    public class ProductRangeController : WooodApiController
     {
         private readonly ProductRangeRepository productRangeRepository;
         private SystemLogger logger;
 
-        public ProductRangeController()
+        public ProductRangeController() : base()
         {
             productRangeRepository = new ProductRangeRepository();
             logger = new SystemLogger();
@@ -80,13 +80,13 @@ namespace APIWoood.Controllers.Api
                     });
                 }
 
-                logger.Log(ErrorType.INFO, "GetProductRangeByRange()", RequestContext.Principal.Identity.Name, "Total in query: " + productRanges.Count, "api/woood-assortimenten-view/list/id/" + ass);
+                logger.Log(ErrorType.INFO, "GetProductRangeByRange(" + ass + ")", RequestContext.Principal.Identity.Name, "Total in query: " + productRanges.Count, "api/woood-assortimenten-view/list/id", startDate);
 
                 return Ok(productRanges);
             }
             catch (Exception e)
             {
-                logger.Log(ErrorType.ERR, "GetProductRangeByRange()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-assortimenten-view/list/id/" + ass);
+                logger.Log(ErrorType.ERR, "GetProductRangeByRange(" + ass + ")", RequestContext.Principal.Identity.Name, e.Message, "api/woood-assortimenten-view/list/id");
 
                 return InternalServerError(e);
             }

@@ -11,12 +11,12 @@ using System.Web.Http;
 
 namespace APIWoood.Controllers.Api
 {
-    public class WebAvailabilityController : ApiController
+    public class WebAvailabilityController : WooodApiController
     {
         private readonly WebAvailabilityRepository webAvailabilityRepository;
         private SystemLogger logger;
 
-        public WebAvailabilityController()
+        public WebAvailabilityController() : base()
         {
             webAvailabilityRepository = new WebAvailabilityRepository();
             logger = new SystemLogger();
@@ -92,7 +92,7 @@ namespace APIWoood.Controllers.Api
                     webAvailabilities.Add(NewWebAvailability(item));
                 }
 
-                logger.Log(ErrorType.INFO, "GetWebAvailability()", RequestContext.Principal.Identity.Name, "Total in query: " + webAvailabilities.Count(), "api/woood-web-availability/list");
+                logger.Log(ErrorType.INFO, "GetWebAvailability()", RequestContext.Principal.Identity.Name, "Total in query: " + webAvailabilities.Count(), "api/woood-web-availability/list", startDate);
 
                 return Ok(webAvailabilities);
             }
@@ -176,13 +176,13 @@ namespace APIWoood.Controllers.Api
                     webAvailabilities.Add(NewWebAvailability(item));
                 }
 
-                logger.Log(ErrorType.INFO, "GetWebAvailabilityByDebtor()", RequestContext.Principal.Identity.Name, "Total in query: " + webAvailabilities.Count(), "api/woood-web-availability/view/fakdebnr/" + fakdebnr);
+                logger.Log(ErrorType.INFO, "GetWebAvailabilityByDebtor(" + fakdebnr + ")", RequestContext.Principal.Identity.Name, "Total in query: " + webAvailabilities.Count(), "api/woood-web-availability/view/fakdebnr", startDate);
 
                 return Ok(webAvailabilities);
             }
             catch (Exception e)
             {
-                logger.Log(ErrorType.ERR, "GetWebAvailabilityByDebtor()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-web-availability/view/fakdebnr/" + fakdebnr);
+                logger.Log(ErrorType.ERR, "GetWebAvailabilityByDebtor(" + fakdebnr + ")", RequestContext.Principal.Identity.Name, e.Message, "api/woood-web-availability/view/fakdebnr");
 
                 return InternalServerError(e);
             }

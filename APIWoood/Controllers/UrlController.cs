@@ -1,5 +1,7 @@
 ﻿using APIWoood.Logic.Models;
 using APIWoood.Logic.Repositories;
+using APIWoood.Logic.SharedKernel;
+using APIWoood.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -14,11 +16,13 @@ namespace APIWoood.Controllers
     {
         private readonly UrlRepository urlRepository;
         private readonly UserRepository userRepository;
+        private readonly LogRepository logRepository;
 
         public UrlController()
         {
             urlRepository = new UrlRepository();
             userRepository = new UserRepository();
+            logRepository = new LogRepository();
         }
 
         // GET: Url
@@ -36,6 +40,40 @@ namespace APIWoood.Controllers
             {
                 throw new Exception("You are not allowed to access this");
             }
+        }
+
+        public ActionResult Details(int id, Period period = Period.month)
+        {
+            var url = urlRepository.GetById(id);
+
+            var visitors = new List<UserViewModel>();
+
+            var users = userRepository.List();
+            foreach (var user in users)
+            {
+                var logs = logRepository.ListByUserAndUrl(user.Id, url.Name, period);
+                if (logs.Count() > 0)
+                {
+                    var visitor = new UserViewModel()
+                    {
+                        Id = user.Id,
+                        UserName = user.UserName,
+                        QuantityVisitedUrls = logs.Count(),
+                        LatestVisitDate = logs.First().TimeStamp
+                    };
+                    visitors.Add(visitor);
+                }
+            }
+
+            var viewModel = new UrlStatisticsViewModel()
+            {
+                Id = url.Id,
+                Urls = urlRepository.List(),
+                Period = period,
+                Visitors = visitors
+            };
+
+            return View(viewModel);
         }
 
         // GET: Url/Create

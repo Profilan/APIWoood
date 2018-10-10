@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,14 @@ namespace APIWoood.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if (String.IsNullOrEmpty(User.Identity.GetUserId()))
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
         }
 
         public ActionResult About()

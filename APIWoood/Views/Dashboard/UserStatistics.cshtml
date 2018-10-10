@@ -1,0 +1,66 @@
+﻿@model  APIWoood.Models.UserStatisticsViewModel
+
+@{
+    ViewBag.Title = "User Statistics";
+}
+
+<div class="container-fluid">
+    <h2>User Statistics</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+                <div class="col-md-3">
+                    @Html.DropDownListFor(x => Model.Id, new SelectList(Model.Users, "Id", "UserName"), "- Select User -", htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-md-9">
+                    @Html.Partial("_PeriodPicker", Model.Period)
+                </div>
+        </div>
+
+        <hr />
+
+        <div class="col-md-6">
+            <h4>Visited Url's</h4>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>@Html.ActionLink("Name", "UserStatistics", new { sortOrder = "NameAsc" })</th>
+                        <th style="text-align: right">@Html.ActionLink("Avg. Duration (ms)", "UserStatistics", new { sortOrder = "DurationDesc" })</th>
+                        <th style="text-align: right">@Html.ActionLink("Latest Visit", "UserStatistics", new { sortOrder = "LatestVisitDateDesc" })</th>
+                        <th style="text-align: right">@Html.ActionLink("Visited #", "UserStatistics", new { sortOrder = "HitsDesc" })</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var url in Model.VisitedUrls)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(url.Name, "Details", "Url", new { id = url.Id }, null)</td>
+                        <td style="text-align: right">
+                            @url.Duration.ToString("F")
+                        </td>
+                        <td style="text-align: right">@url.LatestVisitDate</td>
+                        <td style="text-align: right"><span class="badge badge-secondary badge-pill">@Html.ActionLink(url.Hits.ToString(), "UrlVisits", "User", new { userId = Model.Id, urlId = url.Id, period = Model.Period }, null)</span></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+
+            $("#Id").change(function (e) {
+                $("form").attr("action", "/Dashboard/UserStatistics/" + @Model.Id);
+                $("form").submit();
+            });
+        });
+    </script>
+}
+
+

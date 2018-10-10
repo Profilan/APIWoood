@@ -1,0 +1,28 @@
+﻿@{
+    var period = Model ;
+}
+
+@using APIWoood.Logic.SharedKernel
+
+Period:
+<div class="btn-group" role="group">
+
+    <a href="#" class="btn @(period == Period.hour ? "btn-outline-secondary" : "btn-secondary") period-button" data-period="1">hour</a>
+    <a href="#" class="btn @(period == Period.day ? "btn-outline-secondary" : "btn-secondary") period-button" data-period="2">day</a>
+    <a href="#" class="btn @(period == Period.week ? "btn-outline-secondary" : "btn-secondary") period-button" data-period="3">week</a>
+    <a href="#" class="btn @(period == Period.month ? "btn-outline-secondary" : "btn-secondary") period-button" data-period="4">30 days</a>
+    <input type="hidden" id="Period" name="Period" value="4" />
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $(".period-button").click(function (e) {
+            e.preventDefault();
+
+            var button = $(this);
+            var period = button.data('period');
+            $("#Period").val(period);
+            $("form").submit();
+        });
+    });
+</script>

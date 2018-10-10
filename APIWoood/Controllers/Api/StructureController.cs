@@ -12,13 +12,13 @@ using System.Web.Http;
 
 namespace APIWoood.Controllers.Api
 {
-    public class StructureController : ApiController
+    public class StructureController : WooodApiController
     {
         private readonly StructureRepository structureRepository;
         private readonly ProductRepository productRepository;
         private SystemLogger logger;
 
-        public StructureController()
+        public StructureController() : base()
         {
             structureRepository = new StructureRepository();
             productRepository = new ProductRepository();
@@ -167,7 +167,7 @@ namespace APIWoood.Controllers.Api
                     page_count = pagedResult.PageCount
                 };
 
-                logger.Log(ErrorType.INFO, "GetStructureList()", RequestContext.Principal.Identity.Name, "Total in query: " + products.Count(), "api/woood-structureview/list");
+                logger.Log(ErrorType.INFO, "GetStructureList()", RequestContext.Principal.Identity.Name, "Total in query: " + products.Count(), "api/woood-structureview/list", startDate);
 
                 return Ok(collection);
             }
@@ -254,13 +254,13 @@ namespace APIWoood.Controllers.Api
              {
                 var item = GetItem(artikelcode);
 
-                logger.Log(ErrorType.INFO, "GetStructureByArticle()", RequestContext.Principal.Identity.Name, "", "api/woood-structureview/view/artikelcode/" + artikelcode);
+                logger.Log(ErrorType.INFO, "GetStructureByArticle(" + artikelcode + ")", RequestContext.Principal.Identity.Name, "", "api/woood-structureview/view/artikelcode", startDate);
 
                 return Ok(item);
             }
             catch (Exception e)
             {
-                logger.Log(ErrorType.ERR, "GetStructureByArticle()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-structureview/view/artikelcode/" + artikelcode);
+                logger.Log(ErrorType.ERR, "GetStructureByArticle(" + artikelcode + ")", RequestContext.Principal.Identity.Name, e.Message, "api/woood-structureview/view/artikelcode");
 
                 return InternalServerError(e);
             }

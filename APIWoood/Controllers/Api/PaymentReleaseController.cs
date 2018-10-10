@@ -12,14 +12,14 @@ using System.Web.Http;
 
 namespace APIWoood.Controllers.Api
 {
-    public class PaymentReleaseController : ApiController
+    public class PaymentReleaseController : WooodApiController
     {
         private readonly PaymentReleaseRepository paymentReleaseRepository;
         private readonly UserRepository userRepository;
         private readonly OrderRepository orderRepository;
         private SystemLogger logger;
 
-        public PaymentReleaseController()
+        public PaymentReleaseController() : base()
         {
             paymentReleaseRepository = new PaymentReleaseRepository();
             userRepository = new UserRepository();
@@ -131,7 +131,7 @@ namespace APIWoood.Controllers.Api
 
                 paymentReleaseRepository.Insert(paymentToPost);
 
-                logger.Log(ErrorType.INFO, "CreatePaymentRelease()", RequestContext.Principal.Identity.Name, "The Release Payment was succesfully added", "api/woood-payment-release/create");
+                logger.Log(ErrorType.INFO, "CreatePaymentRelease()", RequestContext.Principal.Identity.Name, "The Release Payment was succesfully added", "api/woood-payment-release/create", startDate);
 
                 return Ok(new
                 {

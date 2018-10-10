@@ -11,12 +11,12 @@ using System.Web.Http;
 
 namespace APIWoood.Controllers.Api
 {
-    public class SellingPointController : ApiController
+    public class SellingPointController : WooodApiController
     {
         private readonly SellingPointRepository sellingPointRepository;
         private SystemLogger logger;
 
-        public SellingPointController()
+        public SellingPointController() : base()
         {
             sellingPointRepository = new SellingPointRepository();
             logger = new SystemLogger();
@@ -87,7 +87,7 @@ namespace APIWoood.Controllers.Api
                     });
                 }
 
-                logger.Log(ErrorType.INFO, "GetSellingPoints()", RequestContext.Principal.Identity.Name, "Total in query: " + items.Count(), "api/woood-verkooppunt-view/list");
+                logger.Log(ErrorType.INFO, "GetSellingPoints()", RequestContext.Principal.Identity.Name, "Total in query: " + items.Count(), "api/woood-verkooppunt-view/list", startDate);
 
                 return Ok(sellingPoints);
             }
@@ -163,13 +163,13 @@ namespace APIWoood.Controllers.Api
                     });
                 }
 
-                logger.Log(ErrorType.INFO, "GetSellingPointByArticle()", RequestContext.Principal.Identity.Name, "Total in query: " + items.Count(), "api/woood-verkooppunt-view/view/artikelcode/" + artikelcode);
+                logger.Log(ErrorType.INFO, "GetSellingPointByArticle(" + artikelcode + ")", RequestContext.Principal.Identity.Name, "Total in query: " + items.Count(), "api/woood-verkooppunt-view/view/artikelcode", startDate);
 
                 return Ok(sellingPoints);
             }
             catch (Exception e)
             {
-                logger.Log(ErrorType.ERR, "GetSellingPointByArticle()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-verkooppunt-view/view/artikelcode/" + artikelcode);
+                logger.Log(ErrorType.ERR, "GetSellingPointByArticle(" + artikelcode + ")", RequestContext.Principal.Identity.Name, e.Message, "api/woood-verkooppunt-view/view/artikelcode");
 
                 return InternalServerError(e);
             }

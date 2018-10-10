@@ -13,6 +13,7 @@ namespace APIWoood.Logic.Models
         public virtual string Detail { get; protected set; }
         public virtual bool Acknowledged { get; set; }
         public virtual int UserId { get; set; }
+        public virtual double Duration { get; set; }
 
         // Needed for NHibernate
         public Log()
@@ -27,7 +28,8 @@ namespace APIWoood.Logic.Models
             string url,
             string detail,
             bool acknowledged,
-            int userId = 1)
+            int userId = 1,
+            double duration = 0)
         {
             TimeStamp = timeStamp;
             Priority = priority;
@@ -37,6 +39,7 @@ namespace APIWoood.Logic.Models
             Detail = detail;
             Acknowledged = acknowledged;
             UserId = userId;
+            Duration = duration;
         }
 
         // requestId, targetId, response, properties, referenceId

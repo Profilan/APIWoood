@@ -216,5 +216,27 @@ namespace APIWoood.Controllers
                 throw new Exception("You are not allowed to access this");
             }
         }
+
+        [Authorize]
+        public ActionResult UrlVisits(int userId, int urlId, Period period = Period.month)
+        {
+            var urlRep = new UrlRepository();
+            var url = urlRep.GetById(urlId);
+
+            var logRep = new LogRepository();
+            var logs = logRep.ListByUserAndUrl(userId, url.Name, period).OrderByDescending(x => x.TimeStamp);
+
+            var viewModel = new LogViewModel()
+            {
+                Users = userRepository.List(),
+                Visits = logs,
+                Urls = urlRep.List(),
+                UrlId = urlId,
+                UserId = userId,
+                Period = period
+            };
+
+            return View(viewModel);
+        }
     }
 }

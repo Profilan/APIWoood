@@ -5,6 +5,7 @@ using FluentAssertions;
 using APIWoood.Logic.Models;
 using HibernatingRhinos.Profiler.Integration;
 using HibernatingRhinos.Profiler.Appender.NHibernate;
+using APIWoood.Logic.SharedKernel;
 
 namespace APIWoood.LogicTests
 {
@@ -214,6 +215,16 @@ namespace APIWoood.LogicTests
             };
 
             rep.Insert(paymentRelease);
+        }
+
+        [TestMethod]
+        public void GetLatestErrors()
+        {
+            var logRepository = new LogRepository();
+
+            var logErrors = logRepository.List(Period.month, ErrorType.ERR, "api/woood-pricelist/list");
+
+            logErrors.Should().NotBeNullOrEmpty();
         }
     }
 }

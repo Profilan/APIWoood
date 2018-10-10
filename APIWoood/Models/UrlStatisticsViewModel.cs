@@ -8,18 +8,16 @@ using System.Web;
 
 namespace APIWoood.Models
 {
-    public class LogViewModel
+    public class UrlStatisticsViewModel
     {
-        [Display(Name = "User")]
-        public int UserId { get; set; }
-        public IEnumerable<User> Users { get; set; }
-
         [Display(Name = "Url")]
-        public int UrlId { get; set; }
+        public int Id { get; set; }
         public IEnumerable<Url> Urls { get; set; }
+
+        public int Hits { get; set; }
 
         public Period Period { get; set; }
 
-        public IEnumerable<Log> Visits { get; set; }
+        public IList<UserViewModel> Visitors { get; set; }
     }
 }

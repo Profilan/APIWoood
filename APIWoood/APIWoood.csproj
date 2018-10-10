@@ -206,6 +206,7 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\DashboardController.cs" />
     <Compile Include="Controllers\Api\DebtorController.cs" />
     <Compile Include="Controllers\Api\DebtorOrderController.cs" />
     <Compile Include="Controllers\Api\DeliveryMethodController.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Controllers\Api\WebAvailabilityController.cs" />
     <Compile Include="Controllers\Api\WooodApiController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\OrderController.cs" />
     <Compile Include="Controllers\Api\ProductController.cs" />
@@ -229,6 +231,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DashboardService.cs" />
+    <Compile Include="Models\DashboardViewModel.cs" />
+    <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DebtorOrder.cs" />
     <Compile Include="Models\Identity\CustomPasswordHasher.cs" />
     <Compile Include="Models\Identity\IdentityStore.cs" />
@@ -252,6 +257,9 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductRange.cs" />
     <Compile Include="Models\SellingPoint.cs" />
+    <Compile Include="Models\UrlStatisticsViewModel.cs" />
+    <Compile Include="Models\UrlViewModel.cs" />
+    <Compile Include="Models\UserStatisticsViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\WebAvailability.cs" />
     <Compile Include="Modules\BasicAuthHttpModule.cs" />
@@ -517,6 +525,15 @@
     <Content Include="Views\Url\Index.cshtml" />
     <Content Include="Views\Url\Create.cshtml" />
     <Content Include="Views\Url\Edit.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Shared\_TopFiveUrlsPieChart.cshtml" />
+    <Content Include="Views\Shared\_TopFiveUsersPieChart.cshtml" />
+    <Content Include="Views\Shared\_UsageUrlsColumnChart.cshtml" />
+    <Content Include="Views\Dashboard\UserStatistics.cshtml" />
+    <Content Include="Views\Url\Details.cshtml" />
+    <Content Include="Views\Shared\_PeriodPicker.cshtml" />
+    <Content Include="Views\User\UrlVisits.cshtml" />
+    <Content Include="Views\Shared\_LatestErrors.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

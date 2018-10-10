@@ -1,0 +1,63 @@
+﻿@model APIWoood.Models.UrlStatisticsViewModel
+
+@{
+    ViewBag.Title = "Url Details";
+}
+
+<div class="container-fluid">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-3">
+                @Html.DropDownListFor(x => Model.Id, new SelectList(Model.Urls, "Id", "Name"), "- Select Url -", htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-md-9">
+                @Html.Partial("_PeriodPicker", Model.Period)
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="col-md-6">
+            <h4>Visitors</h4>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th style="text-align: right">Latest Visit</th>
+                        <th style="text-align: right">Visited #</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.Visitors)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(user.UserName, "UserStatistics", "Dashboard", new { id = user.Id }, null)</td>
+                            <td style="text-align: right">@user.LatestVisitDate</td>
+                            <td style="text-align: right"><span class="badge badge-secondary badge-pill">@Html.ActionLink(user.QuantityVisitedUrls.ToString(), "UrlVisits", "User", new { userId = user.Id, urlId = Model.Id, period = Model.Period }, null)</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+
+            $("#Id").change(function (e) {
+                $("form").attr("action", "/Url/Details/" + @Model.Id);
+                $("form").submit();
+            });
+        });
+    </script>
+}
+

@@ -1,0 +1,44 @@
+﻿@model APIWoood.Models.DashboardViewModel
+
+@{
+    ViewBag.Title = "Dashboard";
+
+}
+
+@using APIWoood.Logic.SharedKernel
+
+
+<div class="container-fluid dashboard">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("_PeriodPicker", Model.Period)
+            </div>
+        </div>
+
+        <hr />
+
+        <!-- 1st row -->
+        <div class="row m-b-2">
+            <div class="col-lg-4">
+                @Html.Partial("_TopFiveUrlsPieChart", Model)
+            </div>
+            <div class="col-lg-4">
+                @Html.Partial("_TopFiveUsersPieChart", Model)
+            </div>
+            <div class="col-lg-4">
+                @Html.Partial("_LatestErrors", Model)
+            </div>
+        </div>
+
+        <!-- 2d row -->
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("_UsageUrlsColumnChart", Model)
+            </div>
+
+        </div>
+    }
+</div>

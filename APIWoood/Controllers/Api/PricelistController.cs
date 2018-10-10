@@ -11,12 +11,12 @@ using APIWoood.Logic.SharedKernel;
 
 namespace APIWoood.Controllers.Api
 {
-    public class PricelistController : ApiController
+    public class PricelistController : WooodApiController
     {
         private readonly PricelistRepository pricelistRepository;
         private SystemLogger logger;
 
-        public PricelistController()
+        public PricelistController() : base()
         {
             pricelistRepository = new PricelistRepository();
             logger = new SystemLogger();
@@ -97,7 +97,7 @@ namespace APIWoood.Controllers.Api
                     page_count = result.PageCount
                 };
 
-                logger.Log(ErrorType.INFO, "GetPricelists()", RequestContext.Principal.Identity.Name, "Total in query: " + pricelists.Count(), "api/woood-pricelist/list");
+                logger.Log(ErrorType.INFO, "GetPricelists()", RequestContext.Principal.Identity.Name, "Total in query: " + pricelists.Count(), "api/woood-pricelist/list", startDate);
 
                 return Ok(collection);
             }
@@ -175,13 +175,13 @@ namespace APIWoood.Controllers.Api
                     pricelists.Add(NewPricelist(item));
                 }
 
-                logger.Log(ErrorType.INFO, "GetPricelistsByDebtor()", RequestContext.Principal.Identity.Name, "Total in query: " + pricelists.Count(), "api/woood-pricelist/view/debiteurnr/" + debiteurnr);
+                logger.Log(ErrorType.INFO, "GetPricelistsByDebtor(" + debiteurnr + ")", RequestContext.Principal.Identity.Name, "Total in query: " + pricelists.Count(), "api/woood-pricelist/view/debiteurnr", startDate);
 
                 return Ok(pricelists);
             }
             catch (Exception e)
             {
-                logger.Log(ErrorType.ERR, "GetPricelists()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-pricelist/view/debiteurnr/" + debiteurnr);
+                logger.Log(ErrorType.ERR, "GetPricelistsByDebtor(" + debiteurnr + ")", RequestContext.Principal.Identity.Name, e.Message, "api/woood-pricelist/view/debiteurnr/" + debiteurnr);
 
                 return InternalServerError(e);
             }

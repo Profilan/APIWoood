@@ -25,7 +25,7 @@
         {
             <tr data-id="@item.Id">
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.ActionLink(item.Name, "Details", "Url", new { id = item.Id }, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Hits)

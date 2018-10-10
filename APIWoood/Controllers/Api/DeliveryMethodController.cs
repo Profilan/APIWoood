@@ -10,12 +10,12 @@ using System.Web.Http;
 
 namespace APIWoood.Controllers.Api
 {
-    public class DeliveryMethodController : ApiController
+    public class DeliveryMethodController : WooodApiController
     {
         private readonly DeliveryMethodRepository DeliveryMethodRepository;
         private SystemLogger logger;
 
-        public DeliveryMethodController()
+        public DeliveryMethodController() : base()
         {
             DeliveryMethodRepository = new DeliveryMethodRepository();
             logger = new SystemLogger();
@@ -65,7 +65,7 @@ namespace APIWoood.Controllers.Api
             {
                 var items = DeliveryMethodRepository.List();
 
-                logger.Log(ErrorType.INFO, "GetDeliveryMethods()", RequestContext.Principal.Identity.Name, "Total in query: " + items.Count(), "api/woood-leveringswijze/list");
+                logger.Log(ErrorType.INFO, "GetDeliveryMethods()", RequestContext.Principal.Identity.Name, "Total in query: " + items.Count(), "api/woood-leveringswijze/list", startDate);
 
                 return Ok(items);
             }
@@ -115,18 +115,18 @@ namespace APIWoood.Controllers.Api
 
                 if (item == null)
                 {
-                    logger.Log(ErrorType.WARN, "GetDeliveryMethodByCode()", RequestContext.Principal.Identity.Name, "", "api/woood-leveringswijze/view/code/" + code);
+                    logger.Log(ErrorType.WARN, "GetDeliveryMethodByCode(" + code + ")", RequestContext.Principal.Identity.Name, "", "api/woood-leveringswijze/view/code");
 
                     return NotFound();
                 }
 
-                logger.Log(ErrorType.INFO, "GetDeliveryMethodByCode()", RequestContext.Principal.Identity.Name, "", "api/woood-leveringswijze/view/code/" + code);
+                logger.Log(ErrorType.INFO, "GetDeliveryMethodByCode(" + code + ")", RequestContext.Principal.Identity.Name, "", "api/woood-leveringswijze/view/code", startDate);
 
                 return Ok(item);
             }
             catch (Exception e)
             {
-                logger.Log(ErrorType.ERR, "GetDeliveryMethodByCode()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-leveringswijze/view/code/" + code);
+                logger.Log(ErrorType.ERR, "GetDeliveryMethodByCode(" + code + ")", RequestContext.Principal.Identity.Name, e.Message, "api/woood-leveringswijze/view/code");
                 return InternalServerError(e);
             }
         }

@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4>Top Ten Url's</h4>
+                </div>
+                <div class="card-body">
+                    @Html.Partial("TopTenUrlPieChart")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

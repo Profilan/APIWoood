@@ -1,0 +1,38 @@
+﻿@model APIWoood.Models.DashboardViewModel
+
+@{ 
+    var period = (int)Model.Period;
+}
+
+<div class="card card-block">
+    <h4 class="card-title">Latest Errors</h4>
+    <div id="latest-errors">
+        <ul class="list-group">
+            <li class="list-group-item prototype d-none"><span style="color: red"></span></li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+
+        function addLatestErrors(data) {
+            $("#latest-errors li").not(".prototype").remove();
+            $.each(data, function (key, value) {
+                var el = $("#latest-errors li.prototype").clone();
+                el.removeClass("prototype d-none")
+                el.find("span").text(value.Name + " (" + value.ErrorCount + ")");
+                $("#latest-errors ul").append(el);
+            });
+
+            setTimeout(updateLatestErrors, 3000);
+        }
+
+        function updateLatestErrors() {
+            $.get("/api/dashboard/latest-errors", { period: @period }, addLatestErrors);
+        }
+
+        updateLatestErrors();
+
+    });
+</script>

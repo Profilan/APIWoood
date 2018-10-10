@@ -86,6 +86,16 @@ namespace APIWoood.Logic.Repositories
             }
         }
 
+        public IEnumerable<Url> ListTopFive()
+        {
+            using (ISession session = SessionFactory.GetNewSession("db2"))
+            {
+                var query = session.Query<Url>().OrderByDescending(x => x.Hits).Take(5);
+
+                return query.ToList();
+            }
+        }
+
         public void Update(Url entity)
         {
             using (ISession session = SessionFactory.GetNewSession("db2"))

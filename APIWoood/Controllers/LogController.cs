@@ -20,7 +20,7 @@ namespace APIWoood.Controllers
         }
 
         // GET: Log
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, string startDate = null, string endDate = null, int UserId = -1, ErrorType ErrorType = ErrorType.NONE)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, string startDate = null, string endDate = null, int userId = -1, ErrorType ErrorType = ErrorType.NONE)
         {
             var loggedInUser = userRepository.GetById(Convert.ToInt32(User.Identity.GetUserId()));
 
@@ -61,13 +61,14 @@ namespace APIWoood.Controllers
                 int pageSize = 10;
                 int pageNumber = (page ?? 1);
 
-                var logs = _logRepository.List(sortOrder, searchString, pageSize, pageNumber, start, end, UserId, ErrorType);
+                var logs = _logRepository.List(sortOrder, searchString, pageSize, pageNumber, start, end, userId, ErrorType);
                 var users = userRepository.List();
 
                 var viewModel = new LogListViewModel()
                 {
                     Logs = logs,
-                    Users = users
+                    Users = users,
+                    UserId = userId
                 };
 
                 return View(viewModel);
