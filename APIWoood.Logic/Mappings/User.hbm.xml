@@ -13,9 +13,14 @@
     <property name="Role" column="role"/>
     <property name="AllowedIP" column="ip_from"/>
 
-    <set name="Debtors" table="EEK_API_WOOOD_USER_DEBTORS">
-      <key column="USER_ID" />
+    <set name="Debtors" table="EEK_API_WOOOD_USER_DEBTORS" lazy="false" cascade="none">
+      <key column="USER_ID" not-null="true" />
       <many-to-many class="Debtor" column="DEBITEURNR"/>
+    </set>
+
+    <set name="Urls" table="EEK_API_WOOOD_USER_URLS" lazy="false" cascade="save-update">
+      <key column="UserId" not-null="true" />
+      <many-to-many class="Url" column="UrlId"/>
     </set>
   </class>
 

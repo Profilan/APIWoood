@@ -11,5 +11,12 @@ namespace APIWoood.Logic.Models
         public virtual int Id { get; set; }
         public virtual string Name { get; set; }
         public virtual int Hits { get; set; }
+
+        public virtual ISet<User> Users { get; set; }
+
+        public Url()
+        {
+            Users = new HashSet<User>();
+        }
     }
 }

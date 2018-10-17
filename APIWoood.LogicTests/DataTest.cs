@@ -226,5 +226,41 @@ namespace APIWoood.LogicTests
 
             logErrors.Should().NotBeNullOrEmpty();
         }
+
+        [TestMethod]
+        public void UpdateUser()
+        {
+            var userRep = new UserRepository();
+
+            var user = userRep.GetByUsername("raymond");
+
+            /*
+            user.Urls.Clear();
+            var urlRep = new UrlRepository();
+
+            var url1 = urlRep.GetByName("api/woood-web-availability/list");
+            var url2 = urlRep.GetByName("api/woood-structureview/list");
+
+            user.Urls.Add(url1);
+            user.Urls.Add(url2);
+            */
+            user.Debtors.Clear();
+            var debtorRep = new DebtorRepository();
+
+            var url1 = debtorRep.GetById("1001502");
+
+            user.Debtors.Add(url1);
+
+            userRep.Update(user);
+        }
+
+        [TestMethod]
+        public void DeleteUser()
+        {
+            var rep = new UserRepository();
+
+            rep.Delete(27);
+
+        }
     }
 }

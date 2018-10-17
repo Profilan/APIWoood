@@ -55,7 +55,7 @@
 
         <div class="form-group">
             <label for="UserRole">Role</label>
-            @Html.DropDownList("UserRole", new SelectList(Enum.GetValues(typeof(Role))), "Select Role", new { @class = "form-control" })
+            @Html.EnumDropDownListFor(model => model.UserRole, "Select Role", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.UserRole, "", new { @class = "text-danger" })
         </div>
 
@@ -65,7 +65,7 @@
             @Html.ValidationMessageFor(model => model.AllowedIP, "", new { @class = "text-danger" })
         </div>
 
-        <table id="debtorTable" class="table table-bordered">
+        <table id="debtorTable" class="table table-bordered table-sm">
             <thead>
                 <tr>
                     <th>Debtor</th>
@@ -80,6 +80,25 @@
                 <tr class="debtorRow">
                     <td><input type="text" class="form-control debtorpicker" name="Debtors[]" /></td>
                     <td><a href="#" class="removeDebtorButton btn btn-secondary btn-small" role="button"><i class="fa fa-minus"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table id="urlTable" class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Url</th>
+                    <th><a href="#" class="addUrlButton btn btn-info btn-small" role="button"><i class="fa fa-plus"></i></a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="urlRow prototype d-none">
+                    <td><input type="text" class="form-control urlpicker" /></td>
+                    <td><a href="#" class="removeUrlButton btn btn-secondary btn-small" role="button"><i class="fa fa-minus"></i></a></td>
+                </tr>
+                <tr class="urlRow">
+                    <td><input type="text" class="form-control urlpicker" name="Urls[]" /></td>
+                    <td><a href="#" class="removeUrlButton btn btn-secondary btn-small" role="button"><i class="fa fa-minus"></i></a></td>
                 </tr>
             </tbody>
         </table>
@@ -140,7 +159,29 @@
                     $('#debtorTable tbody').append(newRow);
                 });
 
+                $('.addUrlButton').click(function (e) {
+                    var newRow = $('.urlRow.prototype').clone().removeClass('prototype d-none');
+                    newRow.find('.removeUrlButton').click(function (e) {
+                        $(this).parent().parent().remove();
+                    });
+                    newRow.find('.urlpicker').attr('name', 'Urls[]').autocomplete({
+                        source: function (request, response) {
+                            $.getJSON("/api/url/" + request.term, function (data) {
+                                response($.map(data, function (item) {
+                                    return item.Name;
+                                }));
+                            });
+                        },
+                        minLength: 2
+                    });
+                    $('#urlTable tbody').append(newRow);
+                });
+
                 $('.removeDebtorButton').click(function (e) {
+                    $(this).parent().parent().remove();
+                });
+
+                $('.removeUrlButton').click(function (e) {
                     $(this).parent().parent().remove();
                 });
 
@@ -149,6 +190,17 @@
                         $.getJSON("/api/debtor/" + request.term, function (data) {
                             response($.map(data, function (item) {
                                 return item.DEBITEURNR + " " + item.NAAM;
+                            }));
+                        });
+                    },
+                    minLength: 2
+                });
+
+                $(".urlpicker").autocomplete({
+                    source: function (request, response) {
+                        $.getJSON("/api/url/" + request.term, function (data) {
+                            response($.map(data, function (item) {
+                                return item.Name;
                             }));
                         });
                     },

@@ -50,5 +50,12 @@ namespace APIWoood.Logic.Models
 	    public virtual int OVERRIDE_LIMITS { get; set; }
 	    public virtual string DEB_NAME_ALIAS { get; set; }
 	    public virtual string DEB_WWW_ALIAS { get; set; }
+
+        public virtual ISet<User> Users { get; set; }
+
+        public Debtor()
+        {
+            Users = new HashSet<User>();
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace APIWoood.Logic.Repositories
 
         public Debtor GetById(string id)
         {
-            using (ISession session = SessionFactory.GetNewSession("db1"))
+            using (ISession session = SessionFactory.GetNewSession("db2"))
             {
                 var item = session.Get<Debtor>(id);
 
@@ -37,7 +37,7 @@ namespace APIWoood.Logic.Repositories
 
         public PagedResult<Debtor> List(string sortOrder, int pageSize = 25, int pageNumber = 1)
         {
-            using (ISession session = SessionFactory.GetNewSession("db1"))
+            using (ISession session = SessionFactory.GetNewSession("db2"))
             {
                 var criteria = session.CreateCriteria<Debtor>();
 
@@ -78,7 +78,7 @@ namespace APIWoood.Logic.Repositories
 
         public IEnumerable<Debtor> List()
         {
-            using (ISession session = SessionFactory.GetNewSession("db1"))
+            using (ISession session = SessionFactory.GetNewSession("db2"))
             {
                 var query = session.Query<Debtor>();
 
@@ -88,7 +88,7 @@ namespace APIWoood.Logic.Repositories
 
         public IEnumerable<Debtor> ListById(string id)
         {
-            using (ISession session = SessionFactory.GetNewSession("db1"))
+            using (ISession session = SessionFactory.GetNewSession("db2"))
             {
                 var query = from d in session.Query<Debtor>()
                             select d;
@@ -101,7 +101,7 @@ namespace APIWoood.Logic.Repositories
 
         public IEnumerable<Debtor> ListBySearchstring(string searchstring)
         {
-            using (ISession session = SessionFactory.GetNewSession("db1"))
+            using (ISession session = SessionFactory.GetNewSession("db2"))
             {
                 var query = from d in session.Query<Debtor>()
                             select d;

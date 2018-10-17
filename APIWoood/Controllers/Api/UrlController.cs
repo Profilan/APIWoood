@@ -36,6 +36,14 @@ namespace APIWoood.Controllers.Api
             return Ok();
         }
 
+        [Route("api/url/{searchstring}")]
+        [HttpGet]
+        [Authorize]
+        public IHttpActionResult GetUrlsBySearchstring(string searchstring)
+        {
+            var urls = urlRepository.ListBySearchstring(searchstring);
 
+            return Ok(urls);
+        }
     }
 }

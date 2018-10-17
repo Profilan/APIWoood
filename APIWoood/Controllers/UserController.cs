@@ -17,12 +17,14 @@ namespace APIWoood.Controllers
         private readonly UserRepository userRepository;
         private readonly DebtorRepository debtorRepository;
         private readonly UserDebtorRepository userDebtorRepository;
+        private readonly UrlRepository urlRepository;
 
         public UserController()
         {
             userRepository = new UserRepository();
             debtorRepository = new DebtorRepository();
             userDebtorRepository = new UserDebtorRepository();
+            urlRepository = new UrlRepository();
         }
 
         // GET: User
@@ -88,11 +90,13 @@ namespace APIWoood.Controllers
                 try
                 {
                     var debtors = collection["Debtors[]"].Split(',');
+                    var urls = collection["Urls[]"].Split(',');
                     var user = new User();
                     user.SetCredentials(collection["Username"], collection["Password"]);
                     user.ApiKey = collection["ApiKey"];
                     user.AllowedIP = collection["AllowedIP"];
-                    user.Role = collection["UserRole"];
+                    var role = (Role)Convert.ToInt32(collection["UserRole"]);
+                    user.Role = role.ToString();
                     if (collection["Email"] != null)
                     {
                         user.Email = collection["Email"];
@@ -102,14 +106,24 @@ namespace APIWoood.Controllers
                         user.Email = "";
                     }
 
-
                     foreach (string debtorId in debtors)
                     {
-                        var parts = debtorId.Split(' ');
-                        var debtor = debtorRepository.GetById(parts[0]);
-                        user.Debtors.Add(debtor);
+                        if (!String.IsNullOrEmpty(debtorId))
+                        {
+                            var parts = debtorId.Split(' ');
+                            var debtor = debtorRepository.GetById(parts[0]);
+                            user.Debtors.Add(debtor);
+                        }
                     }
 
+                    foreach (string urlName in urls)
+                    {
+                        if (!String.IsNullOrEmpty(urlName))
+                        {
+                            var url = urlRepository.GetByName(urlName);
+                            user.Urls.Add(url);
+                        }
+                    }
                     userRepository.Insert(user);
 
                     return RedirectToAction("Index");
@@ -139,15 +153,6 @@ namespace APIWoood.Controllers
                 Role userRole;
                 Enum.TryParse(item.Role, out userRole);
 
-                IList<string> selectedDebtors = new List<string>();
-                var userDebtors = userDebtorRepository.ListByUserId(id);
-
-                foreach (var userDebtor in userDebtors)
-                {
-                    var debtor = debtorRepository.GetById(userDebtor.UserDebtorIdentifier.DEBITEURNR);
-                    selectedDebtors.Add(debtor.DEBITEURNR + " " + debtor.NAAM);
-                }
-
                 var user = new UserViewModel()
                 {
                     Id = item.Id,
@@ -156,7 +161,9 @@ namespace APIWoood.Controllers
                     UserRole = userRole,
                     ApiKey = item.ApiKey,
                     AllowedIP = item.AllowedIP,
-                    SelectedDebtors = selectedDebtors,
+                    Debtors = item.Debtors,
+                    Urls = item.Urls,
+                    Role = item.Role
                 };
 
                 return View(user);
@@ -179,11 +186,48 @@ namespace APIWoood.Controllers
             {
                 try
                 {
-                    // TODO: Add update logic here
+                    var debtors = collection["Debtors[]"].Split(',');
+                    var urls = collection["Urls[]"].Split(',');
+                    var user = userRepository.GetById(id);
+                    user.ApiKey = collection["ApiKey"];
+                    user.AllowedIP = collection["AllowedIP"];
+                    var role = (Role)Convert.ToInt32(collection["UserRole"]);
+                    user.Role = role.ToString();
+                    if (collection["Email"] != null)
+                    {
+                        user.Email = collection["Email"];
+                    }
+                    else
+                    {
+                        user.Email = "";
+                    }
+
+                    user.Debtors.Clear();
+                    foreach (string debtorId in debtors)
+                    {
+                        if (!String.IsNullOrEmpty(debtorId))
+                        {
+                            var parts = debtorId.Split(' ');
+                            var debtor = debtorRepository.GetById(parts[0]);
+                            user.Debtors.Add(debtor);
+                        }
+                    }
+
+                    user.Urls.Clear();
+                    foreach (string urlName in urls)
+                    {
+                        if (!String.IsNullOrEmpty(urlName))
+                        {
+                            var url = urlRepository.GetByName(urlName);
+                            user.Urls.Add(url);
+                        }
+                    }
+
+                    userRepository.Update(user);
 
                     return RedirectToAction("Index");
                 }
-                catch
+                catch (Exception e)
                 {
                     return View();
                 }

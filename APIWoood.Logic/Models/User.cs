@@ -18,9 +18,12 @@ namespace APIWoood.Logic.Models
 
         public virtual ISet<Debtor> Debtors { get; set; }
 
+        public virtual ISet<Url> Urls { get; set; }
+
         public User()
         {
             Debtors = new HashSet<Debtor>();
+            Urls = new HashSet<Url>();
             _passwordHasher = new SharedKernel.PasswordHasher();
         }
 

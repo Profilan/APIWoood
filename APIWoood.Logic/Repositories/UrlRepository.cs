@@ -2,6 +2,7 @@
 using APIWoood.Logic.SharedKernel;
 using APIWoood.Logic.SharedKernel.Interfaces;
 using NHibernate;
+using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,19 @@ namespace APIWoood.Logic.Repositories
                 {
                     return null;
                 }
+            }
+        }
+
+        public object ListBySearchstring(string searchstring)
+        {
+            using (ISession session = SessionFactory.GetNewSession("db2"))
+            {
+                var query = from u in session.Query<Url>()
+                            select u;
+
+                query = query.Where(u => u.Name.Like("%" + searchstring + "%"));
+
+                return query.ToList();
             }
         }
 
