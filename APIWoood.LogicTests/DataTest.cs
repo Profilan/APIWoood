@@ -194,6 +194,16 @@ namespace APIWoood.LogicTests
         }
 
         [TestMethod]
+        public void StockDataList()
+        {
+            var rep = new StockDataRepository();
+
+            var items = rep.GetStockDataList();
+
+            items.Should().NotBeNull();
+        }
+
+        [TestMethod]
         public void DeliveryMethodList()
         {
             var rep = new DeliveryMethodRepository();

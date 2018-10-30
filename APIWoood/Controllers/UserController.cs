@@ -261,6 +261,35 @@ namespace APIWoood.Controllers
             }
         }
 
+        [HttpPost]
+        [Authorize]
+        public ActionResult ChangePassword(int id, FormCollection collection)
+        {
+            var userId = User.Identity.GetUserId();
+            var loggedInUser = userRepository.GetById(Convert.ToInt32(userId));
+
+            if (loggedInUser.Role == "admin")
+            {
+                try
+                {
+                    var user = userRepository.GetById(id);
+                    user.SetPassword(collection["Password1"]);
+
+                    userRepository.Update(user);
+
+                    return RedirectToAction("Index");
+                }
+                catch (Exception e)
+                {
+                    return View();
+                }
+            }
+            else
+            {
+                throw new Exception("You are not allowed to access this");
+            }
+        }
+
         [Authorize]
         public ActionResult UrlVisits(int userId, int urlId, Period period = Period.month)
         {

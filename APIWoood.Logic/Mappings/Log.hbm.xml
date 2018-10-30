@@ -2,7 +2,7 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" 
                    namespace="APIWoood.Logic.Models" 
                    assembly="APIWoood.Logic">
-  <class name="Log" table="EEK_API_WOOOD_LOG" lazy="false">
+  <class name="Log" table="EEK_API_LOG" lazy="false">
     <id name="Id">
       <generator class="identity"/>
     </id>

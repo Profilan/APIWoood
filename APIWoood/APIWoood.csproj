@@ -216,6 +216,7 @@
     <Compile Include="Controllers\Api\PricelistController.cs" />
     <Compile Include="Controllers\Api\ProductRangeController.cs" />
     <Compile Include="Controllers\Api\SellingPointController.cs" />
+    <Compile Include="Controllers\Api\StockDataController.cs" />
     <Compile Include="Controllers\Api\UrlController.cs" />
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Controllers\Api\WebAvailabilityController.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\UrlController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Filters\JsonExceptionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -235,6 +237,7 @@
     <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DebtorOrder.cs" />
+    <Compile Include="Models\HalCollection.cs" />
     <Compile Include="Models\Identity\CustomPasswordHasher.cs" />
     <Compile Include="Models\Identity\IdentityStore.cs" />
     <Compile Include="Models\Identity\LoginViewModel.cs" />
@@ -263,6 +266,7 @@
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\WebAvailability.cs" />
     <Compile Include="Modules\BasicAuthHttpModule.cs" />
+    <Compile Include="Modules\IPAddressRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -276,6 +280,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\Logo_De_Eekhoorn_homepageNW_2.png" />
     <Content Include="Content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\images\ui-bg_glass_55_fbf9ee_1x400.png" />
     <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />

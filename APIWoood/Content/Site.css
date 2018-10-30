@@ -17,17 +17,17 @@
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    color: #3f9598;
+    color: #00618B;
 }
 
 a {
-    color: #3f9598;
+    color: #00618B;
 }
 
-a:hover {
-    text-decoration: underline;
-    color: #3f9598;
-}
+    a:hover {
+        text-decoration: underline;
+        color: #00618B;
+    }
 
 .form-signin {
     width: 100%;

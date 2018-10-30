@@ -92,6 +92,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\HibernateStoredProcedureExecutor.cs" />
+    <Compile Include="Helpers\Interfaces\IExecuteStoredProcedure.cs" />
+    <Compile Include="Models\StockData.cs" />
     <Compile Include="Models\Url.cs" />
     <Compile Include="Models\UserDebtorIdentifier.cs" />
     <Compile Include="Models\Debtor.cs" />
@@ -130,6 +133,7 @@
     <Compile Include="Repositories\ProductRangeRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\SellingPointRepository.cs" />
+    <Compile Include="Repositories\StockDataRepository.cs" />
     <Compile Include="Repositories\StructureRepository.cs" />
     <Compile Include="Repositories\UrlRepository.cs" />
     <Compile Include="Repositories\UserDebtorRepository.cs" />
@@ -157,6 +161,7 @@
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Mappings\StockData.hbm.xml" />
     <EmbeddedResource Include="Mappings\Url.hbm.xml" />
     <EmbeddedResource Include="Mappings\UserDebtor.hbm.xml" />
     <EmbeddedResource Include="Mappings\Log.hbm.xml" />

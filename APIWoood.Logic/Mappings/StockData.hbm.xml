@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="StockData">
+    <id name="ITEMCODE">
+      <generator class="identity"/>
+    </id>
+
+    <property name="EAN"/>
+    <property name="STOCKLEVEL"/>
+    <property name="STATUS"/>
+    <property name="ATP"/>
+    <property name="DFF_SHIPMENT"/>
+  </class> 
+  <sql-query name="GetStockDataListByDebtor" callable="true">
+    <query-param name="DEBCODE" type="string"/>
+    <return class="StockData">
+      <return-property column="ITEMCODE" name="ITEMCODE"/>
+      <return-property column="EAN" name="EAN"/>
+      <return-property column="STOCKLEVEL" name="STOCKLEVEL"/>
+      <return-property column="STATUS" name="STATUS"/>
+      <return-property column="ATP" name="ATP"/>
+      <return-property column="DFF_SHIPMENT" name="DFF_SHIPMENT"/>
+    </return>
+    SET NOCOUNT ON;EXEC EEK_SP_STOCKFEED @DEBCODE=:debtorCode
+  </sql-query>
+  <sql-query name="GetStockDataList" callable="true">
+    <return class="StockData">
+      <return-property column="ITEMCODE" name="ITEMCODE"/>
+      <return-property column="EAN" name="EAN"/>
+      <return-property column="STOCKLEVEL" name="STOCKLEVEL"/>
+      <return-property column="STATUS" name="STATUS"/>
+      <return-property column="ATP" name="ATP"/>
+      <return-property column="DFF_SHIPMENT" name="DFF_SHIPMENT"/>
+    </return>
+    SET NOCOUNT ON;EXEC EEK_SP_STOCKFEED
+  </sql-query>
+  <sql-query name="GetStockDataById" callable="true">
+    <query-param name="ITEMCODE" type="string"/>
+    <return class="StockData">
+      <return-property column="ITEMCODE" name="ITEMCODE"/>
+      <return-property column="EAN" name="EAN"/>
+      <return-property column="STOCKLEVEL" name="STOCKLEVEL"/>
+      <return-property column="STATUS" name="STATUS"/>
+      <return-property column="ATP" name="ATP"/>
+      <return-property column="DFF_SHIPMENT" name="DFF_SHIPMENT"/>
+    </return>
+    SET NOCOUNT ON;EXEC EEK_SP_STOCKFEED @ITEMCODE=:itemCode
+  </sql-query>
+</hibernate-mapping>
