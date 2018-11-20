@@ -198,7 +198,7 @@ namespace APIWoood.LogicTests
         {
             var rep = new StockDataRepository();
 
-            var items = rep.GetStockDataList();
+            var items = rep.GetStockDataListByDebtor("000504");
 
             items.Should().NotBeNull();
         }

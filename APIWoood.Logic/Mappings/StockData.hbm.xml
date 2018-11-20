@@ -23,7 +23,7 @@
       <return-property column="ATP" name="ATP"/>
       <return-property column="DFF_SHIPMENT" name="DFF_SHIPMENT"/>
     </return>
-    SET NOCOUNT ON;EXEC EEK_SP_STOCKFEED @DEBCODE=:debtorCode
+    SET NOCOUNT ON;EXEC EEK_SP_STOCKFEED @debcode=:debtorCode
   </sql-query>
   <sql-query name="GetStockDataList" callable="true">
     <return class="StockData">

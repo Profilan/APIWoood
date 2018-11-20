@@ -299,10 +299,14 @@ namespace APIWoood.Controllers
             var logRep = new LogRepository();
             var logs = logRep.ListByUserAndUrl(userId, url.Name, period).OrderByDescending(x => x.TimeStamp);
 
+            var histRep = new HistoryRepository();
+            var history = histRep.ListByUserAndUrl(userId, url.Id, period);
+
             var viewModel = new LogViewModel()
             {
                 Users = userRepository.List(),
                 Visits = logs,
+                VisitsOld = history,
                 Urls = urlRep.List(),
                 UrlId = urlId,
                 UserId = userId,

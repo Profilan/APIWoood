@@ -21,5 +21,7 @@ namespace APIWoood.Models
         public Period Period { get; set; }
 
         public IEnumerable<Log> Visits { get; set; }
+
+        public IEnumerable<History> VisitsOld { get; set; }
     }
 }

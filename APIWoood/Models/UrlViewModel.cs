@@ -10,8 +10,10 @@ namespace APIWoood.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int Hits { get; set; }
+        public int HitsOld { get; set; }
         public double Duration { get; set; }
-        public DateTime LatestVisitDate { get; set; }
+        public string LatestVisitDate { get; set; }
+        public string LatestVisitDateOld { get; set; }
         public int ErrorCount { get; set; }
     }
 }

@@ -215,6 +215,7 @@
     <Compile Include="Controllers\Api\PaymentReleaseController.cs" />
     <Compile Include="Controllers\Api\PricelistController.cs" />
     <Compile Include="Controllers\Api\ProductRangeController.cs" />
+    <Compile Include="Controllers\Api\SalesOrderLineStatusController.cs" />
     <Compile Include="Controllers\Api\SellingPointController.cs" />
     <Compile Include="Controllers\Api\StockDataController.cs" />
     <Compile Include="Controllers\Api\UrlController.cs" />
@@ -229,15 +230,17 @@
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\UrlController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Filters\JsonExceptionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ApiError.cs" />
     <Compile Include="Models\DashboardService.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DebtorOrder.cs" />
+    <Compile Include="Models\DutchNedSalesOrderLineStatus.cs" />
     <Compile Include="Models\HalCollection.cs" />
+    <Compile Include="Models\HalItem.cs" />
     <Compile Include="Models\Identity\CustomPasswordHasher.cs" />
     <Compile Include="Models\Identity\IdentityStore.cs" />
     <Compile Include="Models\Identity\LoginViewModel.cs" />
@@ -245,6 +248,7 @@
     <Compile Include="Models\Identity\RegisterViewModel.cs" />
     <Compile Include="Models\Identity\SignInManager.cs" />
     <Compile Include="Models\Identity\UserManager.cs" />
+    <Compile Include="Models\Link.cs" />
     <Compile Include="Models\LogListViewModel.cs" />
     <Compile Include="Models\LogViewModel.cs" />
     <Compile Include="Models\OrderData.cs" />
@@ -260,6 +264,8 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductRange.cs" />
     <Compile Include="Models\SellingPoint.cs" />
+    <Compile Include="Models\StockData.cs" />
+    <Compile Include="Models\StockDataAtp.cs" />
     <Compile Include="Models\UrlStatisticsViewModel.cs" />
     <Compile Include="Models\UrlViewModel.cs" />
     <Compile Include="Models\UserStatisticsViewModel.cs" />
@@ -542,6 +548,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Filters\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

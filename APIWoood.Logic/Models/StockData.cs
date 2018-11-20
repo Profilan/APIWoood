@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace APIWoood.Logic.Models
 {
     public class StockData
@@ -7,7 +9,7 @@ namespace APIWoood.Logic.Models
         public virtual string EAN { get; set; }
         public virtual int STOCKLEVEL { get; set; }
         public virtual string STATUS { get; set; }
-        public virtual string ATP { get; set; }
+        public virtual DateTime ATP { get; set; }
         public virtual string DFF_SHIPMENT { get; set; }
 
     }

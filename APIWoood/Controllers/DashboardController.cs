@@ -18,6 +18,7 @@ namespace APIWoood.Controllers
     {
         private readonly UrlRepository urlRepository;
         private readonly LogRepository logRepository;
+        private readonly HistoryRepository histRepository;
         private readonly UserRepository userRepository = new UserRepository();
 
         JsonSerializerSettings _jsonSetting = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
@@ -27,6 +28,7 @@ namespace APIWoood.Controllers
 
             urlRepository = new UrlRepository();
             logRepository = new LogRepository();
+            histRepository = new HistoryRepository();
         }
 
         // GET: Dashboard
@@ -110,20 +112,24 @@ namespace APIWoood.Controllers
             foreach (var url in urls)
             {
                 var logs = logRepository.ListByUserAndUrl(id, url.Name, period);
-                if (logs.Count() > 0)
+                var history = histRepository.ListByUserAndUrl(id, url.Id, period);
+                if (logs.Count() > 0 || history.Count() > 0)
                 {
                     double totalDuration = 0;
                     foreach (var log in logs)
                     {
                         totalDuration += log.Duration;
                     }
+                    
                     var visitedUrl = new UrlViewModel()
                     {
                         Id = url.Id,
                         Name = url.Name,
                         Hits = logs.Count(),
+                        HitsOld = history.Count(),
                         Duration = totalDuration / logs.Count(),
-                        LatestVisitDate = logs.First().TimeStamp
+                        LatestVisitDate = logs.Count() > 0 ? logs.First().TimeStamp.ToString() : "",
+                        LatestVisitDateOld = history.Count() > 0 ? history.First().HistoryIdentifier.Date.ToString() : ""
                     };
                     visitedUrls.Add(visitedUrl);
                 }

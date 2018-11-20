@@ -17,12 +17,14 @@ namespace APIWoood.Controllers
         private readonly UrlRepository urlRepository;
         private readonly UserRepository userRepository;
         private readonly LogRepository logRepository;
+        private readonly HistoryRepository histRepository;
 
         public UrlController()
         {
             urlRepository = new UrlRepository();
             userRepository = new UserRepository();
             logRepository = new LogRepository();
+            histRepository = new HistoryRepository();
         }
 
         // GET: Url
@@ -52,7 +54,8 @@ namespace APIWoood.Controllers
             foreach (var user in users)
             {
                 var logs = logRepository.ListByUserAndUrl(user.Id, url.Name, period);
-                if (logs.Count() > 0)
+                var history = histRepository.ListByUserAndUrl(user.Id, url.Id, period);
+                if (logs.Count() > 0 || history.Count() > 0)
                 {
                     double duration = 0;
                     foreach (var log in logs)
@@ -64,7 +67,9 @@ namespace APIWoood.Controllers
                         Id = user.Id,
                         UserName = user.UserName,
                         QuantityVisitedUrls = logs.Count(),
-                        LatestVisitDate = logs.First().TimeStamp,
+                        QuantityVisitedUrlsOld = history.Count(),
+                        LatestVisitDate = logs.Count() > 0 ? logs.First().TimeStamp.ToString() : "",
+                        LatestVisitDateOld = history.Count() > 0 ? history.First().HistoryIdentifier.Date.ToString() : "",
                         Duration = duration / logs.Count()
                     };
                     visitors.Add(visitor);

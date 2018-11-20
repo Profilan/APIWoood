@@ -136,6 +136,34 @@
     "name": ""
   },
   {
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "optional": false,
+            "field": "varname1",
+            "description": "<p>No type.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "varname2",
+            "description": "<p>With type.</p>"
+          }
+        ]
+      }
+    },
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "./obj/Release/Package/PackageTmp/doc/main.js",
+    "group": "C__Users_raymond_source_repos_APIWoood_APIWoood_obj_Release_Package_PackageTmp_doc_main_js",
+    "groupTitle": "C__Users_raymond_source_repos_APIWoood_APIWoood_obj_Release_Package_PackageTmp_doc_main_js",
+    "name": ""
+  },
+  {
     "type": "get",
     "url": "/api/woood-deb-order-info/view/debiteurnr/{debiteurnr}?page={page}&limit={limit}",
     "title": "Request debtor orders by debtor",
@@ -1668,6 +1696,247 @@
     },
     "filename": "./Controllers/Api/SellingPointController.cs",
     "groupTitle": "SellingPoints"
+  },
+  {
+    "type": "get",
+    "url": "/api/stock-data/{id}",
+    "title": "Request Stock Data by Itemcode",
+    "version": "1.0.0",
+    "name": "GetStockDataByItemcode",
+    "group": "StockData",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Basic Authorization value (provided by De Eekhoorn Woodworkings B.V.)</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "apikey",
+            "description": "<p>Api Key provided by De Eekhoorn Woodworkings B.V.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "itemcode",
+            "description": "<p>Item Code</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "/api/stock-data/001-ANT?apikey=0123456789abc",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1. 200 OK\n{\n    \"ITEMCODE\": \"001-ANT\",\n    \"EAN\": \"8714713087440\",\n    \"STOCKLEVEL\": 0,\n    \"STATUS\": \"COLLECTION\",\n    \"ATP\": {\n        \"date\": \"2019-02-15 00:00:00.000000\",\n        \"timezone_type\": 3,\n        \"timezone\": \"Europe/Amsterdam\"\n    },\n    \"DFF_SHIPMENT\": \"CARRIER\",\n    \"_links\": {\n        \"self\": {\n            \"href\": \"http://apitest.dutchfurniturefulfilment.local/api/stock-data/001-ANT\"\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "401",
+            "optional": false,
+            "field": "NotAuthorized",
+            "description": "<p>The user is not authorized.</p>"
+          }
+        ]
+      }
+    },
+    "filename": "./Controllers/Api/StockDataController.cs",
+    "groupTitle": "StockData"
+  },
+  {
+    "type": "get",
+    "url": "/api/stock-data",
+    "title": "Request Stock Data",
+    "version": "1.0.0",
+    "name": "GetStockDataList",
+    "group": "StockData",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Basic Authorization value (provided by De Eekhoorn Woodworkings B.V.)</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "apikey",
+            "description": "<p>Api Key provided by De Eekhoorn Woodworkings B.V.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "page",
+            "defaultValue": "1",
+            "description": "<p>Page to show</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "limit",
+            "defaultValue": "25",
+            "description": "<p>Number of products on a page</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "/api/stock-data?apikey=0123456789abc&page=1&limit=25",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1. 200 OK\n{\n    \"_links\": {\n        \"self\": {\n            \"href\": \"http://apitest.dutchfurniturefulfilment.local/api/stock-data?page=1\"\n        },\n        \"first\": {\n            \"href\": \"http://apitest.dutchfurniturefulfilment.local/api/stock-data\"\n        },\n        \"last\": {\n            \"href\": \"http://apitest.dutchfurniturefulfilment.local/api/stock-data?page=2833\"\n        },\n        \"next\": {\n            \"href\": \"http://apitest.dutchfurniturefulfilment.local/api/stock-data?page=2\"\n        }\n    },\n    \"_embedded\": {\n        \"stock_data\": [\n            {\n                \"ITEMCODE\": \"001-ANT\",\n                \"EAN\": \"8714713087440\",\n                \"STOCKLEVEL\": 0,\n                \"STATUS\": \"COLLECTION\",\n                \"ATP\": {\n                    \"date\": \"2019-02-15 00:00:00.000000\",\n                    \"timezone_type\": 3,\n                    \"timezone\": \"Europe/Amsterdam\"\n                },\n                \"DFF_SHIPMENT\": \"CARRIER\",\n                \"_links\": {\n                    \"self\": {\n                        \"href\": \"http://apitest.dutchfurniturefulfilment.local/api/stock-data/001-ANT\"\n                    }\n                }\n            },\n            ...\n        ]\n    },\n    \"page_count\": 2833,\n    \"page_size\": 25,\n    \"total_items\": 2833,\n    \"page\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "401",
+            "optional": false,
+            "field": "NotAuthorized",
+            "description": "<p>The user is not authorized.</p>"
+          }
+        ]
+      }
+    },
+    "filename": "./Controllers/Api/StockDataController.cs",
+    "groupTitle": "StockData"
+  },
+  {
+    "type": "get",
+    "url": "/api/stock-data",
+    "title": "Request Stock Data by Debtorcode",
+    "version": "1.0.0",
+    "name": "GetStockDataListByDebtor",
+    "group": "StockData",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Basic Authorization value (provided by De Eekhoorn Woodworkings B.V.)</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "apikey",
+            "description": "<p>Api Key provided by De Eekhoorn Woodworkings B.V.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "debcode",
+            "description": "<p>Debtor Code</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "page",
+            "defaultValue": "1",
+            "description": "<p>Page to show</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "limit",
+            "defaultValue": "25",
+            "description": "<p>Number of products on a page</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "/api/stock-data?apikey=0123456789abc&page=1&limit=25&debcode=123",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1. 200 OK\n{\n    \"_links\": {\n        \"self\": {\n            \"href\": \"http://apitest.dutchfurniturefulfilment.local/api/stock-data?page=1\"\n        },\n        \"first\": {\n            \"href\": \"http://apitest.dutchfurniturefulfilment.local/api/stock-data\"\n        },\n        \"last\": {\n            \"href\": \"http://apitest.dutchfurniturefulfilment.local/api/stock-data?page=2833\"\n        },\n        \"next\": {\n            \"href\": \"http://apitest.dutchfurniturefulfilment.local/api/stock-data?page=2\"\n        }\n    },\n    \"_embedded\": {\n        \"stock_data\": [\n            {\n                \"ITEMCODE\": \"001-ANT\",\n                \"EAN\": \"8714713087440\",\n                \"STOCKLEVEL\": 0,\n                \"STATUS\": \"COLLECTION\",\n                \"ATP\": {\n                    \"date\": \"2019-02-15 00:00:00.000000\",\n                    \"timezone_type\": 3,\n                    \"timezone\": \"Europe/Amsterdam\"\n                },\n                \"DFF_SHIPMENT\": \"CARRIER\",\n                \"_links\": {\n                    \"self\": {\n                        \"href\": \"http://apitest.dutchfurniturefulfilment.local/api/stock-data/001-ANT\"\n                    }\n                }\n            },\n            ...\n        ]\n    },\n    \"page_count\": 2833,\n    \"page_size\": 25,\n    \"total_items\": 2833,\n    \"page\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "401",
+            "optional": false,
+            "field": "NotAuthorized",
+            "description": "<p>The user is not authorized.</p>"
+          }
+        ]
+      }
+    },
+    "filename": "./Controllers/Api/StockDataController.cs",
+    "groupTitle": "StockData"
   },
   {
     "type": "get",

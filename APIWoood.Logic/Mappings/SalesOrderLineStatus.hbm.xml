@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="SalesOrderLineStatus" table="EEK_DISTRIBUTION_SALESORDERLINESTATUS" lazy="false">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Carrier"/>
+    <property name="SalesOrderLineId"/>
+    <property name="OrderLineStatus"/>
+    <property name="TransactionDate"/>
+    <property name="OrderLineStatusDescription"/>
+
+    <property name="SysCreated"/>
+    <property name="SysCreator"/>
+  </class>
+</hibernate-mapping>

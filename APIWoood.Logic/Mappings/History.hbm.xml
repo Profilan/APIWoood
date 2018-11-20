@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="History" table="EEK_API_HISTORY">
+    <composite-id name="HistoryIdentifier">
+      <key-property name="UserId"/>
+      <key-property name="Date"/>
+      <key-property name="UrlId"/>
+    </composite-id>
+    <property name="StatusCode"/>
+  </class>
+
+</hibernate-mapping>

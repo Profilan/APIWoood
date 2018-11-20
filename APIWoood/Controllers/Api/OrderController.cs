@@ -116,8 +116,8 @@ namespace APIWoood.Controllers.Api
          * @apiError (Error 4xx) {400} Required field is missing.
          * @apiError (Error 4xx) {401} NotAuthorized The user is not authorized.
          * @apiError (Error 4xx) {401} NotAuthorized API key is missing.
-          * @apiError (Error 4xx) {409} Conflict The combination of DEBITEURNR and REFERENTIE must be unique.
-        * 
+         * @apiError (Error 4xx) {409} Conflict The combination of DEBITEURNR and REFERENTIE must be unique.
+         * 
          */
         [Route("api/woood-order/create")]
         [HttpPost]

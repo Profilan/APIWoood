@@ -12,19 +12,19 @@ using System.Threading.Tasks;
 
 namespace APIWoood.Logic.Repositories
 {
-    public class StockDataRepository : IRepository<StockData, int>
+    public class StockDataRepository : IRepository<StockData, string>
     {
-        public void Delete(int id)
+        public void Delete(string id)
         {
             throw new NotImplementedException();
         }
 
-        public StockData GetById(int id)
+        public StockData GetById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public StockData GetStockDataById(int id)
+        public StockData GetStockDataById(string id)
         {
             using (ISession session = SessionFactory.GetNewSession("db2"))
             {
@@ -58,7 +58,7 @@ namespace APIWoood.Logic.Repositories
             throw new NotImplementedException();
         }
 
-        public PagedResult<StockData> GetStockDataListByDebtor(string debtorCode, int pageSize = 1, int pageNumber = 25)
+        public PagedResult<StockData> GetStockDataListByDebtor(string debtorCode, int pageSize = 25, int pageNumber = 1)
         {
             using (ISession session = SessionFactory.GetNewSession("db2"))
             {
@@ -76,13 +76,13 @@ namespace APIWoood.Logic.Repositories
                 result.RowCount = items.Count();
                 var pageCount = (double)result.RowCount / result.PageSize;
                 result.PageCount = (int)Math.Ceiling(pageCount);
-                result.Results = items.Skip(pageSize * pageNumber).Take(pageNumber).ToList();
+                result.Results = items.Skip(pageSize * pageNumber).Take(pageSize).ToList();
 
                 return result;
             }
         }
 
-        public PagedResult<StockData> GetStockDataList(int pageSize = 1, int pageNumber = 25)
+        public PagedResult<StockData> GetStockDataList(int pageSize = 25, int pageNumber = 1)
         {
             using (ISession session = SessionFactory.GetNewSession("db2"))
             {
@@ -94,9 +94,10 @@ namespace APIWoood.Logic.Repositories
                 result.CurrentPage = pageNumber;
                 result.PageSize = pageSize;
                 result.RowCount = items.Count();
-                var pageCount = (double)result.RowCount / result.PageSize;
+                Double pageCount = result.RowCount / result.PageSize;
                 result.PageCount = (int)Math.Ceiling(pageCount);
-                result.Results = items.Skip(pageSize * pageNumber).Take(pageNumber).ToList();
+                
+                result.Results = items.Skip(pageSize * pageNumber).Take(pageSize).ToList();
 
                 return result;
             }

@@ -21,7 +21,7 @@
 
         <hr />
 
-        <div class="col-md-6">
+        <div class="col-md-9">
             <h4>Visited Url's</h4>
             <table class="table table-sm">
                 <thead>
@@ -29,7 +29,9 @@
                         <th>@Html.ActionLink("Name", "UserStatistics", new { sortOrder = "NameAsc" })</th>
                         <th style="text-align: right">@Html.ActionLink("Avg. Duration (ms)", "UserStatistics", new { sortOrder = "DurationDesc" })</th>
                         <th style="text-align: right">@Html.ActionLink("Latest Visit", "UserStatistics", new { sortOrder = "LatestVisitDateDesc" })</th>
+                        <th style="text-align: right">@Html.ActionLink("Latest Visit (old)", "UserStatistics", new { sortOrder = "LatestVisitDateOldDesc" })</th>
                         <th style="text-align: right">@Html.ActionLink("Visited #", "UserStatistics", new { sortOrder = "HitsDesc" })</th>
+                        <th style="text-align: right">@Html.ActionLink("Visited (Old) #", "UserStatistics", new { sortOrder = "HitsOldDesc" })</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,7 +43,9 @@
                             @url.Duration.ToString("F")
                         </td>
                         <td style="text-align: right">@url.LatestVisitDate</td>
+                        <td style="text-align: right">@url.LatestVisitDateOld</td>
                         <td style="text-align: right"><span class="badge badge-secondary badge-pill">@Html.ActionLink(url.Hits.ToString(), "UrlVisits", "User", new { userId = Model.Id, urlId = url.Id, period = Model.Period }, null)</span></td>
+                        <td style="text-align: right"><span class="badge badge-secondary badge-pill">@Html.ActionLink(url.HitsOld.ToString(), "UrlVisits", "User", new { userId = Model.Id, urlId = url.Id, period = Model.Period }, null)</span></td>
                     </tr>
                 }
                 </tbody>

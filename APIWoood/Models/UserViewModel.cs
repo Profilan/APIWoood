@@ -36,7 +36,10 @@ namespace APIWoood.Models
         public IEnumerable<Url> Urls { get; set; }
 
         public int QuantityVisitedUrls { get; set; }
-        public DateTime LatestVisitDate { get; set; }
+        public string LatestVisitDate { get; set; }
+
+        public int QuantityVisitedUrlsOld { get; set; }
+        public string LatestVisitDateOld { get; set; }
 
         public double Duration { get; set; }
     }
