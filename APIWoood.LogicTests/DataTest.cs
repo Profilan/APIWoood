@@ -272,5 +272,38 @@ namespace APIWoood.LogicTests
             rep.Delete(27);
 
         }
+
+        [TestMethod]
+        public void InsertSalesOrderLineStatus()
+        {
+            var rep = new SalesOrderLineStatusRepository();
+
+            var status = new SalesOrderLineStatus()
+            {
+                Carrier = "999068",
+                SalesOrderLineId = 0,
+                OrderLineStatus = 200,
+                TransactionDate = DateTime.Now,
+                OrderLineStatusDescription = "200: {\"tracking_code\":\"xxxxxxxxxxxxx\" }"
+            };
+
+            rep.Insert(status);
+        }
+
+        [TestMethod]
+        public void InsertDeliveryAppointment()
+        {
+            var rep = new DeliveryAppointmentRepository();
+
+            var status = new DeliveryAppointment()
+            {
+                Carrier = "999068",
+                SalesOrderLineId = 0,
+                DeliveryAppointmentStatus = 200,
+                TransactionDate = DateTime.Now,
+            };
+
+            rep.Insert(status);
+        }
     }
 }

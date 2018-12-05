@@ -2,21 +2,19 @@
 using APIWoood.Logic.Repositories;
 using APIWoood.Models;
 using System;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Results;
 
 namespace APIWoood.Controllers.Api
 {
-    public class SalesOrderLineStatusController : ApiController
+    public class DeliveryAppointmentController : ApiController
     {
-        private readonly SalesOrderLineStatusRepository _salesOrderLineStatusRepository = new SalesOrderLineStatusRepository();
+        private readonly DeliveryAppointmentRepository _deliveryAppointmentRepository = new DeliveryAppointmentRepository();
         private readonly UserRepository _userRepository = new UserRepository();
 
-        [Route("api/sales-orderline-status/dutchned")]
+        [Route("api/delivery-appointment/dutchned")]
         [HttpPost]
         [Authorize]
-        public IHttpActionResult CreateSalesOrderLineStatusDutchNed([FromBody]DutchNedSalesOrderLineStatus data, string apiKey)
+        public IHttpActionResult CreateDeliveryAppointmentDutchNed([FromBody]DutchNedDeliveryAppointment data, string apiKey)
         {
             try
             {
@@ -27,18 +25,17 @@ namespace APIWoood.Controllers.Api
                     return Unauthorized();
                 }
 
-                var salesOrderLineStatus = new SalesOrderLineStatus()
+                var deliveryAppointment = new DeliveryAppointment()
                 {
                     Carrier = "999068",
                     SalesOrderLineId = data.OrderLineId,
-                    OrderLineStatus = data.Status,
+                    DeliveryAppointmentStatus = data.Status,
                     TransactionDate = DateTime.Parse(data.Date, null, System.Globalization.DateTimeStyles.RoundtripKind),
-                    OrderLineStatusDescription = data.Data,
-                };
+                 };
 
-                _salesOrderLineStatusRepository.Insert(salesOrderLineStatus);
+                _deliveryAppointmentRepository.Insert(deliveryAppointment);
 
-                return Ok(salesOrderLineStatus);
+                return Ok(deliveryAppointment);
             }
             catch (Exception e)
             {

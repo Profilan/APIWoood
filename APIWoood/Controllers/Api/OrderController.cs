@@ -124,6 +124,7 @@ namespace APIWoood.Controllers.Api
         [Authorize]
         public IHttpActionResult CreateOrder([FromBody]OrderData data)
         {
+            var jsonData = JsonConvert.SerializeObject(data);
             string apiKey;
             try
             {
@@ -131,7 +132,7 @@ namespace APIWoood.Controllers.Api
             }
             catch (System.Exception)
             {
-                logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "API key is missing.", "api/woood-order/create");
+                logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "API key is missing. " + jsonData, "api/woood-order/create");
 
                 return Content(HttpStatusCode.Unauthorized, "API key is missing.");
             }
@@ -169,7 +170,17 @@ namespace APIWoood.Controllers.Api
 
                     if (order.item.Count() == 0)
                     {
+                        logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "The order has no lines", "api/woood-order/create");
 
+                        return Content(HttpStatusCode.BadRequest, "The order has no lines");
+                    }
+
+                    // Check if the user has access to the debtor
+                    if (!DebtorBelongsToUser(user, order.DEBITEURNR))
+                    {
+                        logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "DEBITEURNR does not belong to the user", "api/woood-order/create");
+
+                        return Content(HttpStatusCode.BadRequest, "DEBITEURNR does not belong to the user");
                     }
 
                     var orderToPost = new OrderHeader()
@@ -241,6 +252,22 @@ namespace APIWoood.Controllers.Api
             });
         }
 
-        
+        private bool DebtorBelongsToUser(User user, string debtorCode)
+        {
+            if (user.Debtors.Count() > 0)
+            {
+                foreach (var debtor in user.Debtors)
+                {
+                    if (debtor.DEBITEURNR == debtorCode)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            
+            return true;
+        }
     }
 }

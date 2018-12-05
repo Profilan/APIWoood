@@ -89,3 +89,10 @@ a {
 #latest-errors {
     height: 300px;
 }
+
+/* Fit the content in a bootstrap modal */
+.modal-body > p {
+    word-wrap: break-word;
+    overflow-y: auto;
+}
+

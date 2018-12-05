@@ -9,6 +9,7 @@ namespace APIWoood.Models
     public class Product
     {
         public string ARTIKELCODE { get; set; }                     // ARTIKELCODE
+        public string CREATIONDATE { get; set; }                  // CREATIONDATE
         public string NL { get; set; }                              // NL
         public string EN { get; set; }                              // EN
         public string DE { get; set; }                              // DE

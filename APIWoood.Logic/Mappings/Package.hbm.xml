@@ -8,6 +8,7 @@
     </id>
 
     <property name="ARTIKELCODE"/>
+    <property name="CREATIONDATE"/>
     <property name="NL"/>
     <property name="EN"/>
     <property name="DE"/>

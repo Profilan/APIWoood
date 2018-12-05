@@ -41,6 +41,7 @@ namespace APIWoood.Controllers.Api
          *      [
          *          {
          *              "ARTIKELCODE": "375490",
+         *              "CREATIONDATE": "2018-11-28",
          *              "NL": "RETRO BIJZETTAFEL MET 2 LADEN GRENEN WIT - EIKEN POTEN",
          *              "EN": "RETRO SIDETABLE WITH 2 DRAWERS PINE WITH - OAK",
          *              "DE": "RETRO BEISTELLTISCH WEIß",
@@ -92,6 +93,7 @@ namespace APIWoood.Controllers.Api
          *                  {
          *                      "ARTCODE_PAKKET": "P375490 1#2",
          *                      "ARTIKELCODE": "375490",
+         *                      "CREATIONDATE": "2018-11-28",
          *                      "NL": "PAKKET 1#2 RETRO BIJZETTAFEL",
          *                      "EN": "1#2 RETRO SIDETABLE WITH 2 DRAWERS PINE WITH - OAK",
          *                      "DE": "1#2 RETRO BEISTELLTISCH WEIß",
@@ -178,6 +180,7 @@ namespace APIWoood.Controllers.Api
          *      HTTP/1.1. 200 OK
          *      {
          *          "ARTIKELCODE": "375490",
+         *          "CREATIONDATE": "2018-11-28",
          *          "NL": "RETRO BIJZETTAFEL MET 2 LADEN GRENEN WIT - EIKEN POTEN",
          *          "EN": "RETRO SIDETABLE WITH 2 DRAWERS PINE WITH - OAK",
          *          "DE": "RETRO BEISTELLTISCH WEIß",
@@ -229,6 +232,7 @@ namespace APIWoood.Controllers.Api
          *              {
          *                  "ARTCODE_PAKKET": "P375490 1#2",
          *                  "ARTIKELCODE": "375490",
+         *                  "CREATIONDATE": "2018-11-28",
          *                  "NL": "PAKKET 1#2 RETRO BIJZETTAFEL",
          *                  "EN": "1#2 RETRO SIDETABLE WITH 2 DRAWERS PINE WITH - OAK",
          *                  "DE": "1#2 RETRO BEISTELLTISCH WEIß",
@@ -312,6 +316,7 @@ namespace APIWoood.Controllers.Api
          *          "_embedded": [
          *               {
          *                   "ARTIKELCODE": "362101-GOW",
+         *                   "CREATIONDATE": "2018-11-28",
          *                   "NL": "LOCK KAST 3-DEURS WIT [fsc]",
          *                   "EN": "LOCK CABINET 3-DOOR WHITE PINE UNBRUSHED [fsc]",
          *                   "DE": "LOCK SCHRANK 3-TÜRIG KIEFER UNGEBÜRSTET WEIß [fsc]",
@@ -363,6 +368,7 @@ namespace APIWoood.Controllers.Api
          *                       {
          *                           "ARTCODE_PAKKET": "P362101-GOW 1#4",
          *                           "ARTIKELCODE": "362101-GOW",
+         *                           "CREATIONDATE": "2018-11-28",
          *                           "NL": "PAKKET 1#4 LOCK KAST 3-DEURS WIT [fsc]",
          *                           "EN": "P1#4 LOCK CABINET 3-DOOR WHITE PINE UNBRUSHED [fsc]",
          *                           "DE": "P1#4 LOCK SCHRANK 3-TÜRIG KIEFER UNGEBÜRSTET WEIß [fsc]",
@@ -470,6 +476,7 @@ namespace APIWoood.Controllers.Api
          *      HTTP/1.1. 200 OK
          *      {
          *          "ARTIKELCODE": "375490",
+         *          "CREATIONDATE": "2018-11-28",
          *          "NL": "RETRO BIJZETTAFEL MET 2 LADEN GRENEN WIT - EIKEN POTEN",
          *          "EN": "RETRO SIDETABLE WITH 2 DRAWERS PINE WITH - OAK",
          *          "DE": "RETRO BEISTELLTISCH WEIß",
@@ -521,6 +528,7 @@ namespace APIWoood.Controllers.Api
          *              {
          *                  "ARTCODE_PAKKET": "P375490 1#2",
          *                  "ARTIKELCODE": "375490",
+         *                  "CREATIONDATE": "2018-11-28",
          *                  "NL": "PAKKET 1#2 RETRO BIJZETTAFEL",
          *                  "EN": "1#2 RETRO SIDETABLE WITH 2 DRAWERS PINE WITH - OAK",
          *                  "DE": "1#2 RETRO BEISTELLTISCH WEIß",
@@ -588,6 +596,7 @@ namespace APIWoood.Controllers.Api
             var product = new Product()
             {
                 ARTIKELCODE = item.ARTIKELCODE,
+                CREATIONDATE = item.CREATIONDATE.ToString("yyyy-MM-dd"),
                 NL = item.NL,
                 EN = item.EN,
                 DE = item.DE,
@@ -645,6 +654,7 @@ namespace APIWoood.Controllers.Api
             var package = new Package()
             {
                 ARTIKELCODE = item.ARTIKELCODE,
+                CREATIONDATE = item.CREATIONDATE.ToString("yyyy-MM-dd"),
                 ARTCODE_PAKKET = item.ARTCODE_PAKKET,
                 NL = item.NL,
                 EN = item.EN,
@@ -669,6 +679,7 @@ namespace APIWoood.Controllers.Api
             var package = new Package()
             {
                 ARTIKELCODE = item.ARTIKELCODE,
+                CREATIONDATE = item.CREATIONDATE.ToString("yyyy-MM-dd"),
                 ARTCODE_PAKKET = item.ARTIKELCODE,
                 NL = item.NL,
                 EN = item.EN,

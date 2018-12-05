@@ -2,14 +2,13 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    namespace="APIWoood.Logic.Models"
                    assembly="APIWoood.Logic">
-  <class name="SalesOrderLineStatus" table="EEK_DISTRIBUTION_SALESORDERLINESTATUSSES" lazy="false">
+  <class name="DeliveryAppointment" table="EEK_DISTRIBUTION_DELIVERYAPPOINTMENT" lazy="false">
     <id name="Id">
       <generator class="identity"/>
     </id>
     <property name="Carrier"/>
     <property name="SalesOrderLineId"/>
-    <property name="OrderLineStatus"/>
+    <property name="DeliveryAppointmentStatus"/>
     <property name="TransactionDate"/>
-    <property name="OrderLineStatusDescription"/>
   </class>
 </hibernate-mapping>

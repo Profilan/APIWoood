@@ -25,8 +25,6 @@ namespace APIWoood.Logic.Repositories
             {
                 using (ITransaction transaction = session.BeginTransaction())
                 {
-                    entity.SysCreated = DateTime.Now;
-
                     session.Save(entity);
                     transaction.Commit();
                 }
