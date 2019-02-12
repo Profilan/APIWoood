@@ -19,7 +19,7 @@ namespace APIWoood.Models
         [JsonProperty("date")]
         public string Date { get; set; }
 
-        [JsonProperty("data")]
-        public string Data { get; set; }
+        [JsonProperty("data", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public DutchNedData Data { get; set; }
     }
 }

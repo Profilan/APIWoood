@@ -239,6 +239,7 @@
     <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\DebtorOrder.cs" />
+    <Compile Include="Models\DutchNedData.cs" />
     <Compile Include="Models\DutchNedDeliveryAppointment.cs" />
     <Compile Include="Models\DutchNedSalesOrderLineStatus.cs" />
     <Compile Include="Models\HalCollection.cs" />
@@ -586,7 +587,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1591</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1591/</IISUrl>
+          <IISUrl>http://localhost:1592/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

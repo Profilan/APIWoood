@@ -10,6 +10,7 @@ namespace APIWoood.Models
     {
         public int ID { get; set; }
         [Required]
+        [MaxLength(30)]
         public string ITEMCODE { get; set; }
         [Required]
         public float AANTAL { get; set; }

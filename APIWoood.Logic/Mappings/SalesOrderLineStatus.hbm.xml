@@ -11,5 +11,6 @@
     <property name="OrderLineStatus"/>
     <property name="TransactionDate"/>
     <property name="OrderLineStatusDescription"/>
+    <property name="DeliveryData"/>
   </class>
 </hibernate-mapping>
