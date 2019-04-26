@@ -48,5 +48,8 @@
     <property name="OVERRIDE_LIMITS"/>
     <property name="DEB_NAME_ALIAS"/>
     <property name="DEB_WWW_ALIAS"/>
+    <property name="DEALER_ACTIVATION"/>
+    <property name="DEALER_BRANDS"/>
+    <property name="DEALER_TYPE"/>
   </class>
 </hibernate-mapping>

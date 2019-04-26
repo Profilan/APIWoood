@@ -81,7 +81,10 @@ namespace APIWoood.Controllers.Api
          *                  "DFF_ACCESSCODE": "1681",
          *                  "OVERRIDE_LIMITS": 0,
          *                  "DEB_NAME_ALIAS": null,
-         *                  "DEB_WWW_ALIAS": null
+         *                  "DEB_WWW_ALIAS": null,
+         *                  "DEALER_ACTIVATION": 0,
+         *                  "DEALER_BRANDS": "WOOOD;BEPUREHOME;VTWONEN",
+         *                  "DEALER_TYPE": "DEALER;WEBSHOP"
          *              },
          *              ...
          *          ],
@@ -181,7 +184,10 @@ namespace APIWoood.Controllers.Api
          *                  "DFF_ACCESSCODE": "1681",
          *                  "OVERRIDE_LIMITS": 0,
          *                  "DEB_NAME_ALIAS": null,
-         *                  "DEB_WWW_ALIAS": null
+         *                  "DEB_WWW_ALIAS": null,
+         *                  "DEALER_ACTIVATION": 0,
+         *                  "DEALER_BRANDS": "WOOOD;BEPUREHOME;VTWONEN",
+         *                  "DEALER_TYPE": "DEALER;WEBSHOP"
          *              },
          *              ...
          *          ]               
@@ -267,7 +273,10 @@ namespace APIWoood.Controllers.Api
          *                  "DFF_ACCESSCODE": "1681",
          *                  "OVERRIDE_LIMITS": 0,
          *                  "DEB_NAME_ALIAS": null,
-         *                  "DEB_WWW_ALIAS": null
+         *                  "DEB_WWW_ALIAS": null,
+         *                  "DEALER_ACTIVATION": 0,
+         *                  "DEALER_BRANDS": "WOOOD;BEPUREHOME;VTWONEN",
+         *                  "DEALER_TYPE": "DEALER;WEBSHOP"
          *              }
          *               
          * @apiError (Error 4xx) {401} NotAuthorized The user is not authorized.
