@@ -38,9 +38,12 @@
                     @Html.DisplayFor(modelItem => item.Role)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", "User", new { id = item.Id }, new { data_toggle = "modal", data_target = "#deleteModal", data_id = item.Id, data_username = item.UserName }) |
-                    @Html.ActionLink("Change Password", "ChangePassword", new { id = item.Id }) |
+                    @if (User.IsInRole("admin"))
+                    {
+                        @Html.ActionLink("Edit | ", "Edit", new { id = item.Id }) 
+                        @Html.ActionLink("Delete | ", "Delete", "User", new { id = item.Id }, new { data_toggle = "modal", data_target = "#deleteModal", data_id = item.Id, data_username = item.UserName })
+                        @Html.ActionLink("Change Password | ", "ChangePassword", new { id = item.Id })
+                    }
                     @Html.ActionLink("Statistics", "UserStatistics", "Dashboard", new { id = item.Id }, null)
                 </td>
             </tr>

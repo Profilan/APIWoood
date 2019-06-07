@@ -23,6 +23,15 @@
     <property name="DS_LAND"/>
     <property name="DS_TELEFOON"/>
     <property name="DS_EMAIL"/>
+    <property name="SR_SERVICE_PRODUCT"/>
+    <property name="SR_AFLEVEREN_AAN"/>
+    <property name="SR_LOCATIE"/>
+    <property name="SR_BEDRIJFSNAAM"/>
+    <property name="SR_BEWIJS"/>
+    <property name="SR_ORDERREF"/>
+    <property name="SR_REDEN"/>
+    <property name="SR_TOELICHTING"/>
+    <property name="SR_PDF_ATTACHMENT"/>
     <property name="AUTHENTICATED_USER"/>
     <property name="ACCEPTATIE_ORDERSPLITSING"/>
     <property name="PAYMENT_RELEASE_REQUIRED"/>

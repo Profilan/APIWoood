@@ -18,8 +18,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.Hits)
             </th>
-            <th></th>
-        </tr>
+            @if (User.IsInRole("admin"))
+            {
+                <th></th>
+            }
+            </tr>
 
         @foreach (var item in Model)
         {
@@ -30,10 +33,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Hits)
                 </td>
+                @if (User.IsInRole("admin"))
+                {
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { data_toggle = "modal", data_target = "#deleteModal", data_id = item.Id, data_url = item.Name })
                 </td>
+                }
             </tr>
         }
 

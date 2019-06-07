@@ -32,7 +32,7 @@ namespace APIWoood.Controllers
         {
             var loggedInUser = userRepository.GetById(Convert.ToInt32(User.Identity.GetUserId()));
 
-            if (loggedInUser.Role == "admin")
+            if (loggedInUser.Role == "admin" || loggedInUser.Role == "guest")
             {
                 var items = urlRepository.List();
 
@@ -68,8 +68,8 @@ namespace APIWoood.Controllers
                         UserName = user.UserName,
                         QuantityVisitedUrls = logs.Count(),
                         QuantityVisitedUrlsOld = history.Count(),
-                        LatestVisitDate = logs.Count() > 0 ? logs.First().TimeStamp.ToString() : "",
-                        LatestVisitDateOld = history.Count() > 0 ? history.First().HistoryIdentifier.Date.ToString() : "",
+                        LatestVisitDate = logs.Count() > 0 ? logs.Last().TimeStamp.ToString() : "",
+                        LatestVisitDateOld = history.Count() > 0 ? history.Last().HistoryIdentifier.Date.ToString() : "",
                         Duration = duration / logs.Count()
                     };
                     visitors.Add(visitor);

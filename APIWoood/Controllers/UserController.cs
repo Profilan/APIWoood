@@ -34,7 +34,7 @@ namespace APIWoood.Controllers
             var userId = User.Identity.GetUserId();
             var loggedInUser = userRepository.GetById(Convert.ToInt32(userId));
 
-            if (loggedInUser.Role == "admin")
+            if (loggedInUser.Role == "admin" || loggedInUser.Role == "guest")
             {
                 var items = userRepository.List();
 

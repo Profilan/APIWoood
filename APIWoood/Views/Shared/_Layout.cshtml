@@ -44,10 +44,14 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li class="nav-item">@Html.ActionLink("Dashboard", "Index", "Dashboard", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li class="nav-item">@Html.ActionLink("Users", "Index", "User", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li class="nav-item">@Html.ActionLink("Log", "Index", "Log", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li class="nav-item">@Html.ActionLink("Url's", "Index", "Url", new { area = "" }, new { @class = "nav-link" })</li>
+                        if (User.IsInRole("admin"))
+                        {
+                            <li class="nav-item">@Html.ActionLink("Log", "Index", "Log", new { area = "" }, new { @class = "nav-link" })</li>
+
+                        }
                     }
+                    <li class="nav-item">@Html.ActionLink("Users", "Index", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Url's", "Index", "Url", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
 

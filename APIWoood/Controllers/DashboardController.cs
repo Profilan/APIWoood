@@ -128,8 +128,8 @@ namespace APIWoood.Controllers
                         Hits = logs.Count(),
                         HitsOld = history.Count(),
                         Duration = totalDuration / logs.Count(),
-                        LatestVisitDate = logs.Count() > 0 ? logs.First().TimeStamp.ToString() : "",
-                        LatestVisitDateOld = history.Count() > 0 ? history.First().HistoryIdentifier.Date.ToString() : ""
+                        LatestVisitDate = logs.Count() > 0 ? logs.Last().TimeStamp.ToString() : "",
+                        LatestVisitDateOld = history.Count() > 0 ? history.Last().HistoryIdentifier.Date.ToString() : ""
                     };
                     visitedUrls.Add(visitedUrl);
                 }

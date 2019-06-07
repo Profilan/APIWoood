@@ -57,6 +57,15 @@ namespace APIWoood.Controllers.Api
          * @apiParam (Order) {String} [DS_LAND] Delivery Country
          * @apiParam (Order) {String} [DS_TELEFOON] Delivery Phone
          * @apiParam (Order) {String} [DS_EMAIL] Delivery E-mail
+         * @apiParam (Order) {String} [SR_SERVICE_PRODUCT] Product code of selected product
+         * @apiParam (Order) {String} [SR_AFLEVEREN_AAN] Desired Delivery Address of service part => B2B (="RETAILER") or Consumer (="CONSUMER")
+         * @apiParam (Order) {String} [SR_LOCATIE] Location => Online (="ONLINE") or Shop (="SHOP")
+         * @apiParam (Order) {String} [SR_BEDRIJFSNAAM] Company Name
+         * @apiParam (Order) {String} [SR_BEWIJS] Proof => Manual (="MANUAL) or Copy (="COPY")
+         * @apiParam (Order) {String} [SR_ORDERREF] Order Number
+         * @apiParam (Order) {String} [SR_REDEN] Reason
+         * @apiParam (Order) {String} [SR_TOELICHTING] Explanation
+         * @apiParam (Order) {String} [SR_PDF_ATTACHMENT] PDF Attachment
          * @apiParam (Order) {Int} [PAYMENT_RELEASE_REQUIRED=0] Payment Release Required
          * 
          * @apiParam (OrderItem) {String} ITEMCODE Product Code
@@ -203,7 +212,16 @@ namespace APIWoood.Controllers.Api
                         DS_EMAIL = order.DS_EMAIL,
                         AUTHENTICATED_USER = data.header.username,
                         ACCEPTATIE_ORDERSPLITSING = order.ACCEPTATIE_ORDERSPLITSING,
-                        PAYMENT_RELEASE_REQUIRED = order.PAYMENT_RELEASE_REQUIRED
+                        PAYMENT_RELEASE_REQUIRED = order.PAYMENT_RELEASE_REQUIRED,
+                        SR_SERVICE_PRODUCT = order.SR_SERVICE_PRODUCT,
+                        SR_AFLEVEREN_AAN = order.SR_AFLEVEREN_AAN,
+                        SR_LOCATIE = order.SR_LOCATIE,
+                        SR_BEDRIJFSNAAM = order.SR_BEDRIJFSNAAM,
+                        SR_BEWIJS = order.SR_BEDRIJFSNAAM,
+                        SR_ORDERREF = order.SR_ORDERREF,
+                        SR_REDEN = order.SR_REDEN,
+                        SR_TOELICHTING = order.SR_TOELICHTING,
+                        SR_PDF_ATTACHMENT = order.SR_PDF_ATTACHMENT
                     };
 
                     int orderLineCount = 0;

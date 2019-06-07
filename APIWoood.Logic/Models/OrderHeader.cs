@@ -24,7 +24,16 @@ namespace APIWoood.Logic.Models
 	    public virtual string DS_LAND { get; set; }
 	    public virtual string DS_TELEFOON { get; set; }
 	    public virtual string DS_EMAIL { get; set; }
-	    public virtual string AUTHENTICATED_USER { get; set; }
+        public virtual string SR_SERVICE_PRODUCT { get; set; }
+        public virtual string SR_AFLEVEREN_AAN { get; set; }
+        public virtual string SR_LOCATIE { get; set; }
+        public virtual string SR_BEDRIJFSNAAM { get; set; }
+        public virtual string SR_BEWIJS { get; set; }
+        public virtual string SR_ORDERREF { get; set; }
+        public virtual string SR_REDEN { get; set; }
+        public virtual string SR_TOELICHTING { get; set; }
+        public virtual string SR_PDF_ATTACHMENT { get; set; }
+        public virtual string AUTHENTICATED_USER { get; set; }
 	    public virtual int ACCEPTATIE_ORDERSPLITSING { get; set; }
 	    public virtual int PAYMENT_RELEASE_REQUIRED { get; set; }
         public virtual DateTime SYSCREATED { get; set; }

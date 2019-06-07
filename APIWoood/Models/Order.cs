@@ -27,6 +27,15 @@ namespace APIWoood.Models
         public string DS_LAND { get; set; }
         public string DS_TELEFOON { get; set; }
         public string DS_EMAIL { get; set; }
+        public string SR_SERVICE_PRODUCT { get; set; }
+        public string SR_AFLEVEREN_AAN { get; set; }
+        public string SR_LOCATIE { get; set; }
+        public string SR_BEDRIJFSNAAM { get; set; }
+        public string SR_BEWIJS { get; set; }
+        public string SR_ORDERREF { get; set; }
+        public string SR_REDEN { get; set; }
+        public string SR_TOELICHTING { get; set; }
+        public string SR_PDF_ATTACHMENT { get; set; }
         public string AUTHENTICATED_USER { get; set; }
         public int ACCEPTATIE_ORDERSPLITSING { get; set; }
         public int PAYMENT_RELEASE_REQUIRED { get; set; }
@@ -39,6 +48,16 @@ namespace APIWoood.Models
         public Order()
         {
             item = new HashSet<OrderItem>();
+
+            SR_SERVICE_PRODUCT = "";
+            SR_AFLEVEREN_AAN = "";
+            SR_LOCATIE = "";
+            SR_BEDRIJFSNAAM = "";
+            SR_BEWIJS = "";
+            SR_ORDERREF = "";
+            SR_REDEN = "";
+            SR_TOELICHTING = "";
+            SR_PDF_ATTACHMENT = "";
 
             SYSCREATED = DateTime.Now;
             SYSMODIFIED = SYSCREATED;

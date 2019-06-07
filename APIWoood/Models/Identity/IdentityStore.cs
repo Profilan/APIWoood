@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using NHibernate;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace APIWoood.Models.Identity
@@ -9,7 +10,8 @@ namespace APIWoood.Models.Identity
     public class IdentityStore : IUserStore<User, int>,
         IUserPasswordStore<User, int>,
         IUserLockoutStore<User, int>,
-        IUserTwoFactorStore<User, int>
+        IUserTwoFactorStore<User, int>,
+        IUserRoleStore<User, int>
     {
         private readonly ISession session;
 
@@ -119,6 +121,30 @@ namespace APIWoood.Models.Identity
         public void Dispose()
         {
             //do nothing
+        }
+
+        public Task AddToRoleAsync(User user, string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveFromRoleAsync(User user, string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IList<string>> GetRolesAsync(User user)
+        {
+            IList<string> roles = new List<string>();
+            roles.Add(user.Role);
+
+            return Task.FromResult(roles);
+        }
+
+        public Task<bool> IsInRoleAsync(User user, string roleName)
+        {
+            
+            return Task.FromResult(user.Role == roleName);
         }
     }
 }
