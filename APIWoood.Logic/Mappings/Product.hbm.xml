@@ -48,6 +48,7 @@
     <property name="VRIJEVOORRAAD"/>
     <property name="ASS_CODE_EXCLUSIV"/>
     <property name="ATP"/>
+    <property name="DFF_SHIPMENT"/>
     <property name="FSC"/>
     <property name="COUNTRY_OF_ORIGIN"/>
     <property name="INTRASTAT_CODE"/>

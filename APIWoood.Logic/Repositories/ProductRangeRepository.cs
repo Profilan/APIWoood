@@ -80,6 +80,8 @@ namespace APIWoood.Logic.Repositories
             {
                 var query = session.Query<ProductRange>();
 
+              
+
                 return query.ToList();
             }
         }

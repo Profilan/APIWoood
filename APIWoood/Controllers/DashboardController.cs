@@ -37,7 +37,7 @@ namespace APIWoood.Controllers
 
             // Get the top 5 url's
             var urlViewModelList = new List<Url>();
-            var urls = urlRepository.List();
+            var urls = urlRepository.List().Where(x => x.ShowInStatistics == true);
             foreach (var url in urls)
             {
                 var logs = logRepository.ListByUrl(url.Name, period);
@@ -71,7 +71,7 @@ namespace APIWoood.Controllers
             var topFiveUsers = userViewModelList.OrderByDescending(x => x.QuantityVisitedUrls).Take(5);
 
             // Get the url usage (Live)
-            var usageUrls = urlRepository.List().OrderBy(x => x.Hits);
+            var usageUrls = urlRepository.List().Where(x => x.ShowInStatistics == true).OrderBy(x => x.Hits);
 
             // Get the laters errors
             
@@ -107,7 +107,7 @@ namespace APIWoood.Controllers
 
             ViewBag.CurrentSort = sortOrder;
 
-            var urls = urlRepository.List().OrderBy(x => x.Name);
+            var urls = urlRepository.List().Where(x => x.ShowInStatistics == true).OrderBy(x => x.Name);
             var visitedUrls = new List<UrlViewModel>();
             foreach (var url in urls)
             {

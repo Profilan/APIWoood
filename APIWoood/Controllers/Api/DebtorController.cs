@@ -4,6 +4,7 @@ using APIWoood.Logic.SharedKernel;
 using APIWoood.Models;
 using Microsoft.AspNet.Identity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
@@ -101,24 +102,36 @@ namespace APIWoood.Controllers.Api
         [Route("api/woood-debtors/list")]
         [HttpGet]
         [Authorize]
-        public IHttpActionResult GetPagedDebtors(int page, int limit = 25)
+        public IHttpActionResult GetPagedDebtors(int page = 1, int limit = 25)
         {
             try
             {
                 var result = debtorRepository.List("DEBITEURNR_ASC", limit, page);
 
-                var collection = new PagedCollection<APIWoood.Logic.Models.Debtor>()
+                if (result.Results.Count > 0)
                 {
-                    _embedded = result.Results,
-                    page_size = result.PageSize,
-                    page = result.CurrentPage,
-                    total_items = result.RowCount,
-                    page_count = result.PageCount
-                };
+                    var collection = new PagedCollection<APIWoood.Logic.Models.Debtor>()
+                    {
+                        _embedded = result.Results,
+                        page_size = result.PageSize,
+                        page = result.CurrentPage,
+                        total_items = result.RowCount,
+                        page_count = result.PageCount
+                    };
 
-                 logger.Log(ErrorType.INFO, "GetPagedDebtors()", RequestContext.Principal.Identity.Name, "Total in query: " + result.Results.Count, "api/woood-debtors/list", startDate);
+                    logger.Log(ErrorType.INFO, "GetPagedDebtors()", RequestContext.Principal.Identity.Name, "Total in query: " + result.Results.Count, "api/woood-debtors/list", startDate);
 
-                return Ok(collection);
+                    return Ok(collection);
+
+                }
+                else
+                {
+
+                    logger.Log(ErrorType.INFO, "GetPagedDebtors()", RequestContext.Principal.Identity.Name, "Total in query: " + result.Results.Count, "api/woood-debtors/list", startDate);
+
+                    return Ok(new List<string>());
+
+                }
             }
             catch (Exception e)
             {

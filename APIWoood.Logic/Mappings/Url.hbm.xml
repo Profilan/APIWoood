@@ -8,6 +8,7 @@
     </id>
     <property name="Name"/>
     <property name="Hits"/>
+    <property name="ShowInStatistics"/>
   </class>
 
 </hibernate-mapping>

@@ -82,6 +82,7 @@ namespace APIWoood.Controllers.Api
          *              "VRIJEVOORRAAD": 4,
          *              "ASS_CODE_EXCLUSIV": "17",
          *              "ATP": null,
+         *              "DFF_SHIPMENT": "POST",
          *              "FSC": false,
          *              "COUNTRY_OF_ORIGIN": "NL ",
          *              "INTRASTAT_CODE": " 94036010",
@@ -221,6 +222,7 @@ namespace APIWoood.Controllers.Api
          *          "VRIJEVOORRAAD": 4,
          *          "ASS_CODE_EXCLUSIV": "17",
          *          "ATP": null,
+         *          "DFF_SHIPMENT": "POST",
          *          "FSC": false,
          *          "COUNTRY_OF_ORIGIN": "NL ",
          *          "INTRASTAT_CODE": " 94036010",
@@ -357,6 +359,7 @@ namespace APIWoood.Controllers.Api
          *                   "VRIJEVOORRAAD": 100,
          *                   "ASS_CODE_EXCLUSIV": "11",
          *                   "ATP": "14-09-2018",
+         *                   "DFF_SHIPMENT": "POST",
          *                   "FSC": true,
          *                   "COUNTRY_OF_ORIGIN": "NL ",
          *                   "INTRASTAT_CODE": " 94035000",
@@ -400,6 +403,62 @@ namespace APIWoood.Controllers.Api
         [HttpGet]
         [Authorize]
         public IHttpActionResult GetProducts(int page = 1, int limit = 25)
+        {
+            try
+            {
+                var result = productRepository.List("ARTIKELCODE_ASC", limit, page);
+
+                var products = new List<Product>();
+                foreach (var item in result.Results)
+                {
+                    var product = CreateProduct(item);
+
+                    // Get the packages which belong to this product, if AANTAL_PAKKETTEN > 1
+                    if (item.AANTAL_PAKKETTEN > 1)
+                    {
+                        var packageItems = packageRepository.ListByArtikelCode(item.ARTIKELCODE);
+
+                        foreach (var packageItem in packageItems)
+                        {
+                            var package = CreatePackage(packageItem);
+
+                            product.PAKKETTEN.Add(package);
+                        }
+                    }
+                    else // Create a package like main product
+                    {
+                        var package = CreatePackage(item);
+
+                        product.PAKKETTEN.Add(package);
+                    }
+
+                    products.Add(product);
+                }
+
+                var collection = new PagedCollection<Product>()
+                {
+                    _embedded = products,
+                    page_size = result.PageSize,
+                    page = result.CurrentPage,
+                    total_items = result.RowCount,
+                    page_count = result.PageCount
+                };
+
+                logger.Log(ErrorType.INFO, "GetProducts()", RequestContext.Principal.Identity.Name, "Total in query: " + products.Count, "api/woood-productview/list", startDate);
+
+                return Ok(collection);
+            }
+            catch (Exception e)
+            {
+                logger.Log(ErrorType.ERR, "GetProducts()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-productview/list");
+
+                return InternalServerError(e);
+            }
+        }
+        [Route("api/woood-productview/list")]
+        [HttpPost]
+        [Authorize]
+        public IHttpActionResult PostProducts(int page = 1, int limit = 25)
         {
             try
             {
@@ -517,6 +576,7 @@ namespace APIWoood.Controllers.Api
          *          "VRIJEVOORRAAD": 4,
          *          "ASS_CODE_EXCLUSIV": "17",
          *          "ATP": null,
+         *          "DFF_SHIPMENT": "POST",
          *          "FSC": false,
          *          "COUNTRY_OF_ORIGIN": "NL ",
          *          "INTRASTAT_CODE": " 94036010",
@@ -637,6 +697,7 @@ namespace APIWoood.Controllers.Api
                 VRIJEVOORRAAD = item.VRIJEVOORRAAD,
                 ASS_CODE_EXCLUSIV = item.ASS_CODE_EXCLUSIV,
                 ATP = item.ATP,
+                DFF_SHIPMENT = item.DFF_SHIPMENT,
                 FSC = item.FSC,
                 COUNTRY_OF_ORIGIN = item.COUNTRY_OF_ORIGIN,
                 INTRASTAT_CODE = item.INTRASTAT_CODE,

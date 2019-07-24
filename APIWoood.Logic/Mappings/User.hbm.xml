@@ -12,6 +12,7 @@
     <property name="Email" column="email"/>
     <property name="Role" column="role"/>
     <property name="AllowedIP" column="ip_from"/>
+    <property name="Password" column="rawPassword"/>
 
     <set name="Debtors" table="EEK_API_WOOOD_USER_DEBTORS" lazy="false" cascade="none">
       <key column="USER_ID" not-null="true" />

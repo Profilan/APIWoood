@@ -273,7 +273,7 @@ namespace APIWoood.Controllers.Api
 
             var itemDictionary = new Dictionary<string, object>()
                          {
-                            { "LVL", 0 },
+                            { "LVL", "0" },
                             { "SEQ_NO", "000" },
                             { "SEQ_FULL", "000" },
                             { "ARTIKELCODE", mainProd },
@@ -312,10 +312,10 @@ namespace APIWoood.Controllers.Api
                             { "SEQ_NO", seqNo },
                             { "SEQ_FULL", item.SEQ_NO },
                             { "ARTIKELCODE", item.ITEMREQ },
-                            { "NL_DESCR", item.NL_ITEMREQ_DESC },
-                            { "EN_DESCR", item.EN_ITEMREQ_DESC },
-                            { "DE_DESCR", item.DE_ITEMREQ_DESC },
-                            { "FR_DESCR", item.FR_ITEMREQ_DESC },
+                            { "NL_DESCR", item.ITEMREQ_DESC },
+                            { "EN_DESCR", null },
+                            { "DE_DESCR", null },
+                            { "FR_DESCR", null },
                             { "QTY", item.QTY_PER_MAINPROD },
                             
                         };
@@ -334,10 +334,10 @@ namespace APIWoood.Controllers.Api
                                 { "SEQ_NO", seqNo },
                                 { "SEQ_FULL", item.SEQ_NO },
                                 { "ARTIKELCODE", item.ITEMREQ },
-                                { "NL_DESCR", item.NL_ITEMREQ_DESC },
-                                { "EN_DESCR", item.EN_ITEMREQ_DESC },
-                                { "DE_DESCR", item.DE_ITEMREQ_DESC },
-                                { "FR_DESCR", item.FR_ITEMREQ_DESC },
+                                { "NL_DESCR", item.ITEMREQ_DESC },
+                                { "EN_DESCR", null },
+                                { "DE_DESCR", null },
+                                { "FR_DESCR", null },
                                 { "QTY", item.QTY_PER_MAINPROD },
                                 
                             };
@@ -350,7 +350,24 @@ namespace APIWoood.Controllers.Api
             }
             else
             {
-                return;
+                if (Convert.ToInt32(node["LVL"]) == 0)
+                {
+                    var product = productRepository.GetById(mainProd);
+
+                    var itemDictionary = new Dictionary<string, object>()
+                        {
+                            { "LVL", "0" },
+                            { "SEQ_NO", "001" },
+                            { "SEQ_FULL", "001" },
+                            { "ARTIKELCODE", mainProd },
+                            { "NL_DESCR", product.NL },
+                            { "EN_DESCR", product.EN },
+                            { "DE_DESCR", product.DE },
+                            { "FR_DESCR", product.FR },
+                            { "QTY", 1 },
+                        };
+                    node.Add("001", itemDictionary);
+                }
             }
         }
 

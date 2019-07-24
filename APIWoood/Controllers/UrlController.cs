@@ -138,7 +138,12 @@ namespace APIWoood.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+                var url = urlRepository.GetById(id);
+                url.Name = collection["Name"];
+                url.ShowInStatistics = Convert.ToBoolean(collection["ShowInStatistics"]);
+                url.Hits = Convert.ToInt32(collection["Hits"]);
+
+                urlRepository.Update(url);
 
                 return RedirectToAction("Index");
             }

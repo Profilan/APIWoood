@@ -263,8 +263,14 @@ namespace APIWoood.Controllers.Api
             logger.Log(ErrorType.INFO, "CreateOrder()", RequestContext.Principal.Identity.Name, new JavaScriptSerializer().Serialize(references), "api/woood-order/create", startDate);
 
             return Ok(new {
+                header = new
+                {
+                    status_code = 200,
+                    status_message = "OK"
+                },
                 body = new
                 {
+                    message = "Order has been succesfully added",
                     references
                 }
             });

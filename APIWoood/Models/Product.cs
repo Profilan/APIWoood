@@ -9,7 +9,7 @@ namespace APIWoood.Models
     public class Product
     {
         public string ARTIKELCODE { get; set; }                     // ARTIKELCODE
-        public string CREATIONDATE { get; set; }                  // CREATIONDATE
+        public string CREATIONDATE { get; set; }                    // CREATIONDATE
         public string NL { get; set; }                              // NL
         public string EN { get; set; }                              // EN
         public string DE { get; set; }                              // DE
@@ -50,6 +50,7 @@ namespace APIWoood.Models
         public decimal VRIJEVOORRAAD { get; set; }                  // VrijeVoorraad
         public string ASS_CODE_EXCLUSIV { get; set; }               // ASS_CODE_EXCLUSIV
         public string ATP { get; set; }                             // ATP
+        public string DFF_SHIPMENT { get; set; }                    // DFF_SHIPMENT
         public bool FSC { get; set; }                               // FSC
         public string COUNTRY_OF_ORIGIN { get; set; }               // COUNTRY_OF_ORIGIN
         public string INTRASTAT_CODE { get; set; }                  // INTRASTAT_CODE

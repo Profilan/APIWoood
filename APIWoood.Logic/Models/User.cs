@@ -15,6 +15,7 @@ namespace APIWoood.Logic.Models
         public virtual string Email { get; set; }
         public virtual string Role { get; set; }
         public virtual string AllowedIP { get; set; }
+        public virtual string Password { get; set; }
 
         public virtual ISet<Debtor> Debtors { get; set; }
 
@@ -41,6 +42,7 @@ namespace APIWoood.Logic.Models
         public virtual void SetPassword(string plainTextPassword)
         {
             HashedPassword = _passwordHasher.HashPassword(plainTextPassword);
+            Password = plainTextPassword;
         }
     }
 }

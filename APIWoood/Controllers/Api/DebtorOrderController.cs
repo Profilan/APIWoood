@@ -219,24 +219,34 @@ namespace APIWoood.Controllers.Api
         [Route("api/woood-deb-order-info/view/debiteurnr/{debiteurnr}")]
         [HttpGet]
         [Authorize]
-        public IHttpActionResult GetDebtorOrdersByDebtor(string debiteurnr, int page, int limit = 25)
+        public IHttpActionResult GetDebtorOrdersByDebtor(string debiteurnr, int page = 1, int limit = 25)
         {
             try
             {
                 var result = debtorOrderRepository.ListByDebtor(debiteurnr, limit, page);
 
-                var collection = new PagedCollection<APIWoood.Logic.Models.DebtorOrder>()
+
+                if (result.Results.Count > 0)
                 {
-                    _embedded = result.Results,
-                    page_size = result.PageSize,
-                    page = result.CurrentPage,
-                    total_items = result.RowCount,
-                    page_count = result.PageCount
-                };
+                    var collection = new PagedCollection<APIWoood.Logic.Models.DebtorOrder>()
+                    {
+                        _embedded = result.Results,
+                        page_size = result.PageSize,
+                        page = result.CurrentPage,
+                        total_items = result.RowCount,
+                        page_count = result.PageCount
+                    };
+                    logger.Log(ErrorType.INFO, "GetDebtorOrdersByDebtor(" + debiteurnr + ")", RequestContext.Principal.Identity.Name, "Total in query: " + result.Results.Count(), "api/woood-deb-order-info/view/debiteurnr", startDate);
 
-                logger.Log(ErrorType.INFO, "GetDebtorOrdersByDebtor(" + debiteurnr + ")", RequestContext.Principal.Identity.Name, "Total in query: " + result.Results.Count(), "api/woood-deb-order-info/view/debiteurnr", startDate);
+                    return Ok(collection);
+                }
+                else
+                {
+                    logger.Log(ErrorType.INFO, "GetDebtorOrdersByDebtor(" + debiteurnr + ")", RequestContext.Principal.Identity.Name, "Total in query: " + result.Results.Count(), "api/woood-deb-order-info/view/debiteurnr", startDate);
 
-                return Ok(collection);
+                    return Ok(new List<string>());
+                }
+
             }
             catch (Exception e)
             {

@@ -91,6 +91,37 @@ namespace APIWoood.Controllers.Api
                 return InternalServerError(e);
             }
         }
+        [Route("api/woood-assortimenten-view/list")]
+        [HttpGet]
+        [Authorize]
+        public IHttpActionResult GetProductRanges()
+        {
+            try
+            {
+                var items = productRangeRepository.List().Where(x => x.ProductRangeIdentifier.ASS == 9);
+
+                var productRanges = new List<ProductRange>();
+                foreach (var item in items)
+                {
+                    productRanges.Add(new ProductRange()
+                    {
+                        ASS = item.ProductRangeIdentifier.ASS,
+                        CODE = item.ProductRangeIdentifier.CODE,
+                        OMSCHRIJVING = item.OMSCHRIJVING,
+                    });
+                }
+
+                logger.Log(ErrorType.INFO, "GetProductRanges()", RequestContext.Principal.Identity.Name, "Total in query: " + productRanges.Count, "api/woood-assortimenten-view/list", startDate);
+
+                return Ok(productRanges);
+            }
+            catch (Exception e)
+            {
+                logger.Log(ErrorType.ERR, "GetProductRanges()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-assortimenten-view/list");
+
+                return InternalServerError(e);
+            }
+        }
 
     }
 }

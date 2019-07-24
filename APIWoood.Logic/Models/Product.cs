@@ -50,6 +50,7 @@ namespace APIWoood.Logic.Models
         public virtual decimal VRIJEVOORRAAD { get; set; }                  // VrijeVoorraad
         public virtual string ASS_CODE_EXCLUSIV { get; set; }               // ASS_CODE_EXCLUSIV
         public virtual string ATP { get; set; }                             // ATP
+        public virtual string DFF_SHIPMENT { get; set; }                    // DFF_SHIPMENT
         public virtual bool FSC { get; set; }                               // FSC
         public virtual string COUNTRY_OF_ORIGIN { get; set; }               // COUNTRY_OF_ORIGIN
         public virtual string INTRASTAT_CODE { get; set; }                  // INTRASTAT_CODE
