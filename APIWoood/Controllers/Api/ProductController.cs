@@ -287,7 +287,10 @@ namespace APIWoood.Controllers.Api
 
                 logger.Log(ErrorType.INFO, "GetArticleById(" + id + ")", RequestContext.Principal.Identity.Name, "", "api/woood-artikelview/view/artikelcode", startDate);
 
-                return Ok(product);
+                var products = new List<Product>();
+                products.Add(product);
+
+                return Ok(products);
             }
             catch (Exception e)
             {
@@ -641,7 +644,10 @@ namespace APIWoood.Controllers.Api
 
                 logger.Log(ErrorType.INFO, "GetProductById(" + id + ")", RequestContext.Principal.Identity.Name, "", "api/woood-productview/view/artikelcode", startDate);
 
-                return Ok(product);
+                var products = new List<Product>();
+                products.Add(product);
+
+                return Ok(products);
             }
             catch (Exception e)
             {
@@ -677,10 +683,10 @@ namespace APIWoood.Controllers.Api
                 AANTAL_PAKKETTEN = item.AANTAL_PAKKETTEN,
                 AFMETING_ARTIKEL_HXBXD = item.AFMETING_ARTIKEL_HXBXD,
                 EANCODE = item.EANCODE,
-                EN_LONG_DESC = item.EN_LONG_DESC,
-                NL_LONG_DESC = item.NL_LONG_DESC,
-                DE_LONG_DESC = item.DE_LONG_DESC,
-                FR_LONG_DESC = item.FR_LONG_DESC,
+                EN_LONG_DESC = item.EN_LONG_DESC != null ? item.EN_LONG_DESC : "",
+                NL_LONG_DESC = item.NL_LONG_DESC != null ? item.NL_LONG_DESC : "",
+                DE_LONG_DESC = item.DE_LONG_DESC != null ? item.DE_LONG_DESC : "",
+                FR_LONG_DESC = item.FR_LONG_DESC != null ? item.FR_LONG_DESC : "",
                 AANTAL_VERP = item.AANTAL_VERP,
                 SOURCE = item.SOURCE,
                 MRP_RUN = item.MRP_RUN,
@@ -689,7 +695,7 @@ namespace APIWoood.Controllers.Api
                 ISE_CONSUMENTENPRIJS = item.ISE_CONSUMENTENPRIJS,
                 ISE_CONSUMENTENPRIJS_VAN = item.ISE_CONSUMENTENPRIJS_VAN,
                 GEWICHT = item.GEWICHT,
-                NEW_ARRIVAL = item.NEW_ARRIVAL,
+                NEW_ARRIVAL = Convert.ToInt32(item.NEW_ARRIVAL),
                 VERPAK_DIKTE_MM = item.VERPAK_DIKTE_MM,
                 VERPAK_LENGTE_MM = item.VERPAK_LENGTE_MM,
                 VERPAK_BREEDTE_MM = item.VERPAK_BREEDTE_MM,
@@ -698,12 +704,12 @@ namespace APIWoood.Controllers.Api
                 ASS_CODE_EXCLUSIV = item.ASS_CODE_EXCLUSIV,
                 ATP = item.ATP,
                 DFF_SHIPMENT = item.DFF_SHIPMENT,
-                FSC = item.FSC,
+                FSC = Convert.ToInt32(item.FSC),
                 COUNTRY_OF_ORIGIN = item.COUNTRY_OF_ORIGIN,
                 INTRASTAT_CODE = item.INTRASTAT_CODE,
-                ASSEMBLY_REQUIRED = item.ASSEMBLY_REQUIRED,
-                WEB_VAN_PRIJS_NL = item.WEB_VAN_PRIJS_NL,
-                WEB_VAN_PRIJS_ISE = item.WEB_VAN_PRIJS_ISE,
+                ASSEMBLY_REQUIRED = Convert.ToInt32(item.ASSEMBLY_REQUIRED),
+                WEB_VAN_PRIJS_NL = item.WEB_VAN_PRIJS_NL != 0 ? Convert.ToString(item.WEB_VAN_PRIJS_NL) : null,
+                WEB_VAN_PRIJS_ISE = item.WEB_VAN_PRIJS_ISE != 0 ? Convert.ToString(item.WEB_VAN_PRIJS_ISE) : null,
                 AVAILABILITY_WEEK = item.AVAILABILITY_WEEK
             };
 
@@ -727,7 +733,7 @@ namespace APIWoood.Controllers.Api
                 VERPAK_BREEDTE_MM = item.VERPAK_BREEDTE_MM,
                 VOL_M3_VERP = item.VOL_M3_VERP,
                 VRIJEVOORRAADPAKKET = item.VRIJEVOORRAADPAKKET,
-                ASS_CODE_EXCLUSIV = item.ASS_CODE_EXCLUSIV,
+                ASS_CODE_EXCLUSIV = item.ASS_CODE_EXCLUSIV != null ? item.ASS_CODE_EXCLUSIV : "0",
                 EANCODE_PAKKET = item.EANCODE_PAKKET,
                 AANTAL_PAKKETTEN = item.AANTAL_PAKKETTEN
             };

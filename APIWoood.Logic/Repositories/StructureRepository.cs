@@ -35,44 +35,29 @@ namespace APIWoood.Logic.Repositories
         {
             using (ISession session = SessionFactory.GetNewSession("db1"))
             {
-                var criteria = session.CreateCriteria<Structure>();
+                var query = from s in session.Query<Structure>()
+                            select s;
 
                 switch (sortOrder)
                 {
                     case "MAINPROD_ASC":
                     default:
-                        criteria.AddOrder(new Order("MAINPROD", true));
+                        query = query.OrderBy(s => s.MAINPROD);
                         break;
                 }
 
-                criteria.SetProjection(Projections.Distinct(Projections.ProjectionList()
-                    .Add(Projections.Alias(Projections.Property("MAINPROD"), "MAINPROD"))));
+                query = query.Where(x => x.SEQ_NO == "001")
+                    .Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
-                var countCriteria = CriteriaTransformer.TransformToRowCount(criteria);
-
-                criteria.SetMaxResults(pageSize)
-                    .SetFirstResult((pageNumber - 1) * pageSize);
-
-                criteria.SetResultTransformer(
-                    new NHibernate.Transform.AliasToBeanResultTransformer(typeof(Structure)));
-
-                var multi = session.CreateMultiCriteria()
-                    .Add(countCriteria)
-                    .Add(criteria)
-                    .List();
+                var items = query.ToList();
 
                 var result = new PagedResult<Structure>();
-
                 result.CurrentPage = pageNumber;
-
                 result.PageSize = pageSize;
-
-                result.RowCount = (int)((IList)multi[0])[0];
+                result.RowCount = GetCount();
                 var pageCount = (double)result.RowCount / result.PageSize;
-
                 result.PageCount = (int)Math.Ceiling(pageCount);
-
-                result.Results = ((IEnumerable)multi[1]).Cast<Structure>().ToList();
+                result.Results = items;
 
                 return result;
             }
@@ -90,6 +75,19 @@ namespace APIWoood.Logic.Repositories
                     .OrderBy(s => s.SEQ_NO);
  
                 return query.ToList();
+            }
+        }
+
+        private int GetCount()
+        {
+            using (ISession session = SessionFactory.GetNewSession("db1"))
+            {
+                var query = from s in session.Query<Structure>()
+                            select s;
+
+                query = query.Where(x => x.SEQ_NO == "001");
+
+                return query.ToList().Count;
             }
         }
 

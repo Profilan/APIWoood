@@ -1,4 +1,5 @@
 ﻿using APIWoood.Logic.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace APIWoood.Models
         public string VERKOOPEENHEID { get; set; }                  // VERKOOPEENHEID
         public int AANTAL_PAKKETTEN { get; set; }                   // AANTAL_PAKKETTEN
         public string AFMETING_ARTIKEL_HXBXD { get; set; }          // AFMETING_ARTIKEL_HXBXD
+        [JsonProperty("EANCode")]
         public string EANCODE { get; set; }                         // EANCODE
         public string EN_LONG_DESC { get; set; }                    // EN_LONG_DESC
         public string NL_LONG_DESC { get; set; }                    // NL_LONG_DESC
@@ -42,7 +44,7 @@ namespace APIWoood.Models
         public decimal ISE_CONSUMENTENPRIJS { get; set; }           // ISE_CONSUMENTENPRIJS
         public decimal ISE_CONSUMENTENPRIJS_VAN { get; set; }       // ISE_CONSUMENTENPRIJS_VAN
         public decimal GEWICHT { get; set; }                        // GEWICHT
-        public bool NEW_ARRIVAL { get; set; }                       // NEW_ARRIVAL
+        public int NEW_ARRIVAL { get; set; }                       // NEW_ARRIVAL
         public decimal VERPAK_DIKTE_MM { get; set; }                // VERPAK_DIKTE_mm
         public decimal VERPAK_LENGTE_MM { get; set; }               // VERPAK_LENGTE_mm
         public decimal VERPAK_BREEDTE_MM { get; set; }              // VERPAK_BREEDTE_mm
@@ -51,12 +53,12 @@ namespace APIWoood.Models
         public string ASS_CODE_EXCLUSIV { get; set; }               // ASS_CODE_EXCLUSIV
         public string ATP { get; set; }                             // ATP
         public string DFF_SHIPMENT { get; set; }                    // DFF_SHIPMENT
-        public bool FSC { get; set; }                               // FSC
+        public int FSC { get; set; }                               // FSC
         public string COUNTRY_OF_ORIGIN { get; set; }               // COUNTRY_OF_ORIGIN
         public string INTRASTAT_CODE { get; set; }                  // INTRASTAT_CODE
-        public bool ASSEMBLY_REQUIRED { get; set; }                 // ASSEMBLY_REQUIRED
-        public decimal WEB_VAN_PRIJS_NL { get; set; }               // WEB_VAN_PRIJS_NL
-        public decimal WEB_VAN_PRIJS_ISE { get; set; }              // WEB_VAN_PRIJS_ISE
+        public int ASSEMBLY_REQUIRED { get; set; }                 // ASSEMBLY_REQUIRED
+        public string WEB_VAN_PRIJS_NL { get; set; }               // WEB_VAN_PRIJS_NL
+        public string WEB_VAN_PRIJS_ISE { get; set; }              // WEB_VAN_PRIJS_ISE
         public string AVAILABILITY_WEEK { get; set; }               // AVAILABILITY_WEEK
 
         public IList<Package> PAKKETTEN { get; set; }

@@ -3,6 +3,7 @@ using APIWoood.Logic.Repositories;
 using APIWoood.Logic.Services;
 using APIWoood.Logic.SharedKernel;
 using APIWoood.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,60 @@ using System.Web.Http;
 
 namespace APIWoood.Controllers.Api
 {
+    public class ProductDto
+    {
+        [JsonProperty("LVL")]
+        public string LVL { get; set; }
+
+        [JsonProperty("SEQ_NO")]
+        public string SEQ_NO { get; set; }
+
+        [JsonIgnore]
+        public string SEQ_FULL { get; set; }
+
+        [JsonProperty("ARTIKELCODE")]
+        public string ARTIKELCODE { get; set; }
+
+        [JsonProperty("NL_DESCR")]
+        public string NL_DESCR { get; set; }
+
+        [JsonProperty("EN_DESCR")]
+        public string EN_DESCR { get; set; }
+
+        [JsonProperty("DE_DESCR")]
+        public string DE_DESCR { get; set; }
+
+        [JsonProperty("FR_DESCR")]
+        public string FR_DESCR { get; set; }
+    }
+
+    public class ProductChildDto
+    {
+        [JsonProperty("LVL")]
+        public int LVL { get; set; }
+
+        [JsonProperty("SEQ_NO")]
+        public string SEQ_NO { get; set; }
+
+        [JsonIgnore]
+        public string SEQ_FULL { get; set; }
+
+        [JsonProperty("ARTIKELCODE")]
+        public string ARTIKELCODE { get; set; }
+
+        [JsonProperty("NL_DESCR")]
+        public string NL_DESCR { get; set; }
+
+        [JsonProperty("EN_DESCR")]
+        public string EN_DESCR { get; set; }
+
+        [JsonProperty("DE_DESCR")]
+        public string DE_DESCR { get; set; }
+
+        [JsonProperty("FR_DESCR")]
+        public string FR_DESCR { get; set; }
+    }
+
     public class StructureController : WooodApiController
     {
         private readonly StructureRepository structureRepository;
@@ -153,9 +208,15 @@ namespace APIWoood.Controllers.Api
             {
                 var pagedResult = structureRepository.List("MAINPROD_ASC", limit, page);
 
+                int pageCount = 0;
                 foreach (var item in pagedResult.Results)
                 {
-                    products.Add(GetItem(item.MAINPROD));
+                    var product = GetItem(item.MAINPROD);
+                    if (product != null)
+                    {
+                        products.Add(GetItem(item.MAINPROD));
+                        ++pageCount;
+                    }
                 }
 
                 var collection = new PagedCollection<Dictionary<string, object>>()
@@ -164,16 +225,16 @@ namespace APIWoood.Controllers.Api
                     page_size = pagedResult.PageSize,
                     page = pagedResult.CurrentPage,
                     total_items = pagedResult.RowCount,
-                    page_count = pagedResult.PageCount
+                    page_count = pageCount
                 };
 
-                logger.Log(ErrorType.INFO, "GetStructureList()", RequestContext.Principal.Identity.Name, "Total in query: " + products.Count(), "api/woood-structureview/list", startDate);
+                logger.Log(ErrorType.INFO, "GetStructureList(page = " + page + ", limit = " + limit + ")", RequestContext.Principal.Identity.Name, "Total in query: " + pageCount, "api/woood-structureview/list", startDate);
 
                 return Ok(collection);
             }
             catch (Exception e)
             {
-                logger.Log(ErrorType.ERR, "GetStructureList()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-structureview/list");
+                logger.Log(ErrorType.ERR, "GetStructureList(page = " + page + ", limit = " + limit + ")", RequestContext.Principal.Identity.Name, e.Message, "api/woood-structureview/list");
 
                 return InternalServerError(e);
             }
@@ -271,11 +332,12 @@ namespace APIWoood.Controllers.Api
            
             var product = productRepository.GetById(mainProd);
 
-            var itemDictionary = new Dictionary<string, object>()
+            if (product != null)
+            {
+                var itemDictionary = new Dictionary<string, object>()
                          {
                             { "LVL", "0" },
                             { "SEQ_NO", "000" },
-                            { "SEQ_FULL", "000" },
                             { "ARTIKELCODE", mainProd },
                             { "NL_DESCR", product.NL },
                             { "EN_DESCR", product.EN },
@@ -284,14 +346,18 @@ namespace APIWoood.Controllers.Api
                             { "QTY", 1 },
                         };
 
-            GetChildren(ref itemDictionary, mainProd);
+                GetChildren(ref itemDictionary, mainProd);
 
-            var dictionaryToReturn = new Dictionary<string, object>()
-            {
-                { mainProd, itemDictionary }
-            };
+                var dictionaryToReturn = new Dictionary<string, object>()
+                {
+                    { mainProd, itemDictionary }
+                };
 
-            return dictionaryToReturn;
+                return dictionaryToReturn;
+
+            }
+
+            return null;
         }
 
         private void GetChildren(ref Dictionary<string, object> node, string mainProd)
@@ -309,35 +375,33 @@ namespace APIWoood.Controllers.Api
                         var itemDictionary = new Dictionary<string, object>()
                         {
                             { "LVL", item.LVL },
-                            { "SEQ_NO", seqNo },
-                            { "SEQ_FULL", item.SEQ_NO },
+                            { "SEQ_NO", item.SEQ_NO },
                             { "ARTIKELCODE", item.ITEMREQ },
                             { "NL_DESCR", item.ITEMREQ_DESC },
-                            { "EN_DESCR", null },
-                            { "DE_DESCR", null },
-                            { "FR_DESCR", null },
+                            { "EN_DESCR", item.EN_ITEMREQ_DESC },
+                            { "DE_DESCR", item.DE_ITEMREQ_DESC },
+                            { "FR_DESCR", item.FR_ITEMREQ_DESC },
                             { "QTY", item.QTY_PER_MAINPROD },
                             
                         };
 
-                        node.Add(item.SEQ_NO, itemDictionary);
+                        node.Add(seqNo, itemDictionary);
                         GetChildren(ref itemDictionary, mainProd);
                     }
                     else
                     {
                         var prevSeq = item.SEQ_NO.Substring(0, 3 + 4 * (item.LVL - 2));
-                        if (prevSeq == (string)node["SEQ_FULL"])
+                        if (prevSeq == (string)node["SEQ_NO"])
                         {
                             var itemDictionary = new Dictionary<string, object>()
                             {
                                 { "LVL", item.LVL },
-                                { "SEQ_NO", seqNo },
-                                { "SEQ_FULL", item.SEQ_NO },
+                                { "SEQ_NO", item.SEQ_NO },
                                 { "ARTIKELCODE", item.ITEMREQ },
                                 { "NL_DESCR", item.ITEMREQ_DESC },
-                                { "EN_DESCR", null },
-                                { "DE_DESCR", null },
-                                { "FR_DESCR", null },
+                                { "EN_DESCR", item.EN_ITEMREQ_DESC },
+                                { "DE_DESCR", item.DE_ITEMREQ_DESC },
+                                { "FR_DESCR", item.FR_ITEMREQ_DESC },
                                 { "QTY", item.QTY_PER_MAINPROD },
                                 
                             };
@@ -358,7 +422,6 @@ namespace APIWoood.Controllers.Api
                         {
                             { "LVL", "0" },
                             { "SEQ_NO", "001" },
-                            { "SEQ_FULL", "001" },
                             { "ARTIKELCODE", mainProd },
                             { "NL_DESCR", product.NL },
                             { "EN_DESCR", product.EN },

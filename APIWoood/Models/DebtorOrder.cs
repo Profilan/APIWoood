@@ -7,7 +7,6 @@ namespace APIWoood.Models
 {
     public class DebtorOrder
     {
-        public virtual int ID { get; set; }
         public virtual string ORDERNR { get; set; }
         public virtual string DEBNR { get; set; }
         public virtual string FAKDEBNR { get; set; }
@@ -20,7 +19,7 @@ namespace APIWoood.Models
         public virtual string OMSCHRIJVING_NL { get; set; }
         public virtual string OMSCHRIJVING_EN { get; set; }
         public virtual string OMSCHRIJVING_DE { get; set; }
-        public virtual float AANT_GELEV { get; set; }
+        public virtual float AANTAL_GELEV { get; set; }
         public virtual int STATUS { get; set; }
         public virtual string DEL_LANDCODE { get; set; }
         public virtual string SELCODE { get; set; }

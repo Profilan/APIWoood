@@ -82,6 +82,8 @@ namespace APIWoood.Logic.Repositories
             {
                 var query = session.Query<Debtor>();
 
+                query = query.OrderBy(x => x.DEBITEURNR);
+
                 return query.ToList();
             }
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -21,7 +22,9 @@ namespace APIWoood.Models
         public decimal VOL_M3_VERP { get; set; }            // VOL_M3_VERP
         public decimal VRIJEVOORRAADPAKKET { get; set; }    // VRIJEVOORRAADPAKKET
         public string ASS_CODE_EXCLUSIV { get; set; }       // ASS_CODE_EXCLUSIV
+        [JsonProperty("EANCode_Pakket")]
         public string EANCODE_PAKKET { get; set; }          // EANCODE
         public int AANTAL_PAKKETTEN { get; set; }           // AANTAL_PAKKETTEN
+        
     }
 }

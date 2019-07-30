@@ -108,6 +108,20 @@ namespace APIWoood.Logic.Repositories
             }
         }
 
+        public IEnumerable<DebtorOrder> ListByDebtor(string debiteurnr)
+        {
+            using (ISession session = SessionFactory.GetNewSession("db1"))
+            {
+                var query = from d in session.Query<DebtorOrder>()
+                            select d;
+
+                query = query.OrderBy(d => d.ORDERNR);
+                query = query.Where(x => x.DEBNR == debiteurnr);
+
+                return query.ToList();
+            }
+        }
+
         public IEnumerable<DebtorOrder> List()
         {
             using (ISession session = SessionFactory.GetNewSession("db1"))

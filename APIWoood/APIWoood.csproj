@@ -238,6 +238,7 @@
     <Compile Include="Models\DashboardService.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\DataPoint.cs" />
+    <Compile Include="Models\DebtorDto.cs" />
     <Compile Include="Models\DebtorOrder.cs" />
     <Compile Include="Models\DutchNedData.cs" />
     <Compile Include="Models\DutchNedDeliveryAppointment.cs" />

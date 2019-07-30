@@ -80,18 +80,44 @@ namespace APIWoood.Controllers.Api
         {
             try
             {
-                var result = debtorOrderRepository.List("DEBITEURNR_ASC", limit, page);
+                var items = debtorOrderRepository.List("DEBITEURNR_ASC", limit, page);
 
-                var collection = new PagedCollection<APIWoood.Logic.Models.DebtorOrder>()
+                var orders = new List<DebtorOrder>();
+                foreach (var order in items.Results)
                 {
-                    _embedded = result.Results,
-                    page_size = result.PageSize,
-                    page = result.CurrentPage,
-                    total_items = result.RowCount,
-                    page_count = result.PageCount
+                    orders.Add(new DebtorOrder()
+                    {
+                        ORDERNR = order.ORDERNR,
+                        DEBNR = order.DEBNR,
+                        FAKDEBNR = order.FAKDEBNR,
+                        REFERENTIE = order.REFERENTIE,
+                        OMSCHRIJVING = order.OMSCHRIJVING,
+                        ORDDAT = order.ORDDAT.ToString("yyyy-MM-dd HH:mm:ss"),
+                        AANTAL_BESTELD = order.AANTAL_BESTELD,
+                        ITEMCODE = order.ITEMCODE,
+                        AFLEVERDATUM = order.AFLEVERDATUM.ToString("yyyy-MM-dd HH:mm:ss"),
+                        OMSCHRIJVING_NL = order.OMSCHRIJVING_NL,
+                        OMSCHRIJVING_EN = order.OMSCHRIJVING_EN,
+                        OMSCHRIJVING_DE = order.OMSCHRIJVING_DE,
+                        AANTAL_GELEV = order.AANT_GELEV,
+                        STATUS = order.STATUS,
+                        DEL_LANDCODE = order.DEL_LANDCODE.Trim(),
+                        SELCODE = order.SELCODE,
+                        PRIJS_PER_STUK = order.PRIJS_PER_STUK,
+                        SUBTOTAAL = order.SUBTOTAAL
+                    });
+                }
+
+                var collection = new PagedCollection<DebtorOrder>()
+                {
+                    _embedded = orders,
+                    page_size = items.PageSize,
+                    page = items.CurrentPage,
+                    total_items = items.RowCount,
+                    page_count = items.PageCount
                 };
 
-                logger.Log(ErrorType.INFO, "GetPagedDebtorOrders()", RequestContext.Principal.Identity.Name, "Total in query: " + result.Results.Count, "api/woood-deb-order-info/list", startDate);
+                logger.Log(ErrorType.INFO, "GetPagedDebtorOrders()", RequestContext.Principal.Identity.Name, "Total in query: " + items.Results.Count, "api/woood-deb-order-info/list", startDate);
 
                 return Ok(collection);
             }
@@ -131,7 +157,7 @@ namespace APIWoood.Controllers.Api
          *                  "OMSCHRIJVING_NL": "DUMMY ARTIKEL",
          *                  "OMSCHRIJVING_EN": "DUMMY ARTICLE",
          *                  "OMSCHRIJVING_DE": null,
-         *                  "AANT_GELEV": 1,
+         *                  "AANTAL_GELEV": 1,
          *                  "STATUS": 1,
          *                  "DEL_LANDCODE": "DE ",
          *                  "SELCODE": "DE",
@@ -198,7 +224,7 @@ namespace APIWoood.Controllers.Api
          *                  "OMSCHRIJVING_NL": "DUMMY ARTIKEL",
          *                  "OMSCHRIJVING_EN": "DUMMY ARTICLE",
          *                  "OMSCHRIJVING_DE": null,
-         *                  "AANT_GELEV": 1,
+         *                  "AANTAL_GELEV": 1,
          *                  "STATUS": 1,
          *                  "DEL_LANDCODE": "DE ",
          *                  "SELCODE": "DE",
@@ -219,7 +245,7 @@ namespace APIWoood.Controllers.Api
         [Route("api/woood-deb-order-info/view/debiteurnr/{debiteurnr}")]
         [HttpGet]
         [Authorize]
-        public IHttpActionResult GetDebtorOrdersByDebtor(string debiteurnr, int page = 1, int limit = 25)
+        public IHttpActionResult GetPagedDebtorOrdersByDebtor(string debiteurnr, int page, int limit = 25)
         {
             try
             {
@@ -236,13 +262,72 @@ namespace APIWoood.Controllers.Api
                         total_items = result.RowCount,
                         page_count = result.PageCount
                     };
-                    logger.Log(ErrorType.INFO, "GetDebtorOrdersByDebtor(" + debiteurnr + ")", RequestContext.Principal.Identity.Name, "Total in query: " + result.Results.Count(), "api/woood-deb-order-info/view/debiteurnr", startDate);
+                    logger.Log(ErrorType.INFO, "GetPagedDebtorOrdersByDebtor(" + debiteurnr + ")", RequestContext.Principal.Identity.Name, "Total in query: " + result.Results.Count(), "api/woood-deb-order-info/view/debiteurnr", startDate);
 
                     return Ok(collection);
                 }
                 else
                 {
-                    logger.Log(ErrorType.INFO, "GetDebtorOrdersByDebtor(" + debiteurnr + ")", RequestContext.Principal.Identity.Name, "Total in query: " + result.Results.Count(), "api/woood-deb-order-info/view/debiteurnr", startDate);
+                    logger.Log(ErrorType.INFO, "GetPagedDebtorOrdersByDebtor(" + debiteurnr + ")", RequestContext.Principal.Identity.Name, "Total in query: " + result.Results.Count(), "api/woood-deb-order-info/view/debiteurnr", startDate);
+
+                    return Ok(new List<string>());
+                }
+
+            }
+            catch (Exception e)
+            {
+                logger.Log(ErrorType.ERR, "GetPagedDebtorOrdersByDebtor(" + debiteurnr + ")", RequestContext.Principal.Identity.Name, e.Message, "api/woood-deb-order-info/view/debiteurnr");
+
+                return InternalServerError(e);
+            }
+
+        }
+
+        [Route("api/woood-deb-order-info/view/debiteurnr/{debiteurnr}")]
+        [HttpGet]
+        [Authorize]
+        public IHttpActionResult GetDebtorOrdersByDebtor(string debiteurnr)
+        {
+            try
+            {
+                var items = debtorOrderRepository.ListByDebtor(debiteurnr);
+
+
+                if (items.Count() > 0)
+                {
+                    var orders = new List<DebtorOrder>();
+                    foreach (var order in items)
+                    {
+                        orders.Add(new DebtorOrder()
+                        {
+                            ORDERNR = order.ORDERNR,
+                            DEBNR = order.DEBNR,
+                            FAKDEBNR = order.FAKDEBNR,
+                            REFERENTIE = order.REFERENTIE,
+                            OMSCHRIJVING = order.OMSCHRIJVING,
+                            ORDDAT = order.ORDDAT.ToString("yyyy-MM-dd HH:mm:ss"),
+                            AANTAL_BESTELD = order.AANTAL_BESTELD,
+                            ITEMCODE = order.ITEMCODE,
+                            AFLEVERDATUM = order.AFLEVERDATUM.ToString("yyyy-MM-dd HH:mm:ss"),
+                            OMSCHRIJVING_NL = order.OMSCHRIJVING_NL,
+                            OMSCHRIJVING_EN = order.OMSCHRIJVING_EN,
+                            OMSCHRIJVING_DE = order.OMSCHRIJVING_DE,
+                            AANTAL_GELEV = order.AANT_GELEV,
+                            STATUS = order.STATUS,
+                            DEL_LANDCODE = order.DEL_LANDCODE.Trim(),
+                            SELCODE = order.SELCODE,
+                            PRIJS_PER_STUK = order.PRIJS_PER_STUK,
+                            SUBTOTAAL = order.SUBTOTAAL
+                        });
+                    }
+
+                    logger.Log(ErrorType.INFO, "GetDebtorOrdersByDebtor(" + debiteurnr + ")", RequestContext.Principal.Identity.Name, "Total in query: " + items.Count(), "api/woood-deb-order-info/view/debiteurnr", startDate);
+
+                    return Ok(orders);
+                }
+                else
+                {
+                    logger.Log(ErrorType.INFO, "GetDebtorOrdersByDebtor(" + debiteurnr + ")", RequestContext.Principal.Identity.Name, "Total in query: " + items.Count(), "api/woood-deb-order-info/view/debiteurnr", startDate);
 
                     return Ok(new List<string>());
                 }
