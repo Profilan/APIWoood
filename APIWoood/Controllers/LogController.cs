@@ -58,8 +58,10 @@ namespace APIWoood.Controllers
                 ViewBag.StartDate = start.ToString("yyyy-MM-dd");
                 ViewBag.EndDate = end.ToString("yyyy-MM-dd");
 
-                int pageSize = 10;
+                int pageSize = 25;
                 int pageNumber = (page ?? 1);
+
+                ViewBag.ErrorType = ErrorType;
 
                 var logs = _logRepository.List(sortOrder, searchString, pageSize, pageNumber, start, end, userId, ErrorType);
                 var users = userRepository.List();

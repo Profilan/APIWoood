@@ -8,7 +8,8 @@ namespace APIWoood.Logic.Models
 {
     public class OrderHeader
     {
-	    public virtual OrderIdentifier OrderIdentifier { get; set; }
+        public virtual int ID { get; set; }
+        public virtual OrderIdentifier OrderIdentifier { get; set; }
         public virtual string OMSCHRIJVING { get; set; }
 	    public virtual int STATUS { get; set; }
 	    public virtual string ORDERNR { get; set; }

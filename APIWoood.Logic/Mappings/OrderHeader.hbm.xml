@@ -3,10 +3,15 @@
                    namespace="APIWoood.Logic.Models"
                    assembly="APIWoood.Logic">
   <class name="OrderHeader" table="_AB_TB_WEB_ORKRG">
-    <composite-id name="OrderIdentifier">
-      <key-property name="REFERENTIE"/>
-      <key-property name="DEBITEURNR"/>
-    </composite-id>
+
+    <id name="ID">
+      <generator class="identity" />
+    </id>
+    
+    <component name="OrderIdentifier">
+      <property name="REFERENTIE"/>
+      <property name="DEBITEURNR"/>
+    </component>
 
     <property name="OMSCHRIJVING"/>
     <property name="STATUS"/>
@@ -40,10 +45,7 @@
     <property name="SYSMSG"/>
 
     <set name="Lines" table="_AB_TB_WEB_ORSRG" cascade="all-delete-orphan">
-      <key>
-        <column name="REFERENTIE"/>
-        <column name="DEBITEURNR"/>
-      </key>
+      <key column="ORDERHEADERID"/>
       <one-to-many class="OrderLine"/>
     </set>
 

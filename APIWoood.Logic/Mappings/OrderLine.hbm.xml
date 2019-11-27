@@ -3,6 +3,7 @@
                    namespace="APIWoood.Logic.Models"
                    assembly="APIWoood.Logic">
   <class name="OrderLine" table="_AB_TB_WEB_ORSRG">
+    
     <id name="ID">
       <generator class="identity"/>
     </id>

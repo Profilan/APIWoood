@@ -9,6 +9,7 @@ namespace APIWoood.Logic.Models
     public class OrderLine
     {
         public virtual int ID { get; set; }
+        public virtual int ORDERHEADERID { get; set; }
         public virtual OrderIdentifier OrderIdentifier { get; set; }
         public virtual string ITEMCODE { get; set; }
 	    public virtual float AANTAL { get; set; }

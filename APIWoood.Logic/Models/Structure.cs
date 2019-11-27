@@ -13,6 +13,6 @@
         public virtual string EN_ITEMREQ_DESC { get; set; }
 	    public virtual string DE_ITEMREQ_DESC { get; set; }
 	    public virtual string FR_ITEMREQ_DESC { get; set; }
-	    public virtual float QTY_PER_MAINPROD { get; set; }
+	    public virtual int QTY_PER_MAINPROD { get; set; }
     }
 }

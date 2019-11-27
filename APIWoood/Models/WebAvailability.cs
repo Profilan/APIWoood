@@ -14,7 +14,7 @@ namespace APIWoood.Models
         public virtual string TOELICHTING_EN { get; set; }
         public virtual string TOELICHTING_DE { get; set; }
         public virtual string TOELICHTING_FR { get; set; }
-        public virtual int LEVERWEEK { get; set; }
+        public virtual string LEVERWEEK { get; set; }
         public virtual string LEVERWEEK_JJJJWW { get; set; }
         public virtual string OMSCHRIJVING_NL { get; set; }
         public virtual string OMSCHRIJVING_EN { get; set; }
@@ -24,5 +24,7 @@ namespace APIWoood.Models
         public virtual string EXCLUSIVE { get; set; }
         [JsonProperty("EANCode")]
         public virtual string EANCODE { get; set; }
+        public string SYSCREATED { get; set; }
+        public string SYSMODIFIED { get; set; }
     }
 }

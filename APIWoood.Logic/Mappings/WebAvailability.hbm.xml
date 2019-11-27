@@ -21,5 +21,7 @@
     <property name="BRAND"/>
     <property name="EXCLUSIVE"/>
     <property name="EANCODE"/>
+    <property name="SYSCREATED"/>
+    <property name="SYSMODIFIED"/>
   </class>
 </hibernate-mapping>

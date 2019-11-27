@@ -181,7 +181,7 @@ namespace APIWoood.Controllers.Api
             }
             catch (Exception e)
             {
-                logger.Log(ErrorType.ERR, "GetPricelistsByDebtor(" + debiteurnr + ")", RequestContext.Principal.Identity.Name, e.Message, "api/woood-pricelist/view/debiteurnr/" + debiteurnr);
+                logger.Log(ErrorType.ERR, "GetPricelistsByDebtor(" + debiteurnr + ")", RequestContext.Principal.Identity.Name, e.ToString(), "api/woood-pricelist/view/debiteurnr");
 
                 return InternalServerError(e);
             }

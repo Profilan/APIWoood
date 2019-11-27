@@ -368,6 +368,7 @@ namespace APIWoood.Controllers.Api
                 FACTLANDCODE = debtor.FACTLANDCODE != null ? debtor.FACTLANDCODE.Trim() : "",
                 FACTLAND = debtor.FACTLAND,
                 BEZADRES = debtor.BEZADRES != null ? debtor.BEZADRES : "",
+                BEZPC = debtor.BEZPC,
                 BEZPLAATS = debtor.BEZPLAATS != null ? debtor.BEZPLAATS : "",
                 BEZLANDCODE = debtor.BEZLANDCODE != null ? debtor.BEZLANDCODE.Trim() : "",
                 BEZLAND = debtor.BEZLAND,

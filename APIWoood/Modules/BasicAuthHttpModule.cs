@@ -42,6 +42,8 @@ namespace APIWoood.Modules
 
             var passwordHasher = new PasswordHasher();
 
+            var temp = passwordHasher.HashPassword(password);
+
             if (passwordHasher.HashPassword(password) == user.HashedPassword)
             {
                 return true;

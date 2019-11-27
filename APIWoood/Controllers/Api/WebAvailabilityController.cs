@@ -194,19 +194,21 @@ namespace APIWoood.Controllers.Api
             {
                 FAKDEBNR = item.WebAvailabilityIdentifier.FAKDEBNR,
                 ITEMCODE = item.WebAvailabilityIdentifier.ITEMCODE,
-                TOELICHTING_NL = item.TOELICHTING_NL,
-                TOELICHTING_EN = item.TOELICHTING_EN,
-                TOELICHTING_DE = item.TOELICHTING_DE,
-                TOELICHTING_FR = item.TOELICHTING_FR,
-                LEVERWEEK = item.LEVERWEEK,
+                TOELICHTING_NL = item.TOELICHTING_NL != null ? item.TOELICHTING_NL : "",
+                TOELICHTING_EN = item.TOELICHTING_EN != null ? item.TOELICHTING_EN : "",
+                TOELICHTING_DE = item.TOELICHTING_DE != null ? item.TOELICHTING_DE : "",
+                TOELICHTING_FR = item.TOELICHTING_FR != null ? item.TOELICHTING_FR : "",
+                LEVERWEEK = item.LEVERWEEK == 0 ? Convert.ToString(item.LEVERWEEK) : null,
                 LEVERWEEK_JJJJWW = item.LEVERWEEK_JJJJWW,
-                OMSCHRIJVING_NL = item.OMSCHRIJVING_NL,
-                OMSCHRIJVING_EN = item.OMSCHRIJVING_EN,
-                OMSCHRIJVING_DE = item.OMSCHRIJVING_DE,
-                OMSCHRIJVING_FR = item.OMSCHRIJVING_FR,
+                OMSCHRIJVING_NL = item.OMSCHRIJVING_NL != null ? item.OMSCHRIJVING_NL : "",
+                OMSCHRIJVING_EN = item.OMSCHRIJVING_EN != null ? item.OMSCHRIJVING_EN : "",
+                OMSCHRIJVING_DE = item.OMSCHRIJVING_DE != null ? item.OMSCHRIJVING_DE : "",
+                OMSCHRIJVING_FR = item.OMSCHRIJVING_FR != null ? item.OMSCHRIJVING_FR : "",
                 BRAND = item.BRAND,
                 EXCLUSIVE = item.EXCLUSIVE,
                 EANCODE = item.EANCODE,
+                SYSCREATED = item.SYSCREATED.ToString("yyyy-MM-dd HH:mm:ss"),
+                SYSMODIFIED = item.SYSMODIFIED.ToString("yyyy-MM-dd HH:mm:ss")
             };
         }
     }

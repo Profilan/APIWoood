@@ -22,5 +22,7 @@ namespace APIWoood.Logic.Models
         public virtual string BRAND { get; set; }
         public virtual string EXCLUSIVE { get; set; }
         public virtual string EANCODE { get; set; }
+        public virtual DateTime SYSCREATED { get; set; }
+        public virtual DateTime SYSMODIFIED { get; set; }
     }
 }
