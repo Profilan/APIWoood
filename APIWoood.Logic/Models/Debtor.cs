@@ -1,10 +1,11 @@
-﻿using System;
+﻿using APIWoood.Logic.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APIWoood.Logic.Models
+namespace APIWoood.Models
 {
     public class Debtor
     {

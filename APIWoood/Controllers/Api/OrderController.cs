@@ -172,7 +172,7 @@ namespace APIWoood.Controllers.Api
                     var existingOrders = orderRepository.GetByIdentifier(orderIdentifier);
                     if (existingOrders.Count() > 0)
                     {
-                        logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "The combination of DEBITEURNR and REFERENTIE must be unique", "api/woood-order/create");
+                        logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "The combination of DEBITEURNR(" + order.DEBITEURNR + ") and REFERENTIE(" + order.REFERENTIE + ") must be unique", "api/woood-order/create");
 
                         return Content(HttpStatusCode.BadRequest, "The combination of DEBITEURNR and REFERENTIE must be unique");
                     }

@@ -3,7 +3,7 @@
                    namespace="APIWoood.Logic.Models"
                    assembly="APIWoood.Logic">
   <class name="Debtor" table="EEK_API_vw_DEBTORS" mutable="false">
-    <id name="DEBITEURNR">
+    <id name="DEBITEURNR" column="debcode">
       <generator class="identity"/>
     </id>
 

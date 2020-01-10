@@ -235,6 +235,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ApiError.cs" />
+    <Compile Include="Models\Dashboard.cs" />
     <Compile Include="Models\DashboardService.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\DataPoint.cs" />
@@ -252,9 +253,11 @@
     <Compile Include="Models\Identity\RegisterViewModel.cs" />
     <Compile Include="Models\Identity\SignInManager.cs" />
     <Compile Include="Models\Identity\UserManager.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Link.cs" />
     <Compile Include="Models\LogListViewModel.cs" />
     <Compile Include="Models\LogViewModel.cs" />
+    <Compile Include="Models\Month.cs" />
     <Compile Include="Models\OrderData.cs" />
     <Compile Include="Models\OrderBody.cs" />
     <Compile Include="Models\Header.cs" />
@@ -267,6 +270,11 @@
     <Compile Include="Models\Pricelist.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductRange.cs" />
+    <Compile Include="Models\Quantity.cs" />
+    <Compile Include="Models\QuantityItem.cs" />
+    <Compile Include="Models\Quarter.cs" />
+    <Compile Include="Models\Sales.cs" />
+    <Compile Include="Models\SalesItem.cs" />
     <Compile Include="Models\SellingPoint.cs" />
     <Compile Include="Models\StockData.cs" />
     <Compile Include="Models\StockDataAtp.cs" />
@@ -275,6 +283,7 @@
     <Compile Include="Models\UserStatisticsViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\WebAvailability.cs" />
+    <Compile Include="Models\Year.cs" />
     <Compile Include="Modules\BasicAuthHttpModule.cs" />
     <Compile Include="Modules\IPAddressRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -588,7 +597,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1591</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1580/</IISUrl>
+          <IISUrl>http://localhost:1581/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

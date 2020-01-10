@@ -1,6 +1,7 @@
 ﻿using APIWoood.Logic.Models;
 using APIWoood.Logic.SharedKernel;
 using APIWoood.Logic.SharedKernel.Interfaces;
+using APIWoood.Models;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;

@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Helpers\HibernateStoredProcedureExecutor.cs" />
     <Compile Include="Helpers\Interfaces\IExecuteStoredProcedure.cs" />
+    <Compile Include="Models\Dashboard.cs" />
     <Compile Include="Models\History.cs" />
     <Compile Include="Models\HistoryIdentifier.cs" />
     <Compile Include="Models\SalesOrderLineStatus.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Models\WebAvailability.cs" />
     <Compile Include="Models\WebAvailabilityIdentifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\DashboardRepository.cs" />
     <Compile Include="Repositories\DebtorOrderRepository.cs" />
     <Compile Include="Repositories\DebtorRepository.cs" />
     <Compile Include="Models\DeliveryAppointment.cs" />
@@ -168,6 +170,8 @@
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Mappings\Debtor.hbm.xml" />
+    <EmbeddedResource Include="Mappings\Dashboard.hbm.xml" />
     <EmbeddedResource Include="Mappings\DeliveryAppointment.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -191,7 +195,6 @@
     <EmbeddedResource Include="Mappings\OrderHeader.hbm.xml" />
     <EmbeddedResource Include="Mappings\OrderLine.hbm.xml" />
     <EmbeddedResource Include="Mappings\DebtorOrder.hbm.xml" />
-    <EmbeddedResource Include="Mappings\Debtor.hbm.xml" />
     <EmbeddedResource Include="Mappings\Structure.hbm.xml" />
     <EmbeddedResource Include="Mappings\User.hbm.xml" />
     <EmbeddedResource Include="Mappings\Package.hbm.xml" />

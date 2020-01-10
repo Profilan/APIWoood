@@ -165,6 +165,85 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/api/dashboard",
+    "title": "Request Dashboard information",
+    "version": "1.0.0",
+    "name": "GetDashboard",
+    "group": "Dashboard",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Basic Authorization value (provided by De Eekhoorn Woodworkings B.V.)</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "debcode",
+            "description": "<p>Debtor Code</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "apikey",
+            "description": "<p>Unique key for the user</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "/api/dashboard?debcode=000504&apikey=fftt2sQjjaiSXnX2Qnvr3XnahdDB3ZRDLTnRtpJr",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1. 200 OK\n{\n    \"Quantity\": {\n        \"Year\": {\n            \"Items\": [\n                {\n                    \"EAN\": \"8714713056163\",\n                    \"Amount\": 993\n                },\n                {\n                    \"EAN\": \"8714713057887\",\n                    \"Amount\": 875\n                },\n                ...\n            ],\n        \"Quarter\":\n            \"Items\": [\n                {\n                    \"EAN\": \"8714713056163\",\n                    \"Amount\": 993\n                },\n                {\n                    \"EAN\": \"8714713057887\",\n                    \"Amount\": 875\n                },\n                ...\n            ],\n        \"Month\":\n            \"Items\": [\n                {\n                    \"EAN\": \"8714713056163\",\n                    \"Amount\": 993\n                },\n                {\n                    \"EAN\": \"8714713057887\",\n                    \"Amount\": 875\n                },\n                ...\n            ]\n    },\n    \"Sales\": {\n        \"Year\": {\n            \"Items\": [\n                {\n                    \"EAN\": \"8714713056163\",\n                    \"Amount\": 993\n                },\n                {\n                    \"EAN\": \"8714713057887\",\n                    \"Amount\": 875\n                },\n                ...\n            ],\n        \"Quarter\":\n            \"Items\": [\n                {\n                    \"EAN\": \"8714713056163\",\n                    \"Amount\": 993\n                },\n                {\n                    \"EAN\": \"8714713057887\",\n                    \"Amount\": 875\n                },\n                ...\n            ],\n        \"Month\":\n            \"Items\": [\n                {\n                    \"EAN\": \"8714713056163\",\n                    \"Amount\": 993\n                },\n                {\n                    \"EAN\": \"8714713057887\",\n                    \"Amount\": 875\n                },\n                ...\n            ]\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "401",
+            "optional": false,
+            "field": "NotAuthorized",
+            "description": "<p>The user is not authorized.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "404",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>There are no records for this debtor.</p>"
+          }
+        ]
+      }
+    },
+    "filename": "./Controllers/Api/DashboardController.cs",
+    "groupTitle": "Dashboard"
+  },
+  {
+    "type": "get",
     "url": "/api/woood-deb-order-info/view/debiteurnr/{debiteurnr}?page={page}&limit={limit}",
     "title": "Request debtor orders by debtor",
     "version": "1.0.0",
@@ -222,7 +301,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1. 200 OK\n{\n    \"_embedded\": [\n        {\n            \"ID\": 3241705,\n            \"ORDERNR\": \"54294159\",\n            \"DEBNR\": \"000201\",\n            \"FAKDEBNR\": \"000201\",\n            \"REFERENTIE\": \"TEST 54294159\",\n            \"OMSCHRIJVING\": \"TEST BUITENLAND\",\n            \"ORDDAT\": \"2016-08-16T00:00:00\",\n            \"AANTAL_BESTELD\": 1,\n            \"ITEMCODE\": \"XXXXXX\",\n            \"AFLEVERDATUM\": \"2016-08-16T00:00:00\",\n            \"OMSCHRIJVING_NL\": \"DUMMY ARTIKEL\",\n            \"OMSCHRIJVING_EN\": \"DUMMY ARTICLE\",\n            \"OMSCHRIJVING_DE\": null,\n            \"AANT_GELEV\": 1,\n            \"STATUS\": 1,\n            \"DEL_LANDCODE\": \"DE \",\n            \"SELCODE\": \"DE\",\n            \"PRIJS_PER_STUK\": 0,\n            \"SUBTOTAAL\": 0\n        },\n        ...\n    ],\n    \"page_count\": 3901,\n    \"page_size\": 25,\n    \"total_items\": 97518,\n    \"page\": 1\n}",
+          "content": "HTTP/1.1. 200 OK\n{\n    \"_embedded\": [\n        {\n            \"ID\": 3241705,\n            \"ORDERNR\": \"54294159\",\n            \"DEBNR\": \"000201\",\n            \"FAKDEBNR\": \"000201\",\n            \"REFERENTIE\": \"TEST 54294159\",\n            \"OMSCHRIJVING\": \"TEST BUITENLAND\",\n            \"ORDDAT\": \"2016-08-16T00:00:00\",\n            \"AANTAL_BESTELD\": 1,\n            \"ITEMCODE\": \"XXXXXX\",\n            \"AFLEVERDATUM\": \"2016-08-16T00:00:00\",\n            \"OMSCHRIJVING_NL\": \"DUMMY ARTIKEL\",\n            \"OMSCHRIJVING_EN\": \"DUMMY ARTICLE\",\n            \"OMSCHRIJVING_DE\": null,\n            \"AANTAL_GELEV\": 1,\n            \"STATUS\": 1,\n            \"DEL_LANDCODE\": \"DE \",\n            \"SELCODE\": \"DE\",\n            \"PRIJS_PER_STUK\": 0,\n            \"SUBTOTAAL\": 0\n        },\n        ...\n    ],\n    \"page_count\": 3901,\n    \"page_size\": 25,\n    \"total_items\": 97518,\n    \"page\": 1\n}",
           "type": "json"
         }
       ]
@@ -276,7 +355,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1. 200 OK\n[\n        {\n            \"ID\": 3241705,\n            \"ORDERNR\": \"54294159\",\n            \"DEBNR\": \"000201\",\n            \"FAKDEBNR\": \"000201\",\n            \"REFERENTIE\": \"TEST 54294159\",\n            \"OMSCHRIJVING\": \"TEST BUITENLAND\",\n            \"ORDDAT\": \"2016-08-16T00:00:00\",\n            \"AANTAL_BESTELD\": 1,\n            \"ITEMCODE\": \"XXXXXX\",\n            \"AFLEVERDATUM\": \"2016-08-16T00:00:00\",\n            \"OMSCHRIJVING_NL\": \"DUMMY ARTIKEL\",\n            \"OMSCHRIJVING_EN\": \"DUMMY ARTICLE\",\n            \"OMSCHRIJVING_DE\": null,\n            \"AANT_GELEV\": 1,\n            \"STATUS\": 1,\n            \"DEL_LANDCODE\": \"DE \",\n            \"SELCODE\": \"DE\",\n            \"PRIJS_PER_STUK\": 0,\n            \"SUBTOTAAL\": 0\n        },\n        ...\n    ]",
+          "content": "HTTP/1.1. 200 OK\n[\n        {\n            \"ID\": 3241705,\n            \"ORDERNR\": \"54294159\",\n            \"DEBNR\": \"000201\",\n            \"FAKDEBNR\": \"000201\",\n            \"REFERENTIE\": \"TEST 54294159\",\n            \"OMSCHRIJVING\": \"TEST BUITENLAND\",\n            \"ORDDAT\": \"2016-08-16T00:00:00\",\n            \"AANTAL_BESTELD\": 1,\n            \"ITEMCODE\": \"XXXXXX\",\n            \"AFLEVERDATUM\": \"2016-08-16T00:00:00\",\n            \"OMSCHRIJVING_NL\": \"DUMMY ARTIKEL\",\n            \"OMSCHRIJVING_EN\": \"DUMMY ARTICLE\",\n            \"OMSCHRIJVING_DE\": null,\n            \"AANTAL_GELEV\": 1,\n            \"STATUS\": 1,\n            \"DEL_LANDCODE\": \"DE \",\n            \"SELCODE\": \"DE\",\n            \"PRIJS_PER_STUK\": 0,\n            \"SUBTOTAAL\": 0\n        },\n        ...\n    ]",
           "type": "json"
         }
       ]
