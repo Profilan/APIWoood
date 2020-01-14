@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APIWoood.Models
+namespace APIWoood.Logic.Models
 {
     public class Debtor
     {

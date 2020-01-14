@@ -1,6 +1,4 @@
-﻿using APIWoood.Logic.SharedKernel.Interfaces;
-using APIWoood.Models;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 
 namespace APIWoood.Logic.Models

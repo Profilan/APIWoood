@@ -2,6 +2,7 @@
 using APIWoood.Logic.SharedKernel;
 using APIWoood.Logic.SharedKernel.Interfaces;
 using NHibernate;
+using NHibernate.Multi;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -39,10 +40,15 @@ namespace APIWoood.Logic.Repositories
                 criteria.SetMaxResults(pageSize)
                     .SetFirstResult((pageNumber - 1) * pageSize);
 
+                /*
                 var multi = session.CreateMultiCriteria()
                     .Add(countCriteria)
                     .Add(criteria)
-                    .List();
+                   .List();
+                   */
+                var multi = session.CreateQueryBatch()
+                    .Add<int>(countCriteria)
+                    .Add<Pricelist>(criteria);
 
                 var result = new PagedResult<Pricelist>();
 
@@ -50,12 +56,12 @@ namespace APIWoood.Logic.Repositories
 
                 result.PageSize = pageSize;
 
-                result.RowCount = (int)((IList)multi[0])[0];
+                result.RowCount = multi.GetResult<int>(0).Single();
                 var pageCount = (double)result.RowCount / result.PageSize;
 
                 result.PageCount = (int)Math.Ceiling(pageCount);
 
-                result.Results = ((IEnumerable)multi[1]).Cast<Pricelist>().ToList();
+                result.Results = multi.GetResult<Pricelist>(1);
 
                 return result;
             }

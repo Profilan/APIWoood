@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2018
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIWoood", "APIWoood\APIWoood.csproj", "{E243A486-5050-4941-A879-546181073C2B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIWoood.Tests", "APIWoood.Tests\APIWoood.Tests.csproj", "{7DECC636-7AD8-44CA-80EA-884C62C145EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIWoood.Logic", "APIWoood.Logic\APIWoood.Logic.csproj", "{D6625C78-3476-49F5-99AA-E926DC21393E}"
 EndProject
@@ -21,10 +19,6 @@ Global
 		{E243A486-5050-4941-A879-546181073C2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E243A486-5050-4941-A879-546181073C2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E243A486-5050-4941-A879-546181073C2B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7DECC636-7AD8-44CA-80EA-884C62C145EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7DECC636-7AD8-44CA-80EA-884C62C145EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7DECC636-7AD8-44CA-80EA-884C62C145EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7DECC636-7AD8-44CA-80EA-884C62C145EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D6625C78-3476-49F5-99AA-E926DC21393E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D6625C78-3476-49F5-99AA-E926DC21393E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6625C78-3476-49F5-99AA-E926DC21393E}.Release|Any CPU.ActiveCfg = Release|Any CPU
