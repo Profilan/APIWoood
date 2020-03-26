@@ -54,8 +54,10 @@ namespace APIWoood.Logic.Models
         public virtual int DEALER_ACTIVATION { get; set; }
         public virtual string DEALER_BRANDS { get; set; }
         public virtual string DEALER_TYPE { get; set; }
+		public virtual string DEALER_WWW_WOOOD { get; set; }
+		public virtual string DEALER_WWW_BPH { get; set; }
 
-        public virtual ISet<User> Users { get; set; }
+		public virtual ISet<User> Users { get; set; }
 
         public Debtor()
         {

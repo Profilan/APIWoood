@@ -394,7 +394,9 @@ namespace APIWoood.Controllers.Api
                 DEB_WWW_ALIAS = debtor.DEB_WWW_ALIAS ?? "",
                 DEALER_ACTIVATION = debtor.DEALER_ACTIVATION,
                 DEALER_BRANDS = debtor.DEALER_BRANDS,
-                DEALER_TYPE = debtor.DEALER_TYPE ?? ""
+                DEALER_TYPE = debtor.DEALER_TYPE ?? "",
+                DEALER_WWW_WOOOD = debtor.DEALER_WWW_WOOOD,
+                DEALER_WWW_BPH = debtor.DEALER_WWW_BPH
             };
         }
     }

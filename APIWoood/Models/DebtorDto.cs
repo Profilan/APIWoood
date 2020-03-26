@@ -54,5 +54,7 @@ namespace APIWoood.Models
         public int DEALER_ACTIVATION { get; set; }
         public string DEALER_BRANDS { get; set; }
         public string DEALER_TYPE { get; set; }
+        public string DEALER_WWW_WOOOD { get; set; }
+        public string DEALER_WWW_BPH { get; set; }
     }
 }

@@ -51,5 +51,7 @@
     <property name="DEALER_ACTIVATION"/>
     <property name="DEALER_BRANDS"/>
     <property name="DEALER_TYPE"/>
+    <property name="DEALER_WWW_WOOOD"/>
+    <property name="DEALER_WWW_BPH"/>
   </class>
 </hibernate-mapping>

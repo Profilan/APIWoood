@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APIWoood.Logic.SharedKernel.Interfaces
+namespace APIWoood.Logic.SharedKernel
 {
     public interface IPasswordHasher
     {

@@ -106,12 +106,6 @@
     <Reference Include="X.PagedList, Version=7.9.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
       <HintPath>..\packages\X.PagedList.7.9.0\lib\net461\X.PagedList.dll</HintPath>
     </Reference>
-    <Reference Include="X.PagedList.Mvc, Version=7.9.1.0, Culture=neutral, PublicKeyToken=c6e0b5b21f916f4f, processorArchitecture=MSIL">
-      <HintPath>..\packages\X.PagedList.Mvc.7.9.1\lib\net461\X.PagedList.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="X.PagedList.Mvc.Bootstrap4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\X.PagedList.Mvc.Bootstrap4.7.9.0\lib\net452\X.PagedList.Mvc.Bootstrap4.dll</HintPath>
-    </Reference>
     <Reference Include="X.PagedList.Web.Common, Version=7.9.1.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
       <HintPath>..\packages\X.PagedList.Web.Common.7.9.1\lib\net461\X.PagedList.Web.Common.dll</HintPath>
     </Reference>
@@ -123,6 +117,7 @@
     <Compile Include="Models\History.cs" />
     <Compile Include="Models\HistoryIdentifier.cs" />
     <Compile Include="Models\SalesOrderLineStatus.cs" />
+    <Compile Include="Models\SalesOrderShipment.cs" />
     <Compile Include="Models\StockData.cs" />
     <Compile Include="Models\Url.cs" />
     <Compile Include="Models\UserDebtorIdentifier.cs" />
@@ -166,6 +161,7 @@
     <Compile Include="Repositories\ProductRangeRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\SalesOrderLineStatusRepository.cs" />
+    <Compile Include="Repositories\SalesOrderShipmentRepository.cs" />
     <Compile Include="Repositories\SellingPointRepository.cs" />
     <Compile Include="Repositories\StockDataRepository.cs" />
     <Compile Include="Repositories\StructureRepository.cs" />
@@ -177,7 +173,6 @@
     <Compile Include="Services\SystemLogger.cs" />
     <Compile Include="SharedKernel\Entity.cs" />
     <Compile Include="SharedKernel\Enums.cs" />
-    <Compile Include="SharedKernel\Interfaces\IPasswordHasher.cs" />
     <Compile Include="SharedKernel\Interfaces\IRepository.cs" />
     <Compile Include="SharedKernel\PasswordHasher.cs" />
     <Compile Include="SharedKernel\RepositoryAbstract.cs" />
@@ -195,6 +190,7 @@
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Mappings\SalesOrderShipment.hbm.xml" />
     <EmbeddedResource Include="Mappings\Debtor.hbm.xml" />
     <EmbeddedResource Include="Mappings\Dashboard.hbm.xml" />
     <EmbeddedResource Include="Mappings\DeliveryAppointment.hbm.xml">

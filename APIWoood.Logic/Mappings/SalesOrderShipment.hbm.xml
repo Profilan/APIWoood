@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="SalesOrderShipment" table="EEK_DISTRIBUTION_SHIPMENTS" mutable="false">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+
+    <property name="SkuId" column="SKU_id"/>
+    <property name="ShipmentId"/>
+    <property name="DebtorNumber"/>
+    <property name="SkuType" column="SKU_Type"/>
+    <property name="Carrier"/>
+    <property name="DeliveryDate"/>
+    <property name="DebtorName"/>
+    <property name="DelAddress"/>
+    <property name="DelPostcode"/>
+    <property name="DelCity"/>
+    <property name="DelCountryCode"/>
+    <property name="TrackTraceCode"/>
+    <property name="TrackTraceUrl"/>
+    <property name="Status"/>
+  </class>
+</hibernate-mapping>

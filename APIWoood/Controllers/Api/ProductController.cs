@@ -708,8 +708,8 @@ namespace APIWoood.Controllers.Api
                 COUNTRY_OF_ORIGIN = item.COUNTRY_OF_ORIGIN,
                 INTRASTAT_CODE = item.INTRASTAT_CODE,
                 ASSEMBLY_REQUIRED = Convert.ToInt32(item.ASSEMBLY_REQUIRED),
-                WEB_VAN_PRIJS_NL = item.WEB_VAN_PRIJS_NL != 0 ? Convert.ToString(item.WEB_VAN_PRIJS_NL) : null,
-                WEB_VAN_PRIJS_ISE = item.WEB_VAN_PRIJS_ISE != 0 ? Convert.ToString(item.WEB_VAN_PRIJS_ISE) : null,
+                WEB_VAN_PRIJS_NL = item.WEB_VAN_PRIJS_NL,
+                WEB_VAN_PRIJS_ISE = item.WEB_VAN_PRIJS_ISE,
                 AVAILABILITY_WEEK = item.AVAILABILITY_WEEK
             };
 

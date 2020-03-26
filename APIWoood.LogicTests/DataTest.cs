@@ -32,6 +32,14 @@ namespace APIWoood.LogicTests
         }
 
         [TestMethod]
+        public void SalesOrderShipments()
+        {
+            var rep = new SalesOrderShipmentRepository();
+
+            var shipments = rep.List("ID_ASC");
+        }
+
+        [TestMethod]
         public void PackageList()
         {
             var rep = new PackageRepository();

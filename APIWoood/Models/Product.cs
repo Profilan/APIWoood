@@ -57,8 +57,8 @@ namespace APIWoood.Models
         public string COUNTRY_OF_ORIGIN { get; set; }               // COUNTRY_OF_ORIGIN
         public string INTRASTAT_CODE { get; set; }                  // INTRASTAT_CODE
         public int ASSEMBLY_REQUIRED { get; set; }                 // ASSEMBLY_REQUIRED
-        public string WEB_VAN_PRIJS_NL { get; set; }               // WEB_VAN_PRIJS_NL
-        public string WEB_VAN_PRIJS_ISE { get; set; }              // WEB_VAN_PRIJS_ISE
+        public decimal WEB_VAN_PRIJS_NL { get; set; }               // WEB_VAN_PRIJS_NL
+        public decimal WEB_VAN_PRIJS_ISE { get; set; }              // WEB_VAN_PRIJS_ISE
         public string AVAILABILITY_WEEK { get; set; }               // AVAILABILITY_WEEK
 
         public IList<Package> PAKKETTEN { get; set; }

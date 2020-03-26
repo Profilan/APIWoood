@@ -5,7 +5,7 @@ namespace APIWoood.Logic.Models
 {
     public class User : IUser<int>
     {
-        private readonly SharedKernel.Interfaces.IPasswordHasher _passwordHasher;
+        private readonly IPasswordHasher _passwordHasher;
 
         public virtual int Id { get; set; }
         public virtual string UserName { get; set; }
@@ -27,7 +27,7 @@ namespace APIWoood.Logic.Models
             _passwordHasher = new SharedKernel.PasswordHasher();
         }
 
-        public User(SharedKernel.Interfaces.IPasswordHasher passwordHasher)
+        public User(IPasswordHasher passwordHasher)
         {
             _passwordHasher = passwordHasher;
         }
