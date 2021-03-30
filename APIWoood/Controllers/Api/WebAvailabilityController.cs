@@ -8,9 +8,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using APIWoood.Filters;
 
 namespace APIWoood.Controllers.Api
 {
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class WebAvailabilityController : WooodApiController
     {
         private readonly WebAvailabilityRepository webAvailabilityRepository;
@@ -79,7 +82,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-web-availability/list")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetWebAvailability()
         {
             try
@@ -163,8 +165,7 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-web-availability/view/fakdebnr/{fakdebnr}")]
         [HttpGet]
-        [Authorize]
-        public IHttpActionResult GetWebAvailabilityByDebtor(string fakdebnr)
+         public IHttpActionResult GetWebAvailabilityByDebtor(string fakdebnr)
         {
             try
             {

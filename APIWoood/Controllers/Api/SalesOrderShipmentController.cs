@@ -9,9 +9,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using APIWoood.Filters;
 
 namespace APIWoood.Controllers.Api
 {
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class SalesOrderShipmentController : WooodApiController
     {
         private readonly SalesOrderShipmentRepository salesOrderShipmentRepository = new SalesOrderShipmentRepository();
@@ -20,7 +23,6 @@ namespace APIWoood.Controllers.Api
 
         [Route("api/sales-order-shipment")]
         [HttpPost]
-        [Authorize]
         public IHttpActionResult CreateSalesOrderShipment([FromBody]SalesOrderShipmentDto data, string apikey)
         {
             string apiKey;
@@ -77,7 +79,7 @@ namespace APIWoood.Controllers.Api
 
                         logger.Log(ErrorType.INFO, "CreateSalesOrderShipment()", RequestContext.Principal.Identity.Name, "Shipment with SkuId " + data.SkuId + " inserted", "sales-order-shipment");
 
-                        return Content(HttpStatusCode.Created, data);
+                        return Content(HttpStatusCode.Created, newShipment);
                     }
                     else // existing shipment
                     {
@@ -90,7 +92,7 @@ namespace APIWoood.Controllers.Api
 
                         logger.Log(ErrorType.INFO, "CreateSalesOrderShipment()", RequestContext.Principal.Identity.Name, "Shipment with SkuId " + data.SkuId + " updated", "sales-order-shipment");
 
-                        return Content(HttpStatusCode.Created, data);
+                        return Content(HttpStatusCode.Created, shipment);
                     }
 
                 }

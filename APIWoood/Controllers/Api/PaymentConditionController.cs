@@ -7,9 +7,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using APIWoood.Filters;
 
 namespace APIWoood.Controllers.Api
 {
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class PaymentConditionController : WooodApiController
     {
         private readonly PaymentConditionRepository paymentConditionRepository;
@@ -51,7 +54,6 @@ namespace APIWoood.Controllers.Api
           */
         [Route("api/woood-betalingsconditie/list")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetPaymentConditions()
         {
             try
@@ -99,7 +101,6 @@ namespace APIWoood.Controllers.Api
           */
         [Route("api/woood-betalingsconditie/view/code/{code}")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetPaymentConditionByCode(string code)
         {
             try

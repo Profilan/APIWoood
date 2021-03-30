@@ -11,7 +11,10 @@ namespace APIWoood.Logic.Models
         public virtual int Id { get; set; }
         public virtual string Carrier { get; set; }
         public virtual int SalesOrderLineId { get; set; }
+        public virtual int OrderId { get; set; }
+        public virtual int PackageId { get; set; }
         public virtual int DeliveryAppointmentStatus { get; set; }
         public virtual DateTime TransactionDate { get; set; }
+        public virtual string Data { get; set; }
     }
 }

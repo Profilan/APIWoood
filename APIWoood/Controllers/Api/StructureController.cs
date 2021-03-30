@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using APIWoood.Filters;
 
 namespace APIWoood.Controllers.Api
 {
@@ -67,6 +68,8 @@ namespace APIWoood.Controllers.Api
         public string FR_DESCR { get; set; }
     }
 
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class StructureController : WooodApiController
     {
         private readonly StructureRepository structureRepository;
@@ -200,7 +203,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-structureview/list")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetStructureList(int page = 1, int limit = 25)
         {
             var products = new List<Dictionary<string, object>>();
@@ -308,7 +310,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-structureview/view/artikelcode/{artikelcode}")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetStructureByArticle(string artikelcode)
         {
              try

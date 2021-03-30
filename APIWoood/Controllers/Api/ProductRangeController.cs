@@ -8,9 +8,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using APIWoood.Filters;
 
 namespace APIWoood.Controllers.Api
 {
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class ProductRangeController : WooodApiController
     {
         private readonly ProductRangeRepository productRangeRepository;
@@ -62,7 +65,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-assortimenten-view/list/id/{ass}")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetProductRangeByRange(int ass = 9)
         {
             try
@@ -93,7 +95,6 @@ namespace APIWoood.Controllers.Api
         }
         [Route("api/woood-assortimenten-view/list")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetProductRanges()
         {
             try

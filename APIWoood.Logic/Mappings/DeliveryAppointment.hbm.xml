@@ -8,7 +8,10 @@
     </id>
     <property name="Carrier"/>
     <property name="SalesOrderLineId"/>
+    <property name="OrderId"/>
+    <property name="PackageId"/>
     <property name="DeliveryAppointmentStatus"/>
     <property name="TransactionDate"/>
+    <property name="Data"/>
   </class>
 </hibernate-mapping>

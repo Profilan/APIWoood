@@ -5,9 +5,12 @@ using APIWoood.Models;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using APIWoood.Filters;
 
 namespace APIWoood.Controllers.Api
 {
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class StockDataController : WooodApiController
     {
         private readonly UserRepository userRepository;
@@ -87,7 +90,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/stock-data")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetStockDataList(string apikey, int page = 1, int limit = 25)
         {
             try
@@ -217,7 +219,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/stock-data")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetStockDataListByDebtor(string debcode, string apikey, int page = 1, int limit = 25)
         {
             try
@@ -320,8 +321,7 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/stock-data/{id}")]
         [HttpGet]
-        [Authorize]
-        public IHttpActionResult GetStockDataById(string id, string apikey)
+         public IHttpActionResult GetStockDataById(string id, string apikey)
         {
             try
             {

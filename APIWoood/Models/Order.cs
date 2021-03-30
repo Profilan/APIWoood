@@ -24,6 +24,7 @@ namespace APIWoood.Models
         public string DS_ADRES1 { get; set; }
         public string DS_POSTCODE { get; set; }
         public string DS_PLAATS { get; set; }
+        [StringLength(2)]
         public string DS_LAND { get; set; }
         public string DS_TELEFOON { get; set; }
         public string DS_EMAIL { get; set; }

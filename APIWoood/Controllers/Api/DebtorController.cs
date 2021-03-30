@@ -8,9 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using APIWoood.Filters;
 
 namespace APIWoood.Controllers.Api
 {
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class DebtorController : WooodApiController
     {
         private readonly DebtorRepository debtorRepository;
@@ -102,7 +105,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-debtors/list")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetPagedDebtors(int limit, int page = 1)
         {
             try
@@ -218,7 +220,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-debtors/list")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetDebtors()
         {
             try
@@ -311,7 +312,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-debtors/view/debiteurnr/{id}")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetDebtorById(string id)
         {
             try
@@ -338,7 +338,6 @@ namespace APIWoood.Controllers.Api
 
         [Route("api/debtor/{searchstring}")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetDebtorsBySearchstring(string searchstring)
         {
             var debtors = debtorRepository.ListBySearchstring(searchstring);

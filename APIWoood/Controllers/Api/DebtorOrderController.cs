@@ -8,9 +8,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using APIWoood.Filters;
 
 namespace APIWoood.Controllers.Api
 {
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class DebtorOrderController : WooodApiController
     {
         private readonly DebtorOrderRepository debtorOrderRepository;
@@ -75,7 +78,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-deb-order-info/list")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetPagedDebtorOrders(int page, int limit = 25)
         {
             try
@@ -172,7 +174,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-deb-order-info/list")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetDebtorOrders()
         {
             try
@@ -244,7 +245,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-deb-order-info/view/debiteurnr/{debiteurnr}")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetPagedDebtorOrdersByDebtor(string debiteurnr, int page, int limit = 25)
         {
             try
@@ -285,7 +285,6 @@ namespace APIWoood.Controllers.Api
 
         [Route("api/woood-deb-order-info/view/debiteurnr/{debiteurnr}")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetDebtorOrdersByDebtor(string debiteurnr)
         {
             try

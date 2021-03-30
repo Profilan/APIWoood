@@ -8,9 +8,12 @@ using System;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
+using APIWoood.Filters;
 
 namespace APIWoood.Controllers.Api
 {
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class SalesOrderLineStatusController : ApiController
     {
         private readonly SalesOrderLineStatusRepository _salesOrderLineStatusRepository = new SalesOrderLineStatusRepository();
@@ -19,8 +22,7 @@ namespace APIWoood.Controllers.Api
 
         [Route("api/sales-orderline-status/dutchned")]
         [HttpPost]
-        [Authorize]
-        public IHttpActionResult CreateSalesOrderLineStatusDutchNed([FromBody]DutchNedSalesOrderLineStatus data, string apiKey)
+         public IHttpActionResult CreateSalesOrderLineStatusDutchNed([FromBody]DutchNedSalesOrderLineStatus data, string apiKey)
         {
             try
             {
@@ -60,6 +62,8 @@ namespace APIWoood.Controllers.Api
                 {
                     Carrier = "999068",
                     SalesOrderLineId = data.OrderLineId,
+                    OrderId = data.DutchNedDeliveryOrderId,
+                    PackageId = data.DutchNedPackageId,
                     OrderLineStatus = data.Status,
                     TransactionDate = DateTime.Parse(data.Date, null, System.Globalization.DateTimeStyles.RoundtripKind),
                     DeliveryData = JsonConvert.SerializeObject(data),

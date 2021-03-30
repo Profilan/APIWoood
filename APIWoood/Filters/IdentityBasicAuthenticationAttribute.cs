@@ -23,7 +23,6 @@ namespace APIWoood.Filters
             if (user == null)
             {
                 // No user with userName/password exists.
-                context.ErrorResult = new AuthenticationFailureResult("Invalid credentials", request);
                 return null;
             }
 

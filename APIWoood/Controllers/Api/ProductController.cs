@@ -8,9 +8,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using APIWoood.Filters;
 
 namespace APIWoood.Controllers.Api
 {
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class ProductController : WooodApiController
     {
         private readonly ProductRepository productRepository;
@@ -120,7 +123,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-artikelview/list")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetArticles()
         {
             try
@@ -258,8 +260,7 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-artikelview/view/artikelcode/{id}")]
         [HttpGet]
-        [Authorize]
-        public IHttpActionResult GetArticleById(string id)
+         public IHttpActionResult GetArticleById(string id)
         {
             try
             {
@@ -404,7 +405,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-productview/list")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetProducts(int page = 1, int limit = 25)
         {
             try
@@ -460,7 +460,6 @@ namespace APIWoood.Controllers.Api
         }
         [Route("api/woood-productview/list")]
         [HttpPost]
-        [Authorize]
         public IHttpActionResult PostProducts(int page = 1, int limit = 25)
         {
             try
@@ -615,7 +614,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-productview/view/artikelcode/{id}")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetProductById(string id)
         {
             try

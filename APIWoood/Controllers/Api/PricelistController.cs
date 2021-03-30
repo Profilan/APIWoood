@@ -8,9 +8,12 @@ using System.Net.Http;
 using System.Web.Http;
 using APIWoood.Logic.Services;
 using APIWoood.Logic.SharedKernel;
+using APIWoood.Filters;
 
 namespace APIWoood.Controllers.Api
 {
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class PricelistController : WooodApiController
     {
         private readonly PricelistRepository pricelistRepository;
@@ -75,7 +78,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-pricelist/list")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetPricelists(int page, int limit = 25)
         {
             try
@@ -162,8 +164,7 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-pricelist/view/debiteurnr/{debiteurnr}")]
         [HttpGet]
-        [Authorize]
-        public IHttpActionResult GetPricelistsByDebtor(string debiteurnr)
+         public IHttpActionResult GetPricelistsByDebtor(string debiteurnr)
         {
             try
             {

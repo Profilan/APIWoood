@@ -14,22 +14,33 @@ namespace APIWoood.Logic.Services
             var _userRepository = new UserRepository();
             var _urlRepository = new UrlRepository();
 
-            var _user = _userRepository.GetByUsername(userName);
-
-            if (errorType == ErrorType.INFO)
+            if (userName != "Unknown")
             {
-                var _url = _urlRepository.GetByName(url);
-                _url.Hits += 1;
-                _urlRepository.Update(_url);
+                var _user = _userRepository.GetByUsername(userName);
+
+                if (errorType == ErrorType.INFO)
+                {
+                    var _url = _urlRepository.GetByName(url);
+                    _url.Hits += 1;
+                    _urlRepository.Update(_url);
+                }
+                detail = "Username: " + userName + ": " + detail;
+
+                DateTime start = startDate ?? DateTime.Now;
+                var duration = (DateTime.Now - start).TotalMilliseconds;
+
+                var log = new Log(DateTime.Now, (int)errorType, message, Enum.GetName(typeof(ErrorType), (int)errorType), url, detail, false, _user.Id, duration);
+
+                _logRepository.Insert(log);
             }
-            detail = "Username: " + userName + ": " + detail;
+            else
+            {
+                var log = new Log(DateTime.Now, (int)errorType, message, Enum.GetName(typeof(ErrorType), (int)errorType), url, detail, false);
 
-            DateTime start = startDate ?? DateTime.Now;
-            var duration = (DateTime.Now - start).TotalMilliseconds;
+                _logRepository.Insert(log);
 
-            var log = new Log(DateTime.Now, (int)errorType, message, Enum.GetName(typeof(ErrorType), (int)errorType), url, detail, false, _user.Id, duration);
+            }
 
-            _logRepository.Insert(log);
         }
     }
 }

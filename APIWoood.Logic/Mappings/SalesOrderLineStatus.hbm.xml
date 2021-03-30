@@ -8,6 +8,8 @@
     </id>
     <property name="Carrier"/>
     <property name="SalesOrderLineId"/>
+    <property name="OrderId"/>
+    <property name="PackageId"/>
     <property name="OrderLineStatus"/>
     <property name="TransactionDate"/>
     <property name="OrderLineStatusDescription"/>

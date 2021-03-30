@@ -112,7 +112,7 @@ namespace APIWoood.Logic.Repositories
             {
                 using (ITransaction transaction = session.BeginTransaction())
                 {
-                    session.SaveOrUpdate(entity);
+                    session.Update(entity);
                     transaction.Commit();
                 }
             }

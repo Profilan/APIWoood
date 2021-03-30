@@ -7,9 +7,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using APIWoood.Filters;
 
 namespace APIWoood.Controllers.Api
 {
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class DeliveryMethodController : WooodApiController
     {
         private readonly DeliveryMethodRepository DeliveryMethodRepository;
@@ -58,7 +61,6 @@ namespace APIWoood.Controllers.Api
           */
         [Route("api/woood-leveringswijze/list")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetDeliveryMethods()
         {
             try
@@ -106,7 +108,6 @@ namespace APIWoood.Controllers.Api
           */
         [Route("api/woood-leveringswijze/view/code/{code}")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetDeliveryMethodByCode(string code)
         {
             try

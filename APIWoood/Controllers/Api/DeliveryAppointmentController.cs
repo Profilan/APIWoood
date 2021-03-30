@@ -3,9 +3,13 @@ using APIWoood.Logic.Repositories;
 using APIWoood.Models;
 using System;
 using System.Web.Http;
+using APIWoood.Filters;
+using Newtonsoft.Json;
 
 namespace APIWoood.Controllers.Api
 {
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class DeliveryAppointmentController : ApiController
     {
         private readonly DeliveryAppointmentRepository _deliveryAppointmentRepository = new DeliveryAppointmentRepository();
@@ -13,7 +17,6 @@ namespace APIWoood.Controllers.Api
 
         [Route("api/delivery-appointment/dutchned")]
         [HttpPost]
-        [Authorize]
         public IHttpActionResult CreateDeliveryAppointmentDutchNed([FromBody]DutchNedDeliveryAppointment data, string apiKey)
         {
             try
@@ -29,9 +32,12 @@ namespace APIWoood.Controllers.Api
                 {
                     Carrier = "999068",
                     SalesOrderLineId = data.OrderLineId,
+                    OrderId = data.DutchNedDeliveryOrderId,
+                    PackageId = data.DutchNedPackageId,
                     DeliveryAppointmentStatus = data.Status,
                     TransactionDate = DateTime.Parse(data.Date, null, System.Globalization.DateTimeStyles.RoundtripKind),
-                 };
+                    Data = JsonConvert.SerializeObject(data.Data),
+                };
 
                 _deliveryAppointmentRepository.Insert(deliveryAppointment);
 

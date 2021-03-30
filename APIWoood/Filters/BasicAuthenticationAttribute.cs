@@ -1,6 +1,4 @@
-﻿
-using APIWoood.Results;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Principal;
@@ -8,12 +6,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Filters;
+using APIWoood.Logic.Services;
+using APIWoood.Logic.SharedKernel;
+using APIWoood.Results;
 
 namespace APIWoood.Filters
 {
     public abstract class BasicAuthenticationAttribute : Attribute, IAuthenticationFilter
     {
         public string Realm { get; set; }
+        private readonly SystemLogger logger = new SystemLogger();
 
         public async Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
         {
@@ -37,6 +39,7 @@ namespace APIWoood.Filters
             if (String.IsNullOrEmpty(authorization.Parameter))
             {
                 // Authentication was attempted but failed. Set ErrorResult to indicate an error.
+                logger.Log(ErrorType.ALERT, "Authentication", "Unknown", "Missing credentials", "authentication");
                 context.ErrorResult = new AuthenticationFailureResult("Missing credentials", request);
                 return;
             }
@@ -46,6 +49,7 @@ namespace APIWoood.Filters
             if (userNameAndPasword == null)
             {
                 // Authentication was attempted but failed. Set ErrorResult to indicate an error.
+                logger.Log(ErrorType.ALERT, "Authentication", "Unknown", "Invalid credentials", "authentication");
                 context.ErrorResult = new AuthenticationFailureResult("Invalid credentials", request);
                 return;
             }
@@ -58,6 +62,7 @@ namespace APIWoood.Filters
             if (principal == null)
             {
                 // Authentication was attempted but failed. Set ErrorResult to indicate an error.
+                logger.Log(ErrorType.ALERT, "Authentication", "Unknown", "Invalid username or password", "authentication");
                 context.ErrorResult = new AuthenticationFailureResult("Invalid username or password", request);
             }
             else
@@ -124,7 +129,6 @@ namespace APIWoood.Filters
             Challenge(context);
             return Task.FromResult(0);
         }
-
 
         private void Challenge(HttpAuthenticationChallengeContext context)
         {

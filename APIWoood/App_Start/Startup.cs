@@ -15,6 +15,7 @@ namespace APIWoood
     {
         public void Configuration(IAppBuilder app)
         {
+            /*
             app.CreatePerOwinContext(() => new UserManager(new IdentityStore(SessionFactory.GetNewSession("db2"))));
             app.CreatePerOwinContext<SignInManager>((options, context) => new SignInManager(context.GetUserManager<UserManager>(), context.Authentication));
 
@@ -24,6 +25,7 @@ namespace APIWoood
                 LoginPath = new PathString("/Account/Login"),
                 Provider = new CookieAuthenticationProvider()
             });
+            */
         }
     }
 }

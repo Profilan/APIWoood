@@ -11,9 +11,12 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using APIWoood.Filters;
 
 namespace APIWoood.Controllers.Api
 {
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class OrderController : WooodApiController
     {
         private readonly UserRepository userRepository;
@@ -130,9 +133,14 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-order/create")]
         [HttpPost]
-        [Authorize]
         public IHttpActionResult CreateOrder([FromBody]OrderData data)
         {
+            if (data == null)
+            {
+                logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "Request is wrong format.", "api/woood-order/create");
+
+                return Content(HttpStatusCode.BadRequest, "Request is wrong format.");
+            }
             var jsonData = JsonConvert.SerializeObject(data);
             string apiKey;
             try

@@ -18,7 +18,7 @@ namespace APIWoood.LogicTests
 //            var captureProfilerOutput = new CaptureProfilerOutput(@"");
 //            captureProfilerOutput.StartListening();
 
-            NHibernateProfiler.Initialize();
+            // NHibernateProfiler.Initialize();
         }
 
         [TestMethod]
@@ -312,6 +312,18 @@ namespace APIWoood.LogicTests
             };
 
             rep.Insert(status);
+        }
+
+        [TestMethod]
+        public void UpdateSalesOrderShipment()
+        {
+            var rep = new SalesOrderShipmentRepository();
+
+            var item = rep.GetBySkuId("1");
+
+            item.Status = 5;
+
+            rep.Update(item);
         }
     }
 }

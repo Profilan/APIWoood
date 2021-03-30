@@ -8,9 +8,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using APIWoood.Filters;
 
 namespace APIWoood.Controllers.Api
 {
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class SellingPointController : WooodApiController
     {
         private readonly SellingPointRepository sellingPointRepository;
@@ -65,7 +68,6 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-verkooppunt-view/list")]
         [HttpGet]
-        [Authorize]
         public IHttpActionResult GetSellingPoints()
         {
             try
@@ -141,8 +143,7 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-verkooppunt-view/view/artikelcode/{artikelcode}")]
         [HttpGet]
-        [Authorize]
-        public IHttpActionResult GetSellingPointByArticle(string artikelcode)
+         public IHttpActionResult GetSellingPointByArticle(string artikelcode)
         {
             try
             {

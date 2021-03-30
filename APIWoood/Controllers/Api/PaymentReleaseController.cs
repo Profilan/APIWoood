@@ -9,9 +9,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using APIWoood.Filters;
 
 namespace APIWoood.Controllers.Api
 {
+    [IdentityBasicAuthentication]
+    [AuthorizeApi]
     public class PaymentReleaseController : WooodApiController
     {
         private readonly PaymentReleaseRepository paymentReleaseRepository;
@@ -81,9 +84,14 @@ namespace APIWoood.Controllers.Api
          */
         [Route("api/woood-payment-release/create")]
         [HttpPost]
-        [Authorize]
         public IHttpActionResult CreatePaymentRelease([FromBody]PaymentReleaseData data)
         {
+            if (data == null)
+            {
+                logger.Log(ErrorType.ERR, "CreatePaymentRelease()", RequestContext.Principal.Identity.Name, "Request is wrong format.", "api/woood-payment-release/create");
+
+                return Content(HttpStatusCode.BadRequest, "Request is wrong format.");
+            }
             string apiKey;
             try
             {

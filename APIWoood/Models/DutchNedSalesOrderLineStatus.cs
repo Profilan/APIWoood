@@ -13,6 +13,12 @@ namespace APIWoood.Models
         [Required]
         public int OrderLineId { get; set; }
 
+        [JsonProperty("dutchned_delivery_order_id")]
+        public int DutchNedDeliveryOrderId { get; set; }
+
+        [JsonProperty("dutchned_package_id")]
+        public int DutchNedPackageId { get; set; }
+
         [JsonProperty("status")]
         public int Status { get; set; }
 
