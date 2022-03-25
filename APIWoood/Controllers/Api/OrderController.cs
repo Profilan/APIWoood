@@ -195,7 +195,7 @@ namespace APIWoood.Controllers.Api
                     // Check if the user has access to the debtor
                     if (!DebtorBelongsToUser(user, order.DEBITEURNR))
                     {
-                        logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "DEBITEURNR does not belong to the user", "api/woood-order/create");
+                        logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "DEBITEURNR does not belong to the user: " + jsonData, "api/woood-order/create");
 
                         return Content(HttpStatusCode.BadRequest, "DEBITEURNR does not belong to the user");
                     }
@@ -255,7 +255,9 @@ namespace APIWoood.Controllers.Api
                 }
                 catch (System.Exception e)
                 {
-                    logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, e.Message, "api/woood-order/create");
+                    // var jsonData = JsonConvert.SerializeObject(data);
+
+                    logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, jsonData + ":" + e.ToString(), "api/woood-order/create");
 
                     return InternalServerError(e);
                 }
@@ -268,7 +270,7 @@ namespace APIWoood.Controllers.Api
                 return BadRequest("No orders added");
             }
 
-            logger.Log(ErrorType.INFO, "CreateOrder()", RequestContext.Principal.Identity.Name, new JavaScriptSerializer().Serialize(references), "api/woood-order/create", startDate);
+            logger.Log(ErrorType.INFO, "CreateOrder()", RequestContext.Principal.Identity.Name, new JavaScriptSerializer().Serialize(references) + ": " + jsonData, "api/woood-order/create", startDate);
 
             return Ok(new {
                 header = new

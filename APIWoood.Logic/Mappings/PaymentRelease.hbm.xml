@@ -12,6 +12,8 @@
       <property name="DEBITEURNR"/>
     </component>
     <property name="PAYMENT_RELEASE"/>
+    <property name="PAYMENT_TYPE"/>
+    <property name="PAYMENT_AMOUNT_COD"/>
     <property name="STATUS"/>
     <property name="SYSCREATED"/>
     <property name="SYSMODIFIED"/>

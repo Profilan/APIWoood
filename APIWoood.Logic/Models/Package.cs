@@ -11,6 +11,7 @@ namespace APIWoood.Logic.Models
         public virtual string ARTCODE_PAKKET { get; set; }          // ARTCODE_PAKKET
         public virtual string ARTIKELCODE { get; set; }             // ARTIKELCODE
         public virtual DateTime CREATIONDATE { get; set; }          // CREATIONDATE
+        public virtual DateTime DATEFROM { get; set; }              // DATEFROM
         public virtual string NL { get; set; }                      // NL
         public virtual string EN { get; set; }                      // EN
         public virtual string DE { get; set; }                      // DE

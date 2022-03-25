@@ -9,6 +9,7 @@
 
     <property name="ARTIKELCODE"/>
     <property name="CREATIONDATE"/>
+    <property name="DATEFROM"/>
     <property name="NL"/>
     <property name="EN"/>
     <property name="DE"/>

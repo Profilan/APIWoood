@@ -12,6 +12,7 @@ namespace APIWoood.Models
         public string REFERENTIE { get; set; }
         [Required]
         public string DEBITEURNR { get; set; }
+        [StringLength(30)]
         public string OMSCHRIJVING { get; set; }
         public int STATUS { get; set; }
         public string ORDERNR { get; set; }

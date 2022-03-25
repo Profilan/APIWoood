@@ -45,6 +45,7 @@ namespace APIWoood.Controllers.Api
          *          {
          *              "ARTIKELCODE": "375490",
          *              "CREATIONDATE": "2018-11-28",
+         *              "DATEFROM": "2018-11-28",
          *              "NL": "RETRO BIJZETTAFEL MET 2 LADEN GRENEN WIT - EIKEN POTEN",
          *              "EN": "RETRO SIDETABLE WITH 2 DRAWERS PINE WITH - OAK",
          *              "DE": "RETRO BEISTELLTISCH WEIß",
@@ -98,6 +99,7 @@ namespace APIWoood.Controllers.Api
          *                      "ARTCODE_PAKKET": "P375490 1#2",
          *                      "ARTIKELCODE": "375490",
          *                      "CREATIONDATE": "2018-11-28",
+         *                      "DATEFROM": "2018-11-28",
          *                      "NL": "PAKKET 1#2 RETRO BIJZETTAFEL",
          *                      "EN": "1#2 RETRO SIDETABLE WITH 2 DRAWERS PINE WITH - OAK",
          *                      "DE": "1#2 RETRO BEISTELLTISCH WEIß",
@@ -184,6 +186,7 @@ namespace APIWoood.Controllers.Api
          *      {
          *          "ARTIKELCODE": "375490",
          *          "CREATIONDATE": "2018-11-28",
+         *          "DATEFROM": "2018-11-28",
          *          "NL": "RETRO BIJZETTAFEL MET 2 LADEN GRENEN WIT - EIKEN POTEN",
          *          "EN": "RETRO SIDETABLE WITH 2 DRAWERS PINE WITH - OAK",
          *          "DE": "RETRO BEISTELLTISCH WEIß",
@@ -266,32 +269,40 @@ namespace APIWoood.Controllers.Api
             {
                 var item = productRepository.GetById(id);
 
-                var product = CreateProduct(item);
-
-                if (item.AANTAL_PAKKETTEN > 1)
+                if (item != null)
                 {
-                    var packageItems = packageRepository.ListByArtikelCode(item.ARTIKELCODE);
+                    var product = CreateProduct(item);
 
-                    foreach (var packageItem in packageItems)
+                    if (item.AANTAL_PAKKETTEN > 1)
                     {
-                        var package = CreatePackage(packageItem);
+                        var packageItems = packageRepository.ListByArtikelCode(item.ARTIKELCODE);
+
+                        foreach (var packageItem in packageItems)
+                        {
+                            var package = CreatePackage(packageItem);
+
+                            product.PAKKETTEN.Add(package);
+                        }
+                    }
+                    else // Create a package like main product
+                    {
+                        var package = CreatePackage(item);
 
                         product.PAKKETTEN.Add(package);
                     }
+
+                    logger.Log(ErrorType.INFO, "GetArticleById(" + id + ")", RequestContext.Principal.Identity.Name, "", "api/woood-artikelview/view/artikelcode", startDate);
+
+                    var products = new List<Product>();
+                    products.Add(product);
+
+                    return Ok(products);
+
                 }
-                else // Create a package like main product
+                else
                 {
-                    var package = CreatePackage(item);
-
-                    product.PAKKETTEN.Add(package);
+                    return NotFound();
                 }
-
-                logger.Log(ErrorType.INFO, "GetArticleById(" + id + ")", RequestContext.Principal.Identity.Name, "", "api/woood-artikelview/view/artikelcode", startDate);
-
-                var products = new List<Product>();
-                products.Add(product);
-
-                return Ok(products);
             }
             catch (Exception e)
             {
@@ -323,6 +334,7 @@ namespace APIWoood.Controllers.Api
          *               {
          *                   "ARTIKELCODE": "362101-GOW",
          *                   "CREATIONDATE": "2018-11-28",
+         *                   "DATEFROM": "2018-11-28",
          *                   "NL": "LOCK KAST 3-DEURS WIT [fsc]",
          *                   "EN": "LOCK CABINET 3-DOOR WHITE PINE UNBRUSHED [fsc]",
          *                   "DE": "LOCK SCHRANK 3-TÜRIG KIEFER UNGEBÜRSTET WEIß [fsc]",
@@ -376,6 +388,7 @@ namespace APIWoood.Controllers.Api
          *                           "ARTCODE_PAKKET": "P362101-GOW 1#4",
          *                           "ARTIKELCODE": "362101-GOW",
          *                           "CREATIONDATE": "2018-11-28",
+         *                           "DATEFROM": "2018-11-28",
          *                           "NL": "PAKKET 1#4 LOCK KAST 3-DEURS WIT [fsc]",
          *                           "EN": "P1#4 LOCK CABINET 3-DOOR WHITE PINE UNBRUSHED [fsc]",
          *                           "DE": "P1#4 LOCK SCHRANK 3-TÜRIG KIEFER UNGEBÜRSTET WEIß [fsc]",
@@ -458,6 +471,7 @@ namespace APIWoood.Controllers.Api
                 return InternalServerError(e);
             }
         }
+
         [Route("api/woood-productview/list")]
         [HttpPost]
         public IHttpActionResult PostProducts(int page = 1, int limit = 25)
@@ -538,6 +552,7 @@ namespace APIWoood.Controllers.Api
          *      {
          *          "ARTIKELCODE": "375490",
          *          "CREATIONDATE": "2018-11-28",
+         *          "DATEFROM": "2018-11-28",
          *          "NL": "RETRO BIJZETTAFEL MET 2 LADEN GRENEN WIT - EIKEN POTEN",
          *          "EN": "RETRO SIDETABLE WITH 2 DRAWERS PINE WITH - OAK",
          *          "DE": "RETRO BEISTELLTISCH WEIß",
@@ -591,6 +606,7 @@ namespace APIWoood.Controllers.Api
          *                  "ARTCODE_PAKKET": "P375490 1#2",
          *                  "ARTIKELCODE": "375490",
          *                  "CREATIONDATE": "2018-11-28",
+         *                  "DATEFROM": "2018-11-28",
          *                  "NL": "PAKKET 1#2 RETRO BIJZETTAFEL",
          *                  "EN": "1#2 RETRO SIDETABLE WITH 2 DRAWERS PINE WITH - OAK",
          *                  "DE": "1#2 RETRO BEISTELLTISCH WEIß",
@@ -620,32 +636,39 @@ namespace APIWoood.Controllers.Api
             {
                 var item = productRepository.GetById(id);
 
-                var product = CreateProduct(item);
-
-                if (item.AANTAL_PAKKETTEN > 1)
+                if (item != null)
                 {
-                    var packageItems = packageRepository.ListByArtikelCode(item.ARTIKELCODE);
+                    var product = CreateProduct(item);
 
-                    foreach (var packageItem in packageItems)
+                    if (item.AANTAL_PAKKETTEN > 1)
                     {
-                        var package = CreatePackage(packageItem);
+                        var packageItems = packageRepository.ListByArtikelCode(item.ARTIKELCODE);
+
+                        foreach (var packageItem in packageItems)
+                        {
+                            var package = CreatePackage(packageItem);
+
+                            product.PAKKETTEN.Add(package);
+                        }
+                    }
+                    else // Create a package like main product
+                    {
+                        var package = CreatePackage(item);
 
                         product.PAKKETTEN.Add(package);
                     }
+
+                    logger.Log(ErrorType.INFO, "GetProductById(" + id + ")", RequestContext.Principal.Identity.Name, "", "api/woood-productview/view/artikelcode", startDate);
+
+                    var products = new List<Product>();
+                    products.Add(product);
+
+                    return Ok(products);
                 }
-                else // Create a package like main product
+                else
                 {
-                    var package = CreatePackage(item);
-
-                    product.PAKKETTEN.Add(package);
+                    return NotFound();
                 }
-
-                logger.Log(ErrorType.INFO, "GetProductById(" + id + ")", RequestContext.Principal.Identity.Name, "", "api/woood-productview/view/artikelcode", startDate);
-
-                var products = new List<Product>();
-                products.Add(product);
-
-                return Ok(products);
             }
             catch (Exception e)
             {
@@ -661,6 +684,7 @@ namespace APIWoood.Controllers.Api
             {
                 ARTIKELCODE = item.ARTIKELCODE,
                 CREATIONDATE = item.CREATIONDATE.ToString("yyyy-MM-dd"),
+                DATEFROM = item.DATEFROM.ToString("yyyy-MM-dd"),
                 NL = item.NL,
                 EN = item.EN,
                 DE = item.DE,
@@ -720,6 +744,7 @@ namespace APIWoood.Controllers.Api
             {
                 ARTIKELCODE = item.ARTIKELCODE,
                 CREATIONDATE = item.CREATIONDATE.ToString("yyyy-MM-dd"),
+                DATEFROM = item.DATEFROM.ToString("yyyy-MM-dd"),
                 ARTCODE_PAKKET = item.ARTCODE_PAKKET,
                 NL = item.NL,
                 EN = item.EN,
@@ -745,6 +770,7 @@ namespace APIWoood.Controllers.Api
             {
                 ARTIKELCODE = item.ARTIKELCODE,
                 CREATIONDATE = item.CREATIONDATE.ToString("yyyy-MM-dd"),
+                DATEFROM = item.DATEFROM.ToString("yyyy-MM-dd"),
                 ARTCODE_PAKKET = item.ARTIKELCODE,
                 NL = item.NL,
                 EN = item.EN,

@@ -11,6 +11,8 @@ namespace APIWoood.Logic.Models
         public virtual int ID { get; set; }
         public virtual OrderIdentifier OrderIdentifier { get; set; }
         public virtual int  PAYMENT_RELEASE { get; set; }
+        public virtual string PAYMENT_TYPE { get; set; }
+        public virtual decimal PAYMENT_AMOUNT_COD { get; set; }
         public virtual int STATUS { get; set; }
         public virtual DateTime SYSCREATED { get; set; }
         public virtual DateTime SYSMODIFIED { get; set; }

@@ -135,6 +135,8 @@ namespace APIWoood.Controllers.Api
                 {
                     OrderIdentifier = orderIdentifier,
                     PAYMENT_RELEASE = data.body.PAYMENT_RELEASE,
+                    PAYMENT_AMOUNT_COD = data.body.PAYMENT_AMOUNT_COD,
+                    PAYMENT_TYPE = data.body.PAYMENT_TYPE
                 };
 
                 paymentReleaseRepository.Insert(paymentToPost);
