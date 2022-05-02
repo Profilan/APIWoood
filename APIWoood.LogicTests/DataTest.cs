@@ -111,6 +111,45 @@ namespace APIWoood.LogicTests
         }
 
         [TestMethod]
+        public void ZwaluwSSCCList()
+        {
+            var rep = new ZwaluwSSCCRepository();
+
+            var items = rep.List();
+
+            items.Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public void ZwaluwSSCCCreate()
+        {
+            var rep = new ZwaluwSSCCRepository();
+
+            var itemToCreate = new ZwaluwSSCC
+            {
+                EdiReference = "04-06-2022.637848367651324313",
+                ShipmentNumber = "21052079",
+                DateTime = DateTime.Now,
+                ReferenceNumber = "Wo000148691",
+                LoadingDate = DateTime.Parse("2022-04-06"),
+                UnloadingDate = DateTime.Parse("2022-04-06"),
+                PrimaryReference = "365124",
+                StatusCode = 299,
+                OrderNumber = "78998 - Export",
+                OrderlineId = 570102,
+                ItemCode = "340366-A",
+                OrderlineQuantity = 2.0M,
+                SkuCode = "000000010031241881",
+                LotCode = "41333465_7123113",
+                PalletQuantity = 1.0M,
+            };
+
+            rep.Insert(itemToCreate);
+
+
+        }
+
+        [TestMethod]
         public void OrderCreate()
         {
             var rep = new OrderRepository();

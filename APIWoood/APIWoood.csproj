@@ -413,6 +413,7 @@
     <Compile Include="Controllers\Api\UserController.cs" />
     <Compile Include="Controllers\Api\WebAvailabilityController.cs" />
     <Compile Include="Controllers\Api\WooodApiController.cs" />
+    <Compile Include="Controllers\Api\ZwaluwSSCCController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\OrderController.cs" />
@@ -480,6 +481,10 @@
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\WebAvailability.cs" />
     <Compile Include="Models\Year.cs" />
+    <Compile Include="Models\ZwaluwSSCCDto.cs" />
+    <Compile Include="Models\ZwaluwSSCCOrder.cs" />
+    <Compile Include="Models\ZwaluwSSCCOrderline.cs" />
+    <Compile Include="Models\ZwaluwSSCCShippingDetails.cs" />
     <Compile Include="Modules\BasicAuthHttpModule.cs" />
     <Compile Include="Modules\IPAddressRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

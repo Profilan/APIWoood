@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="ZwaluwSSCC" table="EEK_DISTRIBUTION_SSCC" lazy="false">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    
+    <property name="EdiReference"/>
+    <property name="ShipmentNumber"/>
+    <property name="DateTime"/>
+    <property name="ReferenceNumber"/>
+    <property name="LoadingDate"/>
+    <property name="UnloadingDate"/>
+    <property name="PrimaryReference"/>
+    <property name="StatusCode"/>
+    <property name="OrderNumber"/>
+    <property name="OrderlineId"/>
+    <property name="ItemCode"/>
+    <property name="OrderlineQuantity"/>
+    <property name="SkuCode"/>
+    <property name="LotCode"/>
+    <property name="PalletQuantity"/>
+    <property name="SysCreated"/>
+    <property name="SysModified"/>
+    <property name="Status"/>
+    <property name="SysMsg"/>
+  </class>
+</hibernate-mapping>

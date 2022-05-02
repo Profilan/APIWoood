@@ -11,7 +11,6 @@ namespace APIWoood.Models
         public string ARTCODE_PAKKET { get; set; }          // ARTCODE_PAKKET
         public string ARTIKELCODE { get; set; }             // ARTIKELCODE
         public string CREATIONDATE { get; set; }            // CREATIONDATE
-        public string DATEFROM { get; set; }                // DATEFROM
         public string NL { get; set; }                      // NL
         public string EN { get; set; }                      // EN
         public string DE { get; set; }                      // DE
