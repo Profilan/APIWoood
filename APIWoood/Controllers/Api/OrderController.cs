@@ -135,155 +135,166 @@ namespace APIWoood.Controllers.Api
         [HttpPost]
         public IHttpActionResult CreateOrder([FromBody]OrderData data)
         {
-            if (data == null)
-            {
-                logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "Request is wrong format.", "api/woood-order/create");
-
-                return Content(HttpStatusCode.BadRequest, "Request is wrong format.");
-            }
-            var jsonData = JsonConvert.SerializeObject(data);
-            string apiKey;
             try
             {
-                apiKey = data.header.apikey;
-            }
-            catch (System.Exception)
-            {
-                logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "API key is missing. " + jsonData, "api/woood-order/create");
+                if (data == null)
+                {
+                    logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "Request is wrong format.", "api/woood-order/create");
 
-                return Content(HttpStatusCode.Unauthorized, "API key is missing.");
-            }
-
-            var user = userRepository.GetByUsername(data.header.username);
-            if (apiKey != user.ApiKey)
-            {
-                logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "API key is not correct. Get a right API key from the service provider.", "api/woood-order/create");
-
-                return Content(HttpStatusCode.Unauthorized, "API key is not correct. Get a right API key from the service provider.");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, ModelState.ToString(), "api/woood-order/create");
-
-                return BadRequest(ModelState);
-            }
-
-            var references = new List<string>();
-            int orderCount = 0;
-            foreach (var order in data.body.order)
-            {
+                    return Content(HttpStatusCode.BadRequest, "Request is wrong format.");
+                }
+                var jsonData = JsonConvert.SerializeObject(data);
+                string apiKey;
                 try
                 {
-                    var orderIdentifier = new OrderIdentifier(order.REFERENTIE, order.DEBITEURNR);
+                    apiKey = data.header.apikey;
+                }
+                catch (System.Exception)
+                {
+                    logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "API key is missing. " + jsonData, "api/woood-order/create");
 
-                    var existingOrders = orderRepository.GetByIdentifier(orderIdentifier);
-                    if (existingOrders.Count() > 0)
+                    return Content(HttpStatusCode.Unauthorized, "API key is missing.");
+                }
+
+                var user = userRepository.GetByUsername(data.header.username);
+                if (apiKey != user.ApiKey)
+                {
+                    logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "API key is not correct. Get a right API key from the service provider.", "api/woood-order/create");
+
+                    return Content(HttpStatusCode.Unauthorized, "API key is not correct. Get a right API key from the service provider.");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, ModelState.ToString(), "api/woood-order/create");
+
+                    return BadRequest(ModelState);
+                }
+
+                var references = new List<string>();
+                int orderCount = 0;
+                foreach (var order in data.body.order)
+                {
+                    try
                     {
-                        logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "The combination of DEBITEURNR(" + order.DEBITEURNR + ") and REFERENTIE(" + order.REFERENTIE + ") must be unique", "api/woood-order/create");
+                        var orderIdentifier = new OrderIdentifier(order.REFERENTIE, order.DEBITEURNR);
 
-                        return Content(HttpStatusCode.BadRequest, "The combination of DEBITEURNR and REFERENTIE must be unique");
-                    }
-
-                    if (order.item.Count() == 0)
-                    {
-                        logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "The order has no lines", "api/woood-order/create");
-
-                        return Content(HttpStatusCode.BadRequest, "The order has no lines");
-                    }
-
-                    // Check if the user has access to the debtor
-                    if (!DebtorBelongsToUser(user, order.DEBITEURNR))
-                    {
-                        logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "DEBITEURNR does not belong to the user: " + jsonData, "api/woood-order/create");
-
-                        return Content(HttpStatusCode.BadRequest, "DEBITEURNR does not belong to the user");
-                    }
-
-                    var orderToPost = new OrderHeader()
-                    {
-                        OrderIdentifier = orderIdentifier,
-                        OMSCHRIJVING = order.OMSCHRIJVING,
-                        STATUS = order.STATUS,
-                        ORDERNR = order.ORDERNR,
-                        SELECTIECODE = order.SELECTIECODE,
-                        ORDERTOELICHTING = order.ORDERTOELICHTING,
-                        ACCEPTATIE_VERZAMELEN = order.ACCEPTATIE_VERZAMELEN,
-                        ACCEPTATIE_ORDERKOSTEN = order.ACCEPTATIE_ORDERKOSTEN,
-                        DS_NAAM = order.DS_NAAM,
-                        DS_AANSPREEKTITEL = order.DS_AANSPREEKTITEL,
-                        DS_ADRES1 = order.DS_ADRES1,
-                        DS_POSTCODE = order.DS_POSTCODE,
-                        DS_PLAATS = order.DS_PLAATS,
-                        DS_LAND = order.DS_LAND,
-                        DS_TELEFOON = order.DS_TELEFOON,
-                        DS_EMAIL = order.DS_EMAIL,
-                        AUTHENTICATED_USER = data.header.username,
-                        ACCEPTATIE_ORDERSPLITSING = order.ACCEPTATIE_ORDERSPLITSING,
-                        PAYMENT_RELEASE_REQUIRED = order.PAYMENT_RELEASE_REQUIRED,
-                        SR_SERVICE_PRODUCT = order.SR_SERVICE_PRODUCT,
-                        SR_AFLEVEREN_AAN = order.SR_AFLEVEREN_AAN,
-                        SR_LOCATIE = order.SR_LOCATIE,
-                        SR_BEDRIJFSNAAM = order.SR_BEDRIJFSNAAM,
-                        SR_BEWIJS = order.SR_BEDRIJFSNAAM,
-                        SR_ORDERREF = order.SR_ORDERREF,
-                        SR_REDEN = order.SR_REDEN,
-                        SR_TOELICHTING = order.SR_TOELICHTING,
-                        SR_PDF_ATTACHMENT = order.SR_PDF_ATTACHMENT
-                    };
-
-                    int orderLineCount = 0;
-                    foreach (var item in order.item)
-                    {
-                        var orderLineToPost = new OrderLine()
+                        var existingOrders = orderRepository.GetByIdentifier(orderIdentifier);
+                        if (existingOrders.Count() > 0)
                         {
-                            OrderIdentifier = orderToPost.OrderIdentifier,
-                            ITEMCODE = item.ITEMCODE,
-                            AANTAL = item.AANTAL,
-                            STATUS = item.STATUS,
-                            ORDERNR = item.ORDERNR,
-                            VERZENDWEEK = item.VERZENDWEEK
+                            logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "The combination of DEBITEURNR(" + order.DEBITEURNR + ") and REFERENTIE(" + order.REFERENTIE + ") must be unique", "api/woood-order/create");
+
+                            return Content(HttpStatusCode.BadRequest, "The combination of DEBITEURNR and REFERENTIE must be unique");
+                        }
+
+                        if (order.item.Count() == 0)
+                        {
+                            logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "The order has no lines", "api/woood-order/create");
+
+                            return Content(HttpStatusCode.BadRequest, "The order has no lines");
+                        }
+
+                        // Check if the user has access to the debtor
+                        if (!DebtorBelongsToUser(user, order.DEBITEURNR))
+                        {
+                            logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "DEBITEURNR does not belong to the user: " + jsonData, "api/woood-order/create");
+
+                            return Content(HttpStatusCode.BadRequest, "DEBITEURNR does not belong to the user");
+                        }
+
+                        var orderToPost = new OrderHeader()
+                        {
+                            OrderIdentifier = orderIdentifier,
+                            OMSCHRIJVING = order.OMSCHRIJVING,
+                            STATUS = order.STATUS,
+                            ORDERNR = order.ORDERNR,
+                            SELECTIECODE = order.SELECTIECODE,
+                            ORDERTOELICHTING = order.ORDERTOELICHTING,
+                            ACCEPTATIE_VERZAMELEN = order.ACCEPTATIE_VERZAMELEN,
+                            ACCEPTATIE_ORDERKOSTEN = order.ACCEPTATIE_ORDERKOSTEN,
+                            DS_NAAM = order.DS_NAAM,
+                            DS_AANSPREEKTITEL = order.DS_AANSPREEKTITEL,
+                            DS_ADRES1 = order.DS_ADRES1,
+                            DS_POSTCODE = order.DS_POSTCODE,
+                            DS_PLAATS = order.DS_PLAATS,
+                            DS_LAND = order.DS_LAND,
+                            DS_TELEFOON = order.DS_TELEFOON,
+                            DS_EMAIL = order.DS_EMAIL,
+                            AUTHENTICATED_USER = data.header.username,
+                            ACCEPTATIE_ORDERSPLITSING = order.ACCEPTATIE_ORDERSPLITSING,
+                            PAYMENT_RELEASE_REQUIRED = order.PAYMENT_RELEASE_REQUIRED,
+                            SR_SERVICE_PRODUCT = order.SR_SERVICE_PRODUCT,
+                            SR_AFLEVEREN_AAN = order.SR_AFLEVEREN_AAN,
+                            SR_LOCATIE = order.SR_LOCATIE,
+                            SR_BEDRIJFSNAAM = order.SR_BEDRIJFSNAAM,
+                            SR_BEWIJS = order.SR_BEDRIJFSNAAM,
+                            SR_ORDERREF = order.SR_ORDERREF,
+                            SR_REDEN = order.SR_REDEN,
+                            SR_TOELICHTING = order.SR_TOELICHTING,
+                            SR_PDF_ATTACHMENT = order.SR_PDF_ATTACHMENT
                         };
 
-                        orderToPost.Lines.Add(orderLineToPost);
-                        ++orderLineCount;
+                        int orderLineCount = 0;
+                        foreach (var item in order.item)
+                        {
+                            var orderLineToPost = new OrderLine()
+                            {
+                                OrderIdentifier = orderToPost.OrderIdentifier,
+                                ITEMCODE = item.ITEMCODE,
+                                AANTAL = item.AANTAL,
+                                STATUS = item.STATUS,
+                                ORDERNR = item.ORDERNR,
+                                VERZENDWEEK = item.VERZENDWEEK
+                            };
+
+                            orderToPost.Lines.Add(orderLineToPost);
+                            ++orderLineCount;
+                        }
+
+                        orderRepository.Insert(orderToPost);
+                        ++orderCount;
+                        references.Add(orderIdentifier.REFERENTIE);
                     }
+                    catch (System.Exception e)
+                    {
+                        // var jsonData = JsonConvert.SerializeObject(data);
 
-                    orderRepository.Insert(orderToPost);
-                    ++orderCount;
-                    references.Add(orderIdentifier.REFERENTIE);
+                        logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, jsonData + ":" + e.ToString(), "api/woood-order/create");
+
+                        return InternalServerError(e);
+                    }
                 }
-                catch (System.Exception e)
+
+                if (orderCount == 0)
                 {
-                    // var jsonData = JsonConvert.SerializeObject(data);
+                    logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "No orders added", "api/woood-order/create");
 
-                    logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, jsonData + ":" + e.ToString(), "api/woood-order/create");
-
-                    return InternalServerError(e);
+                    return BadRequest("No orders added");
                 }
-            }
 
-            if (orderCount == 0)
+                logger.Log(ErrorType.INFO, "CreateOrder()", RequestContext.Principal.Identity.Name, new JavaScriptSerializer().Serialize(references) + ": " + jsonData, "api/woood-order/create", startDate);
+
+                return Ok(new
+                {
+                    header = new
+                    {
+                        status_code = 200,
+                        status_message = "OK"
+                    },
+                    body = new
+                    {
+                        message = "Order has been succesfully added",
+                        references
+                    }
+                });
+
+            }
+            catch (System.Exception e)
             {
-                logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, "No orders added", "api/woood-order/create");
+                logger.Log(ErrorType.ERR, "CreateOrder()", RequestContext.Principal.Identity.Name, e.ToString(), "api/woood-order/create");
 
-                return BadRequest("No orders added");
+                return InternalServerError(e);
             }
-
-            logger.Log(ErrorType.INFO, "CreateOrder()", RequestContext.Principal.Identity.Name, new JavaScriptSerializer().Serialize(references) + ": " + jsonData, "api/woood-order/create", startDate);
-
-            return Ok(new {
-                header = new
-                {
-                    status_code = 200,
-                    status_message = "OK"
-                },
-                body = new
-                {
-                    message = "Order has been succesfully added",
-                    references
-                }
-            });
         }
 
         private bool DebtorBelongsToUser(User user, string debtorCode)
