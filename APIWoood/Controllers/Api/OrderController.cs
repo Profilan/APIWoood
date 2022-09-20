@@ -12,6 +12,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Script.Serialization;
 using APIWoood.Filters;
+using APIWoood.Logic.Services.Interfaces;
+using APIWoood.Logic.MessageBrokers.Publishers;
 
 namespace APIWoood.Controllers.Api
 {
@@ -21,13 +23,13 @@ namespace APIWoood.Controllers.Api
     {
         private readonly UserRepository userRepository;
         private readonly OrderRepository orderRepository;
-        private SystemLogger logger;
+        private ILogger logger;
 
         public OrderController() : base()
         {
             userRepository = new UserRepository();
             orderRepository = new OrderRepository();
-            logger = new SystemLogger();
+            logger = new RabbitMQLogger(MessageBrokerPublisherFactory.Create(Logic.SharedKernel.Enums.MessageBrokerType.RabbitMq));
         }
 
 
