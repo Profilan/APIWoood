@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APIWoood.Logic.Models"
+                   assembly="APIWoood.Logic">
+  <class name="SiteLucentPriceFeed">
+    <id name="GTIN" column="GTIN">
+      <generator class="identity"/>
+    </id>
+    <property name="SoldBy"/>
+    <property name="Price" precision="18" scale="2"/>
+  </class>
+	<sql-query name="GetSiteLucentPriceFeed" callable="true">
+		<return class="SiteLucentPriceFeed">
+			<return-property column="GTIN" name="GTIN"/>
+			<return-property column="SoldBy" name="SoldBy"/>
+			<return-property column="Price" name="Price"/>
+		</return>
+		EEK_sp_SiteLucent_PriceFeed
+	</sql-query>
+
+</hibernate-mapping>

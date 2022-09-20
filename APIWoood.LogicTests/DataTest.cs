@@ -364,5 +364,14 @@ namespace APIWoood.LogicTests
 
             rep.Update(item);
         }
+
+        [TestMethod]
+        public void GetSiteLucentPriceFeed()
+        {
+            var rep = new SiteLucentPriceFeedRepository();
+
+            var items = rep.List();
+
+        }
     }
 }

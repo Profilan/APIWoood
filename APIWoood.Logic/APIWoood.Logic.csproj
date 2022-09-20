@@ -118,6 +118,7 @@
     <Compile Include="Models\HistoryIdentifier.cs" />
     <Compile Include="Models\SalesOrderLineStatus.cs" />
     <Compile Include="Models\SalesOrderShipment.cs" />
+    <Compile Include="Models\SiteLucentPriceFeed.cs" />
     <Compile Include="Models\StockData.cs" />
     <Compile Include="Models\Url.cs" />
     <Compile Include="Models\UserDebtorIdentifier.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Repositories\SalesOrderLineStatusRepository.cs" />
     <Compile Include="Repositories\SalesOrderShipmentRepository.cs" />
     <Compile Include="Repositories\SellingPointRepository.cs" />
+    <Compile Include="Repositories\SiteLucentPriceFeedRepository.cs" />
     <Compile Include="Repositories\StockDataRepository.cs" />
     <Compile Include="Repositories\StructureRepository.cs" />
     <Compile Include="Repositories\UrlRepository.cs" />
@@ -192,6 +194,7 @@
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Mappings\SiteLucentPriceFeed.hbm.xml" />
     <EmbeddedResource Include="Mappings\ZwaluwSSCC.hbm.xml" />
     <EmbeddedResource Include="Mappings\SalesOrderShipment.hbm.xml" />
     <EmbeddedResource Include="Mappings\Debtor.hbm.xml" />

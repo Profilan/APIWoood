@@ -402,6 +402,7 @@
     <Compile Include="Controllers\Api\LogController.cs" />
     <Compile Include="Controllers\Api\PaymentConditionController.cs" />
     <Compile Include="Controllers\Api\PaymentReleaseController.cs" />
+    <Compile Include="Controllers\Api\SiteLucentPricefeedController.cs" />
     <Compile Include="Controllers\Api\PricelistController.cs" />
     <Compile Include="Controllers\Api\ProductRangeController.cs" />
     <Compile Include="Controllers\Api\DeliveryAppointmentController.cs" />
@@ -473,6 +474,7 @@
     <Compile Include="Models\SalesItem.cs" />
     <Compile Include="Models\SalesOrderShipmentDto.cs" />
     <Compile Include="Models\SellingPoint.cs" />
+    <Compile Include="Models\SiteLucentPriceFeedDto.cs" />
     <Compile Include="Models\StockData.cs" />
     <Compile Include="Models\StockDataAtp.cs" />
     <Compile Include="Models\UrlStatisticsViewModel.cs" />
