@@ -5,7 +5,6 @@ using NHibernate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using X.PagedList;
 
 namespace APIWoood.Logic.Repositories
 {
@@ -112,7 +111,7 @@ namespace APIWoood.Logic.Repositories
                         break;
                 }
                     
-                return query.ToPagedList(pageNumber, pageSize);
+                return query.ToList();
             }
         }
 
@@ -157,7 +156,7 @@ namespace APIWoood.Logic.Repositories
                         break;
                 }
 
-                return query.ToPagedList(pageNumber, pageSize);
+                return query.ToList();
             }
         }
 

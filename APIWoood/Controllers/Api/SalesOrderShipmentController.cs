@@ -10,6 +10,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using APIWoood.Filters;
+using APIWoood.Logic.Services.Interfaces;
+using APIWoood.Logic.MessageBrokers.Publishers;
 
 namespace APIWoood.Controllers.Api
 {
@@ -19,7 +21,7 @@ namespace APIWoood.Controllers.Api
     {
         private readonly SalesOrderShipmentRepository salesOrderShipmentRepository = new SalesOrderShipmentRepository();
         private readonly UserRepository userRepository = new UserRepository();
-        private SystemLogger logger = new SystemLogger();
+        private ILogger logger = new RabbitMQLogger(MessageBrokerPublisherFactory.Create(Logic.SharedKernel.Enums.MessageBrokerType.RabbitMq));
 
         [Route("api/sales-order-shipment")]
         [HttpPost]

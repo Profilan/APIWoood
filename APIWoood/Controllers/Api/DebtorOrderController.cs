@@ -9,6 +9,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using APIWoood.Filters;
+using APIWoood.Logic.MessageBrokers.Publishers;
+using APIWoood.Logic.Services.Interfaces;
 
 namespace APIWoood.Controllers.Api
 {
@@ -17,12 +19,12 @@ namespace APIWoood.Controllers.Api
     public class DebtorOrderController : WooodApiController
     {
         private readonly DebtorOrderRepository debtorOrderRepository;
-        private SystemLogger logger;
+        private ILogger logger;
 
         public DebtorOrderController() : base()
         {
             debtorOrderRepository = new DebtorOrderRepository();
-            logger = new SystemLogger();
+            logger = new RabbitMQLogger(MessageBrokerPublisherFactory.Create(Logic.SharedKernel.Enums.MessageBrokerType.RabbitMq));
         }
 
         /**

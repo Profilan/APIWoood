@@ -128,7 +128,7 @@ namespace APIWoood.Controllers
 
                     return RedirectToAction("Index");
                 }
-                catch (Exception e)
+                catch
                 {
                     return View();
                 }
@@ -227,7 +227,7 @@ namespace APIWoood.Controllers
 
                     return RedirectToAction("Index");
                 }
-                catch (Exception e)
+                catch
                 {
                     return View();
                 }
@@ -279,7 +279,7 @@ namespace APIWoood.Controllers
 
                     return RedirectToAction("Index");
                 }
-                catch (Exception e)
+                catch
                 {
                     return View();
                 }

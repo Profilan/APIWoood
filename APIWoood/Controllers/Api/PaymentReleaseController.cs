@@ -10,6 +10,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using APIWoood.Filters;
+using APIWoood.Logic.MessageBrokers.Publishers;
+using APIWoood.Logic.Services.Interfaces;
 
 namespace APIWoood.Controllers.Api
 {
@@ -20,14 +22,14 @@ namespace APIWoood.Controllers.Api
         private readonly PaymentReleaseRepository paymentReleaseRepository;
         private readonly UserRepository userRepository;
         private readonly OrderRepository orderRepository;
-        private SystemLogger logger;
+        private ILogger logger;
 
         public PaymentReleaseController() : base()
         {
             paymentReleaseRepository = new PaymentReleaseRepository();
             userRepository = new UserRepository();
             orderRepository = new OrderRepository();
-            logger = new SystemLogger();
+            logger = new RabbitMQLogger(MessageBrokerPublisherFactory.Create(Logic.SharedKernel.Enums.MessageBrokerType.RabbitMq));
         }
 
         /**

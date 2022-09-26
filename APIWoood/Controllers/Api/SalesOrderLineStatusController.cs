@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
 using APIWoood.Filters;
+using APIWoood.Logic.Services.Interfaces;
+using APIWoood.Logic.MessageBrokers.Publishers;
 
 namespace APIWoood.Controllers.Api
 {
@@ -18,7 +20,7 @@ namespace APIWoood.Controllers.Api
     {
         private readonly SalesOrderLineStatusRepository _salesOrderLineStatusRepository = new SalesOrderLineStatusRepository();
         private readonly UserRepository _userRepository = new UserRepository();
-        private SystemLogger logger = new SystemLogger();
+        private ILogger logger = new RabbitMQLogger(MessageBrokerPublisherFactory.Create(Logic.SharedKernel.Enums.MessageBrokerType.RabbitMq));
 
         [Route("api/sales-orderline-status/dutchned")]
         [HttpPost]

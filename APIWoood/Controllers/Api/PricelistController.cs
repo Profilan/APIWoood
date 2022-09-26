@@ -9,6 +9,8 @@ using System.Web.Http;
 using APIWoood.Logic.Services;
 using APIWoood.Logic.SharedKernel;
 using APIWoood.Filters;
+using APIWoood.Logic.Services.Interfaces;
+using APIWoood.Logic.MessageBrokers.Publishers;
 
 namespace APIWoood.Controllers.Api
 {
@@ -17,12 +19,12 @@ namespace APIWoood.Controllers.Api
     public class PricelistController : WooodApiController
     {
         private readonly PricelistRepository pricelistRepository;
-        private SystemLogger logger;
+        private ILogger logger;
 
         public PricelistController() : base()
         {
             pricelistRepository = new PricelistRepository();
-            logger = new SystemLogger();
+            logger = new RabbitMQLogger(MessageBrokerPublisherFactory.Create(Logic.SharedKernel.Enums.MessageBrokerType.RabbitMq));
         }
 
         /**

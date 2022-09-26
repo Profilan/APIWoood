@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using APIWoood.Filters;
+using APIWoood.Logic.Services.Interfaces;
+using APIWoood.Logic.MessageBrokers.Publishers;
 
 namespace APIWoood.Controllers.Api
 {
@@ -15,13 +17,13 @@ namespace APIWoood.Controllers.Api
     {
         private readonly UserRepository userRepository;
         private readonly StockDataRepository stockDataRepository;
-        private SystemLogger logger;
+        private ILogger logger;
 
         public StockDataController()
         {
             stockDataRepository = new StockDataRepository();
             userRepository = new UserRepository();
-            logger = new SystemLogger();
+            logger = new RabbitMQLogger(MessageBrokerPublisherFactory.Create(Logic.SharedKernel.Enums.MessageBrokerType.RabbitMq));
         }
 
         /**

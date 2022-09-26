@@ -8,6 +8,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using APIWoood.Filters;
+using APIWoood.Logic.Services.Interfaces;
+using APIWoood.Logic.MessageBrokers.Publishers;
 
 namespace APIWoood.Controllers.Api
 {
@@ -16,12 +18,12 @@ namespace APIWoood.Controllers.Api
     public class PaymentConditionController : WooodApiController
     {
         private readonly PaymentConditionRepository paymentConditionRepository;
-        private SystemLogger logger;
+        private ILogger logger;
 
         public PaymentConditionController() : base()
         {
             paymentConditionRepository = new PaymentConditionRepository();
-            logger = new SystemLogger();
+            logger = new RabbitMQLogger(MessageBrokerPublisherFactory.Create(Logic.SharedKernel.Enums.MessageBrokerType.RabbitMq));
         }
 
         /**

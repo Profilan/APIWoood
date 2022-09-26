@@ -2,8 +2,6 @@
 using APIWoood.Logic.Models;
 using APIWoood.Logic.SharedKernel;
 using APIWoood.Models.Identity;
-using APIWoood.Results;
-using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;

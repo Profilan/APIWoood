@@ -1,6 +1,8 @@
-﻿using APIWoood.Logic.Models;
+﻿using APIWoood.Logic.MessageBrokers.Publishers;
+using APIWoood.Logic.Models;
 using APIWoood.Logic.Repositories;
 using APIWoood.Logic.Services;
+using APIWoood.Logic.Services.Interfaces;
 using APIWoood.Logic.SharedKernel;
 using APIWoood.Models;
 using System;
@@ -18,7 +20,7 @@ namespace APIWoood.Controllers.Api
         private readonly LogRepository logRepository = new LogRepository();
         private readonly DashboardRepository _dashboardRepository = new DashboardRepository();
         private readonly UserRepository _userRepository = new UserRepository();
-        private SystemLogger logger = new SystemLogger();
+        private ILogger logger = new RabbitMQLogger(MessageBrokerPublisherFactory.Create(Logic.SharedKernel.Enums.MessageBrokerType.RabbitMq));
 
         private DateTime startDate;
 

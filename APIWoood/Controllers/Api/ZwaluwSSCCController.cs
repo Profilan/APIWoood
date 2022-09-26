@@ -1,7 +1,9 @@
 ﻿using APIWoood.Filters;
+using APIWoood.Logic.MessageBrokers.Publishers;
 using APIWoood.Logic.Models;
 using APIWoood.Logic.Repositories;
 using APIWoood.Logic.Services;
+using APIWoood.Logic.Services.Interfaces;
 using APIWoood.Logic.SharedKernel;
 using APIWoood.Models;
 using Newtonsoft.Json;
@@ -17,7 +19,7 @@ namespace APIWoood.Controllers.Api
     {
         private readonly ZwaluwSSCCRepository _SSCCRepository = new ZwaluwSSCCRepository();
         private readonly UserRepository userRepository = new UserRepository();
-        private SystemLogger logger = new SystemLogger();
+        private ILogger logger = new RabbitMQLogger(MessageBrokerPublisherFactory.Create(Logic.SharedKernel.Enums.MessageBrokerType.RabbitMq));
 
         /**
          * @api {post} /api/sscc Create SSCC
