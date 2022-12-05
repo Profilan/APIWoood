@@ -17,6 +17,7 @@ namespace APIWoood.Logic.Services
         public string Detail { get; set; }
         public string Url { get; set; }
         public DateTime? TimeStamp { get; set; }
+        public double Duration { get; set; }
     }
 
     public class RabbitMQLogger : ILogger
@@ -31,6 +32,10 @@ namespace APIWoood.Logic.Services
         public void Log(ErrorType errorType, string message, string userName, string detail, string url, DateTime? startDate = null)
         {
             var messageId = Guid.NewGuid().ToString("N");
+
+            DateTime start = startDate ?? DateTime.Now;
+            var duration = (DateTime.Now - start).TotalMilliseconds;
+
             var logMessage = new LogMessage
             {
                 Source = System.Environment.GetEnvironmentVariable("COMPUTERNAME"),
@@ -40,6 +45,7 @@ namespace APIWoood.Logic.Services
                 Detail = detail,
                 Url = url,
                 TimeStamp = DateTime.Now,
+                Duration = duration,
             };
             var logMessageJson = JsonSerializer.Serialize(logMessage);
             var messageBytes = Encoding.UTF8.GetBytes(logMessageJson);

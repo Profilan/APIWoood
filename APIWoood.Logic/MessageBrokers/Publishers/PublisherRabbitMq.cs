@@ -14,12 +14,21 @@ namespace APIWoood.Logic.MessageBrokers.Publishers
 
         public PublisherRabbitMq(string connectionString, string topic)
         {
+            var endpointList = connectionString.Split(',');
             var connectionFactory = new ConnectionFactory()
             {
-                Uri = new Uri(connectionString),
+                UserName = "SAAPI",
+                Password = "SA32api",
+                VirtualHost = "apitaskmanagement.vhost"
             };
 
-            _connection = connectionFactory.CreateConnection();
+            IList<AmqpTcpEndpoint> endpoints = new List<AmqpTcpEndpoint>();
+            foreach (var endpoint in endpointList)
+            {
+                endpoints.Add(new AmqpTcpEndpoint(new Uri(endpoint)));
+            }
+
+            _connection = connectionFactory.CreateConnection(endpoints);
             _topic = topic;
         }
 
@@ -35,6 +44,7 @@ namespace APIWoood.Logic.MessageBrokers.Publishers
                 var propertiesDictionary = new Dictionary<string, object>();
                 properties.Headers = propertiesDictionary;
                 channel.BasicPublish(_topic, routingKey: string.Empty, properties, message.Body);
+                _connection.Close();
             }
 
             return Task.CompletedTask;
